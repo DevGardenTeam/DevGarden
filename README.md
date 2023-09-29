@@ -37,3 +37,20 @@ Issues <|-- MergeRequest
 Branch <|.. MergeRequest
 
 ```
+
+- Gestion de projet
+
+```plantuml
+
+class WBS{
+    -tasks : Map<String,Tache>
+}
+class Task{
+    id : int
+    name : String
+}
+
+WBS --o Task
+
+
+```
