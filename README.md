@@ -4,6 +4,7 @@
 
 - Repository
 
+```
 @startuml
 enum Role/Permission
 class Membre
@@ -11,3 +12,4 @@ class Membre
 enum --> Membre
 
 @enduml
+```
