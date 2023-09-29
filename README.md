@@ -69,3 +69,23 @@ PertTask --o Member
 Member .. N1
 
 ```
+
+- Parser
+
+```plantuml
+
+interface IParser{
+
+}
+class GithubParser
+class GitLabParser
+class GiteaParser
+
+note "Abstract method for each class in Repository's diagram" as N1
+
+IParser .. N1
+GiteaParser ..|> IParser
+GithubParser ..|> IParser
+GitLabParser ..|> IParser
+
+```
