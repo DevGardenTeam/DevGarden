@@ -5,11 +5,11 @@
 - Repository
 
 ```
-@startuml
+plantuml
 enum Role/Permission
 class Membre
 
 enum --> Membre
 
-@enduml
+
 ```
