@@ -12,6 +12,11 @@ class File
 class Folder
 class Branch
 class Commit
+class Issues
+class MergeRequest
+class Label
+class Milestorne
+
 
 /' Enumeration '/
 enum Permission
@@ -24,5 +29,11 @@ File <-- Folder
 Repository -- Folder
 Repository -- Branch
 Branch -- Commit
+Repository -- Issues
+Issues --> Label
+Issues o-- Milestorne
+Label -- MergeRequest
+Issues <|-- MergeRequest
+Branch <|.. MergeRequest
 
 ```
