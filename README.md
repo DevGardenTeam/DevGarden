@@ -46,11 +46,21 @@ class WBS{
     -tasks : Map<String,Tache>
 }
 class Task{
-    id : int
-    name : String
+    - id : int
+    - name : String
+}
+class PertTask{
+    - duree : long
+    - priority : int
+}
+class GanttTask{
+    - dateBeg : Date
+    - dateEnd : Date
 }
 
 WBS --o Task
-
+Task <|-- PertTask
+PertTask o-- PertTask
+PertTask <|-- GanttTask
 
 ```
