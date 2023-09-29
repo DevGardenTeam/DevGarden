@@ -5,13 +5,13 @@
 - Repository
 
 ```plantuml
-enum Role/Permission
+enum Permission
 class Membre
 class Repository
 class RemotePlatform
 class File
 
-Role/Permission --> Membre
+Permission --> Membre
 Membre -- Repository
 Repository -- RemotePlatform
 Repository -- File
