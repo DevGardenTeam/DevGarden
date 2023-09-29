@@ -57,10 +57,15 @@ class GanttTask{
     - dateBeg : Date
     - dateEnd : Date
 }
+class Membre
+
+note "Refers to the class Member in Repository's diagram" as N1
 
 WBS --o Task
 Task <|-- PertTask
 PertTask o-- PertTask
 PertTask <|-- GanttTask
+PertTask --o Member
+Member .. N1
 
 ```
