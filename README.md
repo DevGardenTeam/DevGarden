@@ -7,8 +7,13 @@
 ```plantuml
 enum Role/Permission
 class Membre
+class Repository
+class RemotePlatform
+class File
 
-enum --> Membre
+Role/Permission --> Membre
+Membre -- Repository
+Repository -- RemotePlatform
+Repository -- File
 
-Class09 -- Class10
 ```
