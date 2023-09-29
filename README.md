@@ -5,5 +5,9 @@
 - Repository
 
 @startuml
-enum .. Membre
+enum Role/Permission
+class Membre
+
+enum --> Membre
+
 @enduml
