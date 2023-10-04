@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import i18n from "./i18n";
+import i18n from "./service/i18n";
 import { I18nextProvider, useTranslation } from "react-i18next";
 
 export default function App() {
