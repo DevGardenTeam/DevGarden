@@ -4,5 +4,8 @@
             "en": "Anglais",
             "fr": "Français",
             "pt": "Portugais"
-        }
+        },
+    "parameters": {
+        "log_out":"Se déconnecter"
+    }
 }

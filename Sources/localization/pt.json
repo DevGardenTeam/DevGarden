@@ -3,5 +3,8 @@
             "en": "Inglês",
             "fr": "Francês",
             "pt": "Português"
-        }
+        },
+    "parameters": {
+        "log_out":"Sair"
+    }
 }

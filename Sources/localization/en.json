@@ -1,8 +1,11 @@
 {
     "welcome" : "welcome",
     "supportedLanguages": {
-            "en": "English",
-            "fr": "French",
-            "pt": "Portuguese"
-        }
+        "en": "English",
+        "fr": "French",
+        "pt": "Portuguese"
+        },
+    "parameters": {
+        "log_out":"Log out"
+    }
 }

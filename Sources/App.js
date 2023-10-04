@@ -9,6 +9,7 @@ export default function App() {
       <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
         <Text style={styles.buttonText}>{t('supportedLanguages.en')}</Text>
       </TouchableOpacity>
+      
     </SafeAreaView>
   );
 }
