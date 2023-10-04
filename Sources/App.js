@@ -1,18 +1,20 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import i18n from "./service/i18n";
-import { I18nextProvider, useTranslation } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 
 export default function App() {
-  const {t} = useTranslation();
+  const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>{t('welcome')}</Text>
+      <Text style={styles.text}>{t('welcome')}</Text>  
       <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
         <Text style={styles.buttonText}>{t('supportedLanguages.en')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
 }
+
+// t('[key]') => valeur directe dans le json
+// t('[key].[2nd_key]') => valeur indirecte dans le json
 
 const styles = StyleSheet.create({
   container: {
