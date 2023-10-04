@@ -3,18 +3,23 @@ import { initReactI18next } from "react-i18next"
 import fr from "./localization/fr.json"
 import en from "./localization/en.json"
 import pt from "./localization/pt.json"
-import * as Localization from "expo-localization";
 
-const getLangCode = () => {
-  const code = Localization.getLocales().shift();
-  if (!code) return "en";
-  return code.languageCode;
-};
+export const languageResources = {
+  fr: {
+    translation: fr, // Make sure to specify the namespace "translation"
+  },
+  en: {
+    translation: en,
+  },
+  pt: {
+    translation: pt,
+  },
+}
 
 i18n.use(initReactI18next)
     .init({
         compatibilityJSON:"v4",
-        lng: getLangCode(),
+        lng: "fr",
         fallbackLng: "en",
         defaultNS: "translation",
         interpolation: {
@@ -22,17 +27,7 @@ i18n.use(initReactI18next)
             escapeValue: false
         },
         // Here you can add all your supported languages
-        resources: {
-            fr: {
-              translation: fr, // Make sure to specify the namespace "translation"
-            },
-            en: {
-              translation: en,
-            },
-            pt: {
-              translation: pt,
-            },
-          },
+        resources: languageResources
     })
 
 export default i18n
