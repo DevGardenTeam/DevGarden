@@ -1,11 +1,20 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import ParametersButton from './components/parameters_buttons_component';
 import './service/i18n';
+import DropDownPicker from 'react-native-dropdown-picker';
+import React, { useState } from 'react';
 
 
 export default function App() {
   const {t} = useTranslation();     // A ajouter pour le multi langue
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+  {label: t('supportedLanguages.en'), value: t('supportedLanguages.en')},
+  {label: t('supportedLanguages.fr'), value: t('supportedLanguages.fr')},
+  {label: t('supportedLanguages.pt'), value: t('supportedLanguages.pt')}
+  ]);
   return (
       <SafeAreaView style={styles.container}>
       <Text style={styles.text}>{t('welcome')}</Text>  
@@ -13,6 +22,16 @@ export default function App() {
         <Text style={styles.buttonText}>{t('supportedLanguages.en')}</Text>
       </TouchableOpacity>
       <ParametersButton title={t('parameters.log_out')} iconSource={require('./assets/icon.png')}/>
+      <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  containerStyle={styles.dropdownContainer}
+                  style={styles.dropdown}
+                  elevation={3}/>
     </SafeAreaView>    
   );
 }

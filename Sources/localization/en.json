@@ -6,6 +6,7 @@
         "pt": "Portuguese"
         },
     "parameters": {
-        "log_out":"Log out"
+        "log_out":"Log out",
+        "language":"Languages"
     }
 }

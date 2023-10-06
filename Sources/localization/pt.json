@@ -5,6 +5,7 @@
             "pt": "Português"
         },
     "parameters": {
-        "log_out":"Sair"
+        "log_out":"Sair",
+        "language":"Línguas"
     }
 }
