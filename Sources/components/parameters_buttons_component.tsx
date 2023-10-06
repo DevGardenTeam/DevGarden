@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType  } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform  } from 'react-native';
 
 type ParmetersButton = {
     title: string,
@@ -20,10 +20,21 @@ const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, onPress
 
 const styles = StyleSheet.create({
     button: {
-      backgroundColor: '#007bff',
-      borderRadius: 4,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 5,
       padding: 10,
       alignItems: 'center',
+      ...Platform.select({
+        ios: {
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 4,
+        },
+        android: {
+          elevation: 4,
+        },
+      }),
     },
     buttonContent: {
       flexDirection: 'row',
@@ -33,10 +44,11 @@ const styles = StyleSheet.create({
       width: 24,
       height: 24,
       marginRight: 8,
-      tintColor: '#fff',
+      marginLeft: 4,
+      tintColor: '#FF0202',
     },
     text: {
-      color: '#fff',
+      color: '#FF0202',
       fontSize: 16,
       fontWeight: 'bold',
     },
