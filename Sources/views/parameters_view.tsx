@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import ParametersButton from '../components/parameters_buttons_component';
@@ -18,12 +18,18 @@ export default function App() {
     {label: t('supportedLanguages.fr'), value: t('supportedLanguages.fr')},
     {label: t('supportedLanguages.pt'), value: t('supportedLanguages.pt')}
   ]);
+
+    // Switch
+
+    const [isEnabled, setIsEnabled] = useState(false);
+    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
     return (
         <SafeAreaView style={styles.container}>
             <div style={styles.container_bis}>
               <div style={styles.part}>
-                <image></image>
-                <text>{t('parameters.log_out')}</text>
+                <image href="require('./assets/internet.svg')"></image>
+                <Text>{t('parameters.language')}</Text>
                 <DropDownPicker
                   open={open}
                   value={value}
@@ -31,6 +37,26 @@ export default function App() {
                   setOpen={setOpen}
                   setValue={setValue}
                   setItems={setItems}/>
+              </div>
+              <div style={styles.part}>
+                <image href="require('./assets/half-moon-shape.svg')"></image>
+                <Text>{t('parameters.night_mode')}</Text>
+                <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
+                  thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}/>
+              </div>
+              <div style={styles.part}>
+                <TouchableOpacity>
+                  <View>
+                    <image href="require('./assets/link.svg')"/>
+                    <Text>{t('parameters.link_account')}</Text>
+                  </View>
+                </TouchableOpacity>
+              </div>
+              <div>
+                {/* ListView */}
               </div>
             </div>
             <ParametersButton title={t('parameters.log_out')} iconSource={require('./assets/logout.svg')}/>

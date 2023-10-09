@@ -6,6 +6,8 @@
         },
     "parameters": {
         "log_out":"Sair",
-        "language":"Línguas"
+        "language":"Línguas",
+        "night_mode":"Modo escuro",
+        "link_account":"Vincular contas"
     }
 }

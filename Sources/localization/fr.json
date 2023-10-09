@@ -7,6 +7,8 @@
         },
     "parameters": {
         "log_out":"Se déconnecter",
-        "language":"Langues"
+        "language":"Langues",
+        "night_mode":"Mode sombre",
+        "link_account":"Associer des comptes"
     }
 }

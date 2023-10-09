@@ -7,6 +7,8 @@
         },
     "parameters": {
         "log_out":"Log out",
-        "language":"Languages"
+        "language":"Languages",
+        "night_mode":"Night mode",
+        "link_account":"Link accounts"
     }
 }
