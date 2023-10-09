@@ -1,5 +1,6 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import '../service/i18n';
 import ParametersButton from '../components/parameters_buttons_component';
 import React, { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -19,8 +20,7 @@ export default function App() {
   ]);
     return (
         <SafeAreaView style={styles.container}>
-            <ParametersButton title={t('parameters.log_out')} iconSource={require('./icon.png')}/>
-            <div>
+            <div style={styles.container_bis}>
               <div style={styles.part}>
                 <image></image>
                 <text>{t('parameters.log_out')}</text>
@@ -33,6 +33,7 @@ export default function App() {
                   setItems={setItems}/>
               </div>
             </div>
+            <ParametersButton title={t('parameters.log_out')} iconSource={require('./assets/logout.svg')}/>
         </SafeAreaView>
   );
 }
@@ -43,6 +44,13 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#191266',
+    },
+    container_bis: {
+      backgroundColor: '#FFFFFF',
+      borderRadius: 5,
+      display: 'flex',
+      paddingLeft: 5,
+      paddingRight: 6,
     },
     part:{
       backgroundColor: '#FFFFFF',

@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
+      width: '20%',
     },
     buttonContent: {
       flexDirection: 'row',
-      alignItems: 'center',
     },
     icon: {
       width: 24,
