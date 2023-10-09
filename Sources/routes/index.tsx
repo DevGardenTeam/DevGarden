@@ -9,12 +9,10 @@ const { Navigator, Screen } = createStackNavigator();
 export function Routes() {
   return (
     <NavigationContainer>
-      <Navigator headerMode="none">
         <Screen
           name="Success"
           component={Success}
         />
-      </Navigator>
     </NavigationContainer>
   )
 }

@@ -1,42 +1,37 @@
-import * as React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Button} from 'react-native';
+import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import { Button } from 'react-native';
 
-WebBrowser.maybeCompleteAuthSession();
 
-// Endpoint
-const discovery = {
-  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-  tokenEndpoint: 'https://github.com/login/oauth/access_token',
-  revocationEndpoint: 'https://github.com/settings/connections/applications/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',
-};
 
 export default function App() {
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId: 'CLIENT_ID',
-      scopes: ['identity'],
-      redirectUri: makeRedirectUri({
-        scheme: 'localhost'
-      }),
-    },
-    discovery
-  );
 
-  React.useEffect(() => {
-    if (response?.type === 'success') {
-      const { code } = response.params;
-    }
-  }, [response]);
+  async function handleSignIn() {  
+    const CLIENT_ID = 'e2ab8ffbefc5b983f71b'
+    const SCOPE = 'http://localhost:19006/'
+    const RESPONSE_TYPE = 'token';
+
+    const authUrl = 'https://github.com/login/oauth/authorize?client_id=e2ab8ffbefc5b983f71b&redirect_uri=&scope=http://localhost:19006/'
+    const response = await AuthSession.startAsync({ authUrl });
+    console.log(response);
+    
+  }
+
 
   return (
-    <Button
-      disabled={!request}
-      title="Login"
-      onPress={() => {
-        promptAsync();
-      }}
-    />
+    <View style={styles.container}>
+      <Button title='Enter with Github' onPress={() => handleSignIn()} />
+      <StatusBar style="auto" />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

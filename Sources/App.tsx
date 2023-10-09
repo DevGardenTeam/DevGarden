@@ -1,29 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import * as AuthSession from 'expo-auth-session';
+import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { View, Button, StatusBar, StyleSheet,  } from 'react-native';
+WebBrowser.maybeCompleteAuthSession();
 
-
-
-
-async function handleSignIn() {
-  const navigation = useNavigation();  
-  const CLIENT_ID = 'e2ab8ffbefc5b983f71b'
-  const SCOPE = 'http://localhost:19006/'
-  const RESPONSE_TYPE = 'token';
-
-  const authUrl = 'https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=&scope=${SCOPE}'
-  const response = await AuthSession.startAsync({ authUrl });
-  console.log(response);
-  
-  navigation.navigate('Sucess');
-}
+// Endpoint
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: 'https://github.com/settings/connections/applications/e2ab8ffbefc5b983f71b',
+};
 
 export default function App() {
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: 'e2ab8ffbefc5b983f71b',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'devGarden',
+        preferLocalhost: true
+      }),
+    },
+    discovery
+  );
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params;
+      console.log(code);
+    }
+  }, [response]);
+
   return (
     <View style={styles.container}>
-      <Button title='Enter with Github' onPress={handleSignIn} />
-      <StatusBar style="auto" />
+      <Button title='Enter with Github' onPress={() => promptAsync()} />
+      <StatusBar />
     </View>
   );
 }
