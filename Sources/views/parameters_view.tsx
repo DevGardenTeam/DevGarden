@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, Image } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import ParametersButton from '../components/parameters_buttons_component';
@@ -28,7 +28,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
             <div style={styles.container_bis}>
               <div style={styles.part}>
-                <image href="require('./assets/internet.svg')"></image>
+                <Image source={require('./assets/internet.svg')}></Image>
                 <Text>{t('parameters.language')}</Text>
                 <DropDownPicker
                   open={open}
@@ -39,7 +39,7 @@ export default function App() {
                   setItems={setItems}/>
               </div>
               <div style={styles.part}>
-                <image href="require('./assets/half-moon-shape.svg')"></image>
+                <Image source={require('./assets/half-moon-shape.svg')}></Image>
                 <Text>{t('parameters.night_mode')}</Text>
                 <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
                   thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -50,7 +50,7 @@ export default function App() {
               <div style={styles.part}>
                 <TouchableOpacity>
                   <View>
-                    <image href="require('./assets/link.svg')"/>
+                    <Image source={require('./assets/link.svg')}/>
                     <Text>{t('parameters.link_account')}</Text>
                   </View>
                 </TouchableOpacity>
