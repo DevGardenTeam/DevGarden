@@ -1,26 +1,23 @@
 import React from 'react';
-import { Image, View, StyleSheet, ImageSourcePropType  } from 'react-native';
+import { Image, View, StyleSheet, ImageSourcePropType, DimensionValue  } from 'react-native';
 
 type Icon = {
     iconSource: ImageSourcePropType
+    tintColor?: string
+    height? : DimensionValue 
+    width?: DimensionValue
+
 }
   
-const IconComponent: React.FC<Icon> = ({ iconSource }) => {
+const IconComponent: React.FC<Icon> = ({ iconSource,tintColor,height=24,width=24 }) => {
     return (
             <View>
-                <Image source={iconSource} style={styles.icon} />
+                <Image source={iconSource} style={{width:width ,
+                    height: height,
+                    tintColor: tintColor}} />
             </View>
     );
 };
 
-const styles = StyleSheet.create({
-    icon: {
-      width: 24,
-      height: 24,
-      marginRight: 8,
-      marginLeft: 4,
-      tintColor: '#FF0202',
-    },
-});
   
 export default IconComponent;

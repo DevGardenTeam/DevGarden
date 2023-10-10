@@ -5,7 +5,8 @@
             "fr": "Français",
             "pt": "Portugais"
         },
-    "parameters": {
+    "settings": {
+        "settings":"Paramètres",
         "log_out":"Se déconnecter",
         "language":"Langues",
         "night_mode":"Mode sombre",

@@ -4,7 +4,8 @@
             "fr": "Francês",
             "pt": "Português"
         },
-    "parameters": {
+    "settings": {
+        "settings":"Configurações",
         "log_out":"Sair",
         "language":"Línguas",
         "night_mode":"Modo escuro",
