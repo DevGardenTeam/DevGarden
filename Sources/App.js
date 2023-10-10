@@ -2,6 +2,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, Image } 
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import './service/i18n';
 import ParametersButton from './components/parameters_buttons_component';
+import IconComponent from './components/icon_component';
 import React, { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -28,7 +29,7 @@ export default function App() {
         <SafeAreaView style={styles.container}>
             <div style={styles.container_bis}>
               <div style={styles.part}>
-                <Image source={require('./assets/internet.svg')}></Image> {/* le svg est pas pris en compte*/}
+                <IconComponent iconSource={require('./assets/internet.svg')} />
                 <Text>{t('parameters.language')}</Text>
                 <DropDownPicker
                   open={open}
@@ -40,7 +41,7 @@ export default function App() {
                   searchable={true}/>
               </div>
               <div style={styles.part}>
-                <Image source={require('./assets/half-moon-shape.svg')}></Image>
+                <IconComponent iconSource={require('./assets/half-moon-shape.svg')}/>
                 <Text>{t('parameters.night_mode')}</Text>
                 <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
                   thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -48,14 +49,12 @@ export default function App() {
                   onValueChange={toggleSwitch}
                   value={isEnabled}/>
               </div>
-              <div style={styles.part}>
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.part}>
                   <View>
-                    <Image source={require('./assets/link.svg')}/>
-                    <Text>{t('parameters.link_account')}</Text>
-                  </View>
-                </TouchableOpacity>
-              </div>
+                  <IconComponent iconSource={require('./assets/link.svg')}/>
+                  <Text>{t('parameters.link_account')}</Text>
+                </View>
+              </TouchableOpacity>
               <div>
                 {/* ListView */}
               </div>
