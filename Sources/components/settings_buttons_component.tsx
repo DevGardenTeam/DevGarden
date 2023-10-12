@@ -35,21 +35,25 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
-      width: '20%',
+      boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
+      width: '60%',
+      margin:"8%"
     },
     buttonContent: {
       flexDirection: 'row',
+      alignItems:"center",
+      justifyContent:"center"
     },
     icon: {
-      width: 24,
-      height: 24,
+      width: 30,
+      height: 30,
       marginRight: 8,
       marginLeft: 4,
       tintColor: '#FF0202',
     },
     text: {
       color: '#FF0202',
-      fontSize: 16,
+      fontSize: 20,
       fontWeight: 'bold',
     },
 });

@@ -6,15 +6,16 @@ type Icon = {
     tintColor?: string
     height? : DimensionValue 
     width?: DimensionValue
-
+    margin? : DimensionValue
 }
   
-const IconComponent: React.FC<Icon> = ({ iconSource,tintColor,height=24,width=24 }) => {
+const IconComponent: React.FC<Icon> = ({ iconSource,tintColor,height=24,width=24,margin=5 }) => {
     return (
             <View>
                 <Image source={iconSource} style={{width:width ,
                     height: height,
-                    tintColor: tintColor}} />
+                    tintColor: tintColor,
+                    margin:margin}} />
             </View>
     );
 };

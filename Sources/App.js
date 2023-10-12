@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, Image } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import './service/i18n';
-import settingsButton from './components/settings_buttons_component';
+import SettingsButton from './components/settings_buttons_component';
 import IconComponent from './components/icon_component';
 import React, { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -28,42 +28,52 @@ export default function App() {
     return (
         <SafeAreaView style={styles.container}>
           <div style={styles.titlecontainer}>
-            <IconComponent iconSource={require('./assets/settings.svg')} tintColor='#000000'/>
-            <Text>{t('settings.settings')}</Text>
+            <IconComponent iconSource={require('./assets/settings.svg')} tintColor='#414141' width={40} height={40}/>
+            <Text style={styles.title}>{t('settings.settings')}</Text>
           </div>
             <div style={styles.container_bis}>
               <div style={styles.part}>
                 <IconComponent iconSource={require('./assets/internet.svg')} />
-                <Text>{t('settings.language')}</Text>
-                <DropDownPicker
-                  open={open}
-                  value={value}
-                  items={items}
-                  setOpen={setOpen}
-                  setValue={setValue}
-                  setItems={setItems}
-                  searchable={true}/>
+                <Text style={styles.text}>{t('settings.language')}</Text>
+                <div>
+                  <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    searchable={true}
+                    style={styles.DropDownPicker}
+                    dropDownContainerStyle={styles.DropDownPickerContainer}
+                    searchContainerStyle={styles.DropDownPickerContainer}
+                    listItemLabelStyle={styles.ItemsStyle}
+                    placeholderStyle={styles.ItemsStyle}
+                    searchTextInputStyle={styles.searchTextInputStyle}/>
+                </div>
               </div>
               <div style={styles.part}>
                 <IconComponent iconSource={require('./assets/half-moon-shape.svg')}/>
-                <Text>{t('settings.night_mode')}</Text>
-                <Switch trackColor={{false: '#767577', true: '#81b0ff'}}
-                  thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                <Text style={styles.text}>{t('settings.night_mode')}</Text>
+                <div style={styles.buttonPart}>
+                  <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+                  thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
                   ios_backgroundColor="#3e3e3e"
                   onValueChange={toggleSwitch}
                   value={isEnabled}/>
+                </div>
               </div>
-                <TouchableOpacity style={styles.part}>
-                  <View>
-                  <IconComponent iconSource={require('./assets/link.svg')}/>
-                  <Text>{t('settings.link_account')}</Text>
+                <TouchableOpacity>
+                  <View style={styles.part}>
+                    <IconComponent iconSource={require('./assets/link.svg')}/>
+                    <Text style={styles.text}>{t('settings.link_account')}</Text>
                 </View>
               </TouchableOpacity>
               <div>
                 {/* ListView */}
               </div>
             </div>
-            <settingsButton title={t('settings.log_out')} iconSource={require('./assets/logout.svg')}/>
+            <SettingsButton title={t('settings.log_out')} iconSource={require('./assets/logout.svg')}></SettingsButton>
         </SafeAreaView>
   );
 }
@@ -75,33 +85,61 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#F1F0F0',
     },
+    // Title
     titlecontainer:{
       display : "flex",
       flexDirection : "row",
-      alignContent:"center",
-      justifyContent:"center"
+      justifyContent:"center",
+      alignItems:"center",
+      marginBottom:"5%"
     },
-    titleIcon:{
-      width:"auto",
-      height:"auto",
-      tintColor:"#000000"
+    title:{
+      fontSize:35,
+      margin : "5%",
+      marginLeft:"20%",
+      color:"#414141",
+      fontWeight:"bold"
     },
+    //Main Part
     container_bis: {
       backgroundColor: '#FFFFFF',
-      borderRadius: 5,
+      borderRadius: 15,
       display: 'flex',
       paddingLeft: 5,
       paddingRight: 5,
       flexDirection: 'column',
-      width:"70%"
+      width:"75%",
+      boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
     },
     part:{
-      backgroundColor: '#FFFFFF',
-      borderRadius: 5,
       padding: 10,
       display: 'flex',
       flexDirection: 'row',
-      alignItems: "baseline",
-      justifyContent: "flex-start"
+      alignItems: "center",
+      justifyContent: "flex-start",
+      margin:"0.2%"
     },
+    text:{
+      fontSize:20,
+      fontWeight:"bold",
+      marginLeft:"3%",
+      flex:2
+    },
+    //DropDownPicker
+    DropDownPicker:{
+      borderRadius: 30,
+      border:"none",
+      boxShadow: "0px 5px 10px 1px rgba(0,0,0,0.5)",
+    },
+    DropDownPickerContainer:{
+      border:"none",
+    },
+    ItemsStyle:{
+      fontSize:"15",
+      fontWeight:"500",
+    },
+    searchTextInputStyle:{
+      border : "none",
+      width:"25%"
+    }
   });
