@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-import './service/i18n';
+import i18n from './service/i18n';
 import SettingsButton from './components/settings_buttons_component';
 import IconComponent from './components/icon_component';
 import React, { useState } from 'react';
@@ -13,7 +13,7 @@ export default function App() {
     // DropDownPicker
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState("null");
     const [items, setItems] = useState([
     {label: t('supportedLanguages.en'), value: t('supportedLanguages.en')},
     {label: t('supportedLanguages.fr'), value: t('supportedLanguages.fr')},
@@ -40,9 +40,11 @@ export default function App() {
                     open={open}
                     value={value}
                     items={items}
+                    defaultValue={value}
                     setOpen={setOpen}
                     setValue={setValue}
                     setItems={setItems}
+                    placeholder={t('supportedLanguages.'+i18n.language)}
                     searchable={true}
                     style={styles.DropDownPicker}
                     dropDownContainerStyle={styles.DropDownPickerContainer}
@@ -71,6 +73,17 @@ export default function App() {
               </TouchableOpacity>
               <div>
                 {/* ListView */}
+                <FlatList
+                  data={[
+                    {key: 'Mon projet perso'},
+                    {key: "Dev'Garden"},
+                  ]}
+                  // Pour le binding remplacer l'item.key et le chemin de l'icon
+                  renderItem={({item}) => <TouchableOpacity style={styles.listview}>
+                    <IconComponent iconSource={require("./assets/gitlab.svg")} height={55} width={55}/>
+                    <Text style={styles.text}>{item.key}</Text>
+                    </TouchableOpacity>}
+                />
               </div>
             </div>
             <SettingsButton title={t('settings.log_out')} iconSource={require('./assets/logout.svg')}></SettingsButton>
@@ -96,14 +109,14 @@ const styles = StyleSheet.create({
     title:{
       fontSize:35,
       margin : "5%",
-      marginLeft:"20%",
+      marginLeft:"13%",
       color:"#414141",
       fontWeight:"bold"
     },
     //Main Part
     container_bis: {
       backgroundColor: '#FFFFFF',
-      borderRadius: 15,
+      borderRadius: 10,
       display: 'flex',
       paddingLeft: 5,
       paddingRight: 5,
@@ -141,5 +154,13 @@ const styles = StyleSheet.create({
     searchTextInputStyle:{
       border : "none",
       width:"25%"
+    },
+    //ListView
+    listview:{
+      display : "flex",
+      flexDirection : "row",
+      alignItems: "center",
+      marginStart:"5%",
+      marginTop : "-2%"
     }
   });

@@ -21,7 +21,7 @@ const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, onPress
 const styles = StyleSheet.create({
     button: {
       backgroundColor: '#FFFFFF',
-      borderRadius: 5,
+      borderRadius: 10,
       padding: 10,
       alignItems: 'center',
       ...Platform.select({
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         },
       }),
       boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
-      width: '60%',
+      width: '75%',
       margin:"8%"
     },
     buttonContent: {
