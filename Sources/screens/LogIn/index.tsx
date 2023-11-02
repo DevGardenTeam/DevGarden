@@ -19,10 +19,7 @@ export default function Login() {
     {
       clientId: 'e2ab8ffbefc5b983f71b',
       scopes: ['identity'],
-      redirectUri: makeRedirectUri({
-        scheme: 'devGarden',
-        preferLocalhost: true
-      }),
+      redirectUri: 'http://localhost:19006/auth/callback',
     },
     discovery
   );
