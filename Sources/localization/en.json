@@ -1,5 +1,4 @@
 {
-    "welcome" : "welcome",
     "supportedLanguages": {
         "en": "English",
         "fr": "French",
@@ -7,9 +6,10 @@
         },
     "settings": {
         "settings":"Settings",
-        "log_out":"Log out",
+        "logOut":"Log out",
         "language":"Languages",
-        "night_mode":"Night mode",
-        "link_account":"Link accounts"
+        "nightMode":"Night mode",
+        "linkAccount":"Link accounts",
+        "searchPlaceHolder":"Search for a language"
     }
 }

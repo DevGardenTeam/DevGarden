@@ -6,9 +6,10 @@
         },
     "settings": {
         "settings":"Configurações",
-        "log_out":"Sair",
+        "logOut":"Sair",
         "language":"Línguas",
-        "night_mode":"Modo escuro",
-        "link_account":"Vincular contas"
+        "nightMode":"Modo escuro",
+        "linkAccount":"Vincular contas",
+        "searchPlaceHolder":"Procurar uma língua"
     }
 }

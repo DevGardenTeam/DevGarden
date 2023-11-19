@@ -46,6 +46,7 @@ export default function App() {
                     setItems={setItems}
                     placeholder={t('supportedLanguages.'+i18n.language)}
                     searchable={true}
+                    searchPlaceholder={t('settings.searchPlaceHolder')}
                     style={styles.DropDownPicker}
                     dropDownContainerStyle={styles.DropDownPickerContainer}
                     searchContainerStyle={styles.DropDownPickerContainer}
@@ -56,7 +57,7 @@ export default function App() {
               </div>
               <div style={styles.part}>
                 <IconComponent iconSource={require('./assets/half-moon-shape.svg')}/>
-                <Text style={styles.text}>{t('settings.night_mode')}</Text>
+                <Text style={styles.text}>{t('settings.nightMode')}</Text>
                 <div style={styles.buttonPart}>
                   <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
                   thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
@@ -68,7 +69,7 @@ export default function App() {
                 <TouchableOpacity>
                   <View style={styles.part}>
                     <IconComponent iconSource={require('./assets/link.svg')}/>
-                    <Text style={styles.text}>{t('settings.link_account')}</Text>
+                    <Text style={styles.text}>{t('settings.linkAccount')}</Text>
                 </View>
               </TouchableOpacity>
               <div>
@@ -86,7 +87,7 @@ export default function App() {
                 />
               </div>
             </div>
-            <SettingsButton title={t('settings.log_out')} iconSource={require('./assets/logout.svg')}></SettingsButton>
+            <SettingsButton title={t('settings.logOut')} iconSource={require('./assets/logout.svg')}></SettingsButton>
         </SafeAreaView>
   );
 }
@@ -144,16 +145,14 @@ const styles = StyleSheet.create({
       border:"none",
       boxShadow: "0px 5px 10px 1px rgba(0,0,0,0.5)",
     },
-    DropDownPickerContainer:{
-      border:"none",
-    },
     ItemsStyle:{
       fontSize:"15",
       fontWeight:"500",
     },
     searchTextInputStyle:{
       border : "none",
-      width:"25%"
+      width:"25%",
+      flexWrap:"wrap"
     },
     //ListView
     listview:{

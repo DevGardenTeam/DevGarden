@@ -1,5 +1,4 @@
 {
-    "welcome": "bienvenue",
     "supportedLanguages": {
             "en": "Anglais",
             "fr": "Français",
@@ -7,9 +6,10 @@
         },
     "settings": {
         "settings":"Paramètres",
-        "log_out":"Se déconnecter",
+        "logOut":"Se déconnecter",
         "language":"Langues",
-        "night_mode":"Mode sombre",
-        "link_account":"Associer des comptes"
+        "nightMode":"Mode sombre",
+        "linkAccount":"Associer des comptes",
+        "searchPlaceHolder":"Rechercher une langue"
     }
 }
