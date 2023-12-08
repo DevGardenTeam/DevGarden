@@ -108,9 +108,8 @@ const styles = StyleSheet.create({
       marginBottom:"5%"
     },
     title:{
-      fontSize:35,
-      margin : "5%",
-      marginLeft:"13%",
+      fontSize:"300%",
+      margin : "4%",
       color:"#414141",
       fontWeight:"bold"
     },
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
       margin:"0.2%"
     },
     text:{
-      fontSize:20,
+      fontSize:"125%",
       fontWeight:"bold",
       marginLeft:"3%",
       flex:2
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
       boxShadow: "0px 5px 10px 1px rgba(0,0,0,0.5)",
     },
     ItemsStyle:{
-      fontSize:"15",
+      fontSize:"75%",
       fontWeight:"500",
     },
     searchTextInputStyle:{
@@ -159,7 +158,6 @@ const styles = StyleSheet.create({
       display : "flex",
       flexDirection : "row",
       alignItems: "center",
-      marginStart:"5%",
-      marginTop : "-2%"
+      marginStart:"5%"
     }
   });
