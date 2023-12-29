@@ -1,41 +1,80 @@
-import React from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, StyleSheet, Dimensions, SafeAreaView, StatusBar, TextInput, Text } from 'react-native';
 
 const LoginScreen: React.FC = () => {
+  const [email, setEmail] = useState('');
+
   return (
-    <View style={styles.container}>
-        <Image
+    <SafeAreaView style={styles.safeArea}>
+        <View style={styles.image1}>
+          <Image
             source={require('../assets/images/Rectangle_Login_1.png')}
-            style={styles.image1}
-        />
+          />
+          <View style={styles.overlay}>
+          <Text style={styles.title}>Bienvenue</Text>
+            <TextInput
+              style={styles.emailInput}
+              placeholder="Email Address"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+          </View>
+        </View>
+        
         <View style={styles.space} />
-        <Image
+
+        <View style={styles.image2}>
+          <Image
             source={require('../assets/images/Rectangle_Login_2.png')}
-            style={styles.image2}
-        />
-    </View>
+          />
+        </View>
+    </SafeAreaView>
   );
 };
 
-const SIZE = Dimensions.get('window').width * 0.9;
+const SIZE = Dimensions.get('window').width ;
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    padding:5,
-    margin:5,
-    justifyContent : 'space-around'
+  title : {
+    fontSize: 20,
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    letterSpacing: 10,
+    marginBottom: 20,
+  },
+  emailInput: { 
+    width: '60%',
+    backgroundColor: '#F5F5F5',
+    padding: 10,
+    borderRadius: 8,
+    elevation: 3,
+  },
+  safeArea: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    justifyContent: 'space-around',
   },
   image1: {
-    width: '100%',
-    height: '70%',
-    resizeMode: 'contain',
-    position: 'relative',
-  },
-  image2: {
-    width: '100%',
+    width: SIZE,
     height: '50%',
     resizeMode: 'contain',
     position: 'relative',
+    alignItems: 'center'
+  },
+  overlay: {
+    position: 'absolute',
+    top: "10%",
+    left: 0,
+    right: 0,
+    alignItems: 'center', // Horizontalement
+    justifyContent: 'center', // Verticalement
+  },
+  image2: {
+    width: SIZE,
+    height: '40%',
+    resizeMode: 'contain',
+    position: 'relative',
+    alignItems: 'center'
   },
   space: {
     height: 0,

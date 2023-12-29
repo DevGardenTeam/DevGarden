@@ -16,7 +16,8 @@ export default function Navigation() {
                                            <BottomTabNavigator.Screen name="Login"  component={LoginScreen}
                                            options={{
                                                 title: 'Login',
-                                                tabBarStyle : {display : "none"}
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
                                            }}/>
             </BottomTabNavigator.Navigator>
         </NavigationContainer>
