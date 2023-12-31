@@ -32,8 +32,8 @@ export default function Login() {
       const { code } = response.params;
       console.log(`response code => ${code}`); // Debug
   
-      // Send the authorization code to your .NET Web API
-      fetch('https://localhost:7260/api/OAuth/token', {
+      // Send the authorization code to the .NET Web API
+      fetch('https://localhost:7260/api/v1/OAuth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,11 +44,12 @@ export default function Login() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           const accessToken = data.access_token;
           console.log(`Access token => ${accessToken}`); // Debug
   
           if (accessToken) {
-            // Proceed with your logic here, e.g., navigate to the success screen
+            // navigate to the success screen 
             navigation.navigate('Success');
           }
         })
