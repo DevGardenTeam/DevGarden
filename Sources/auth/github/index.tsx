@@ -11,7 +11,7 @@ import { styles } from './styles';
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
 
-// Endpoint
+// just a formality for the different endpoints
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',
