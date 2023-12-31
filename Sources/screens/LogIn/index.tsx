@@ -21,7 +21,7 @@ export default function Login() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: 'e2ab8ffbefc5b983f71b',
-      scopes: ['identity'],
+      scopes: ['identity', 'repo'],
       redirectUri: 'http://localhost:19006/auth/callback',
     },
     discovery
@@ -49,10 +49,8 @@ export default function Login() {
           console.log(`Access token => ${accessToken}`); // Debug
   
           if (accessToken) {
-            // use the access token to fetch all branches
-            // log the result in the console
             // navigate to the success screen
-            navigation.navigate('Success', { accessToken: accessToken } );
+            navigation.navigate('Success', { accessToken: accessToken });
           }
         })
         .catch((error) => {
