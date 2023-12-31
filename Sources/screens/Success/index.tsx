@@ -1,9 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { styles } from './styles'
 
-export function Success() {
+export function Success({ route }) {
+   
+    const { accessToken } = route.params;
+
+    console.log("accessToken received on the success page => " + accessToken);
+
     return(
         <View style={styles.container}>
             <Text>Success</Text>

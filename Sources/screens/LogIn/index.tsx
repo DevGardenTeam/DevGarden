@@ -49,8 +49,10 @@ export default function Login() {
           console.log(`Access token => ${accessToken}`); // Debug
   
           if (accessToken) {
-            // navigate to the success screen 
-            navigation.navigate('Success');
+            // use the access token to fetch all branches
+            // log the result in the console
+            // navigate to the success screen
+            navigation.navigate('Success', { accessToken: accessToken } );
           }
         })
         .catch((error) => {
