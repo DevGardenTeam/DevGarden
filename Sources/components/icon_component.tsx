@@ -9,14 +9,14 @@ type Icon = {
     margin? : DimensionValue
 }
   
-const IconComponent: React.FC<Icon> = ({ iconSource,tintColor,height=24,width=24,margin=5 }) => {
+const IconComponent: React.FC<Icon> = ({ iconSource,tintColor,height='60%',width='5%',margin='1%' }) => {
     return (
-            <View>
-                <Image source={iconSource} style={{width:width ,
-                    height: height,
-                    tintColor: tintColor,
-                    margin:margin}} />
-            </View>
+                <Image source={iconSource} 
+                    style={{width:width ,
+                        height: height,
+                        tintColor: tintColor,
+                        margin:margin,
+                        resizeMode: 'contain'}} />
     );
 };
 
