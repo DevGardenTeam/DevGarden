@@ -34,7 +34,7 @@ const ParametersScreen: React.FC = () =>  {
             <View style={styles.headerEllipse} />
           </View>
           <View style={styles.titlecontainer}>
-            <IconComponent iconSource={require('./assets/settings.svg')} tintColor='#414141' width={ISLANDSCAPE ? WIDTH * 0.05 : WIDTH * 0.125} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.07}/>
+            <IconComponent iconSource={require('../assets/settings.svg')} tintColor='#414141' width={ISLANDSCAPE ? WIDTH * 0.05 : WIDTH * 0.125} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.07}/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
           </View>
             <View style={styles.container_bis}>
@@ -47,19 +47,19 @@ const ParametersScreen: React.FC = () =>  {
                   ]}
                   // Pour le binding remplacer l'item.key et le chemin de l'icon
                   renderItem={({item}) => <TouchableOpacity style={styles.listview}>
-                    <IconComponent iconSource={require("./assets/gitlab.svg")} width={ISLANDSCAPE ? WIDTH * 0.075 : WIDTH * 0.15} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
+                    <IconComponent iconSource={require("../assets/gitlab.svg")} width={ISLANDSCAPE ? WIDTH * 0.075 : WIDTH * 0.15} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
                     <Text style={styles.titleAccount}>{item.key}</Text>
                     </TouchableOpacity>}
                 />
               </View>
               <TouchableOpacity>
                   <View style={styles.part}>
-                    <IconComponent iconSource={require('./assets/link.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
+                    <IconComponent iconSource={require('../assets/link.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
                     <Text style={styles.text}>{t('settings.linkAccount')}</Text>
                 </View>
               </TouchableOpacity>
               <View style={styles.part}>
-                <IconComponent iconSource={require('./assets/half-moon-shape.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
+                <IconComponent iconSource={require('../assets/half-moon-shape.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
                 <Text style={styles.text}>{t('settings.nightMode')}</Text>
                 <View>
                   <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -71,7 +71,7 @@ const ParametersScreen: React.FC = () =>  {
                 </View>
               </View>
               <View style={styles.part}>
-                <IconComponent iconSource={require('./assets/internet.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
+                <IconComponent iconSource={require('../assets/internet.svg')} width={ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.085} height={ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06}/>
                 <Text style={styles.text}>{t('settings.language')}</Text>
                 <View>
                   <DropDownPicker
@@ -91,7 +91,7 @@ const ParametersScreen: React.FC = () =>  {
                 </View>
               </View>
             </View>
-            <SettingsButton title={t('settings.logOut')} iconSource={require('./assets/logout.svg')}></SettingsButton>
+            <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/logout.svg')}></SettingsButton>
         </SafeAreaView>
   );
 }
