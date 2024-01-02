@@ -1,29 +1,32 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, Dimensions, SafeAreaView, StatusBar, TextInput, Text } from 'react-native';
+import TextInputComponent from '../components/text_input_component';
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');
 
   return (
     <SafeAreaView style={styles.safeArea}>
-        <View style={styles.image1}>
+        <View style={styles.image}>
           <Image
             source={require('../assets/images/Rectangle_Login_1.png')}
           />
           <View style={styles.overlay}>
           <Text style={styles.title}>Bienvenue</Text>
-            <TextInput
-              style={styles.emailInput}
+            <TextInputComponent
               placeholder="Email Address"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+            <TextInputComponent
+              placeholder="Password"
               value={email}
               onChangeText={(text) => setEmail(text)}
             />
           </View>
         </View>
-        
-        <View style={styles.space} />
 
-        <View style={styles.image2}>
+        <View style={styles.image}>
           <Image
             source={require('../assets/images/Rectangle_Login_2.png')}
           />
@@ -32,7 +35,9 @@ const LoginScreen: React.FC = () => {
   );
 };
 
-const SIZE = Dimensions.get('window').width ;
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
 
 const styles = StyleSheet.create({
   title : {
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   emailInput: { 
-    width: '60%',
+    width: WIDTH * 0.6,
     backgroundColor: '#F5F5F5',
     padding: 10,
     borderRadius: 8,
@@ -52,11 +57,11 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
-  image1: {
-    width: SIZE,
-    height: '50%',
+  image: {
+    width: WIDTH,
+    height: HEIGHT * 0.5,
     resizeMode: 'contain',
     position: 'relative',
     alignItems: 'center'
@@ -69,16 +74,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Horizontalement
     justifyContent: 'center', // Verticalement
   },
-  image2: {
-    width: SIZE,
-    height: '40%',
-    resizeMode: 'contain',
-    position: 'relative',
-    alignItems: 'center'
-  },
-  space: {
-    height: 0,
-  },
+
+
 });
 
 export default LoginScreen;
