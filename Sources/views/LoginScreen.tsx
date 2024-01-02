@@ -4,6 +4,7 @@ import TextInputComponent from '../components/text_input_component';
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -21,9 +22,10 @@ const LoginScreen: React.FC = () => {
             />
             <TextInputComponent
               placeholder="Password"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              iconSource={require('../assets/IconMail.png')}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              password = {true}
+              iconSource={require('../assets/IconLock.png')}
             />
           </View>
         </View>

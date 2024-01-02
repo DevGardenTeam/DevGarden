@@ -1,5 +1,5 @@
 import React from 'react';
-import { DimensionValue, TextInput, ImageSourcePropType, View, Image, StyleSheet  } from 'react-native';
+import { DimensionValue, TextInput, ImageSourcePropType, View, Image, StyleSheet, Dimensions  } from 'react-native';
 
 type TextInputProps  = {
     placeholder?: string
@@ -7,27 +7,32 @@ type TextInputProps  = {
     value?: string
     onChangeText?: (text: string) => void
     iconSource?: ImageSourcePropType
+    password?: boolean
 }
   
-const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width='70%', onChangeText, value, iconSource  }) => {
+const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width='70%', onChangeText, value, iconSource, password = false  }) => {
     return (
         <View style={[styles.container, { width: width }]}>
             <TextInput 
                 style={styles.input}
                 placeholder={placeholder}
                 value={value}
-                onChangeText={onChangeText}>
+                onChangeText={onChangeText}
+                secureTextEntry = {password}>
             </TextInput >
 
-            <Image source={iconSource}></Image>
+            <Image style={styles.icon} source={iconSource}></Image>
         </View>
                 
     );
 };
 
+
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#F5F5F5',
       flexDirection: 'row', 
       alignItems: 'center', 
     },
@@ -40,8 +45,8 @@ const styles = StyleSheet.create({
       margin : 15
     },
     icon: {
-      position: 'absolute', // Pour que l'icône soit positionnée au-dessus du TextInput
-      right: 10,    
+      position: 'absolute',
+      right : WIDTH * 0.05,
     },
   });
 
