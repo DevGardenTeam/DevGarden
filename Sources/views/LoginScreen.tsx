@@ -17,11 +17,13 @@ const LoginScreen: React.FC = () => {
               placeholder="Email Address"
               value={email}
               onChangeText={(text) => setEmail(text)}
+              iconSource={require('../assets/IconMail.png')}
             />
             <TextInputComponent
               placeholder="Password"
               value={email}
               onChangeText={(text) => setEmail(text)}
+              iconSource={require('../assets/IconMail.png')}
             />
           </View>
         </View>
