@@ -1,14 +1,16 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import { RepositoryService } from './service/RepositoryService';
 
 export default function App() {
   const {t} = useTranslation();     // A ajouter pour le multi langue
+  const repo = new RepositoryService()
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>{t('welcome')}</Text>  
-      <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
-        <Text style={styles.buttonText}>{t('supportedLanguages.en')}</Text>
-      </TouchableOpacity>
+    <SafeAreaView>
+      <View style={styles.container}>
+        <Button title='Enter with Github' onPress={() => repo.getMany()} />
+        <StatusBar />
+      </View>
     </SafeAreaView>
   );
 }
@@ -19,22 +21,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: '#191266',
-  },
-  button: {
-    backgroundColor: '#6258e8',
-    padding: 10,
-    borderRadius: 3,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  text: {
-    marginBottom: 100,
-    fontSize: 18,
-    color: 'white',
+    justifyContent: 'center',
   },
 });
