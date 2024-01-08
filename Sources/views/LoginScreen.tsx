@@ -6,15 +6,19 @@ import TextInputComponent from '../components/text_input_component';
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [isChecked, setChecked] = useState(false);
+
+  const BigSquare = () => {
+    return <View style={styles.square1} />;
+  };
+  const SmallSquare = () => {
+    return <View style={styles.square2} />;
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
         <View style={styles.image}>
-          <Image
-            source={require('../assets/images/Rectangle_Login_1.png')}
-          />
+          <BigSquare/>
           <View style={styles.overlay}>
           <Text style={styles.title}>Bienvenue</Text>
             <TextInputComponent
@@ -41,9 +45,7 @@ const LoginScreen: React.FC = () => {
         </View>
 
         <View style={styles.image}>
-          <Image
-            source={require('../assets/images/Rectangle_Login_2.png')}
-          />
+          <SmallSquare/>
           <View style={styles.overlay}>
             <TouchableOpacity>
               <Text style={styles.forgotPasswordText}>Forget Password</Text>
@@ -72,48 +74,75 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 10,
-    marginBottom: 20,
+    marginBottom: '20%',
   },
+
   emailInput: { 
     width: WIDTH * 0.6,
     backgroundColor: '#F5F5F5',
-    padding: 10,
     borderRadius: 8,
     elevation: 3,
   },
+
   safeArea: {
-    flex: 1,
     paddingTop: StatusBar.currentHeight,
-    justifyContent: 'flex-start',
   },
+
   image: {
-    width: WIDTH,
-    height: HEIGHT * 0.5,
+    flex: 0,
     resizeMode: 'contain',
-    position: 'relative',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '5%',
   },
+
   overlay: {
     position: 'absolute',
     top: WIDTH * 0.1,
     left: 0,
     right: 0,
     alignItems: 'center', // Horizontalement
-    justifyContent: 'center', // Verticalement
+  },
+
+  square1: {
+    width: WIDTH * 0.8,
+    height: HEIGHT * 0.6,
+    backgroundColor: 'white', // Couleur du carré
+    borderRadius: 15, // Bord arrondi
+    elevation: 5, // Élévation pour l'ombre
+    shadowColor: 'black', // Couleur de l'ombre
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+
+  square2: {
+    width: WIDTH * 0.8,
+    height: HEIGHT * 0.3,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    elevation: 5,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 
   forgotPasswordText: {
     color: 'green',
     fontSize: 14,
     textDecorationLine: 'underline',
-    marginTop: 10,
     left : WIDTH * 0.2,
-    top : HEIGHT * 0.05
   },
 
   buttonContainer: {
     flexDirection: 'row',
-    marginTop : 150, // à changer apres pour le responsive
+    marginTop : '15%', // à changer apres pour le responsive
   },
   button: {
     borderBottomWidth: 1,
