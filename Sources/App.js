@@ -28,6 +28,7 @@ export default function App() {
         </View>
       </View>
       <View style={styles.ground}> 
+        <View style={styles.groundGradient}/>
       </View>
     </SafeAreaView>
   );
@@ -46,7 +47,13 @@ const styles = StyleSheet.create({
   ground:{
     width: '100%',
     height:'10%',
-    backgroundColor: "#7E6200"
+    backgroundColor: 'linear-gradient(to bottom, #7E6200 75%, tra,sparent )'
+    // 'linear-gradient(to bottom, #7E6200 75%, tra,sparent )'
+  },
+  groundGradient:{
+    width: '100%',
+    height:'100%',
+    backgroundColor: '#7E6200',
   },
   day:{
     backgroundColor: "#B1E3FF",
