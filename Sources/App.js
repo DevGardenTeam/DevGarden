@@ -8,9 +8,13 @@ export default function App() {
 
   useEffect(() => {
     const currentHour = new Date().getHours();
-    const isDay = currentHour >= 6 && currentHour < 18;
+    const isDay = currentHour >= 5 && currentHour < 18;
     setIsDaytime(isDay);
   }, []); 
+
+  const toggleDaytime = () => {
+    setIsDaytime(!isDaytime);
+  };
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
 
@@ -21,7 +25,7 @@ export default function App() {
       <View style={styles.ground}/> 
       <View style={[styles.days,isDaytime ? styles.day : styles.night]}>
         <View style={styles.top}>
-          <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]}/>
+          <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
           <View style={styles.switch}>
             <Switch/>
             <Text>{type}</Text>
@@ -36,7 +40,6 @@ export default function App() {
             </TouchableOpacity>
         </View>
       </View>
-      
     </SafeAreaView>
   );
 }
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
   },
   top:{
     width: '100%',
-    height:'10%',
+    height: ISLANDSCAPE ? HEIGHT*0.20+HEIGHT*0.037 : WIDTH*0.25+WIDTH*0.07,
     justifyContent: "space-between",
     flexDirection:'row',
   },
@@ -83,7 +86,8 @@ const styles = StyleSheet.create({
     borderRadius: WIDTH,
     height: ISLANDSCAPE ? HEIGHT*0.20 : WIDTH*0.25,
     width: ISLANDSCAPE ? HEIGHT*0.20 : WIDTH*0.25,
-    margin: ISLANDSCAPE ? "2%" : "5%",
+    marginTop: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.06,
+    marginLeft: ISLANDSCAPE ? "2%" : "5%",
   },
   sun:{
     backgroundColor: 'orange',
@@ -95,21 +99,21 @@ const styles = StyleSheet.create({
   },
   bottom:{
     width: '100%',
-    height: '90%',
+    height: ISLANDSCAPE ? HEIGHT - (HEIGHT*0.20+HEIGHT*0.037+HEIGHT*0.2) : HEIGHT - (WIDTH*0.25+WIDTH*0.065+HEIGHT*0.2),
     flexDirection: 'row',
     alignItems: 'flex-end',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   sign: {
     height: ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     width : ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.025 : -WIDTH*0.03,
+    marginBottom: ISLANDSCAPE ? HEIGHT*0.04 : -WIDTH*0.095,
   },
   tree: {
     height: ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.75,
     width : ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.5,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.05   : -WIDTH*0.055 ,
-  }
+    marginBottom: ISLANDSCAPE ? HEIGHT*0.04   : -WIDTH*0.095 ,
+  },
 });
