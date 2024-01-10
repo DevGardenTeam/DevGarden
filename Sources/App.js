@@ -18,6 +18,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.ground}/> 
       <View style={[styles.days,isDaytime ? styles.day : styles.night]}>
         <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]}/>
@@ -27,15 +28,15 @@ export default function App() {
           </View>
         </View>
         <View style={styles.bottom}>
-          <View style={styles.signview}>
             <TouchableOpacity>
-              <Image source={require('./assets/panneau.png')}></Image>
+              <Image source={require('./assets/panneau.png')} style={styles.sign}></Image>
             </TouchableOpacity>
-          </View>
+            <TouchableOpacity>
+              <Image source={require('./assets/trees/tree1.png')} style={styles.tree}></Image>
+            </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.ground}> 
-      </View>
+      
     </SafeAreaView>
   );
 }
@@ -49,11 +50,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+    flexDirection: 'column-reverse'
   },
   ground:{
     width: '100%',
-    height:'10%',
-    backgroundImage: 'linear-gradient(to bottom, #7E6200 50%, transparent )'
+    height:'20%',
+    backgroundImage: 'linear-gradient(to bottom, #7E6200 25%, transparent )'
     // 'linear-gradient(to bottom, #7E6200 75%, tra,sparent )'
   },
   days: {
@@ -66,13 +68,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#B1E3FF",
   },
   night:{
-    backgroundColor: "#191970",
+    backgroundImage: "linear-gradient(to bottom, #020107 , #201b46)",
   },
   top:{
     width: '100%',
     height:'10%',
     justifyContent: "space-between",
-    flexDirection:'row'
+    flexDirection:'row',
   },
   switch: {
     margin: ISLANDSCAPE ? "2%" : "5%",
@@ -93,9 +95,21 @@ const styles = StyleSheet.create({
   },
   bottom:{
     width: '100%',
-    flexDirection: 'row'
+    height: '90%',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around'
   },
   sign: {
-    resizeMode: 'contain'
+    height: ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
+    width : ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
+    resizeMode: 'contain',
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.025 : -WIDTH*0.03,
+  },
+  tree: {
+    height: ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.75,
+    width : ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.5,
+    resizeMode: 'contain',
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.05   : -WIDTH*0.055 ,
   }
 });
