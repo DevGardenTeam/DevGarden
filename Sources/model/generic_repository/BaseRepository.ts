@@ -41,6 +41,9 @@ export abstract class BaseRepository<T> extends HttpClient implements IBaseRepos
   }
 
   const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
+    console.log("hello");  
+    console.log(response);
+
     return new Promise((resolve, reject) => {
       const result: ApiResponse<any> = {
         data: response.data,

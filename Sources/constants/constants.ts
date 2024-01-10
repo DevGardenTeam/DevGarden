@@ -1,1 +1,1 @@
-export const CURRENT_BASE_URL: string = "http://localhost:5073/api/v1";
+export const CURRENT_BASE_URL: string = "https://localhost:7260/api/v1";

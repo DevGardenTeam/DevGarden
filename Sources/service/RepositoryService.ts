@@ -3,7 +3,7 @@ import { BaseRepository } from "../model/generic_repository/BaseRepository";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
 export class RepositoryService extends BaseRepository<Repository>{
-    collection = 'DevGardenRepositoryController';
+    collection = 'DevGardenRepository';
 
     constructor(){
         super();
@@ -32,6 +32,11 @@ export class RepositoryService extends BaseRepository<Repository>{
     }
 
     private deserialize(response: ApiResponse<Repository[]>): Repository[] {
+        console.log("here")
+
+        console.log(response);
+        
+
         return (response.data || []).map((item: any) => {
             return new Repository(
                 item.id,
