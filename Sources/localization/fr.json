@@ -12,5 +12,8 @@
         "linkAccount":"Associer des comptes",
         "searchPlaceHolder":"Rechercher une langue"
     },
-    "garden":"Jardin"
+    "projectView": {
+        "garden":"Jardin",
+        "list":"Liste"
+    }
 }

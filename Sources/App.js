@@ -4,6 +4,9 @@ import i18n from './service/i18n';
 import React, { useState, useEffect } from 'react';
 
 export default function App() {
+
+  // Changement de fond selon l'horaire
+
   const [isDaytime, setIsDaytime] = useState(true);
 
   useEffect(() => {
@@ -12,13 +15,40 @@ export default function App() {
     setIsDaytime(isDay);
   }, []); 
 
-  const toggleDaytime = () => {
-    setIsDaytime(!isDaytime);
+  // Switch
+
+  const [view, setView] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled);
+    setView(!view); // Ajoutez cette ligne pour mettre à jour la variable view
   };
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
 
-  var type = t('garden')
+  if (!view) {
+    var type = t('projectView.list');
+    return (
+      <SafeAreaView style={styles.container2}>
+        <View style={styles.listTop}>
+          <Text style={styles.title}>DevGarden</Text>
+          <View style={styles.switch}>
+            <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+              thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
+            </Switch>
+            <Text style={styles.text}>{type}</Text>
+          </View>
+        </View>
+        
+      </SafeAreaView>
+    );
+  }
+
+  var type = t('projectView.garden');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,8 +57,14 @@ export default function App() {
         <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
           <View style={styles.switch}>
-            <Switch/>
-            <Text>{type}</Text>
+            <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+              thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
+            </Switch>
+            <Text style={styles.text}>{type}</Text>
           </View>
         </View>
         <View style={styles.bottom}>
@@ -81,6 +117,11 @@ const styles = StyleSheet.create({
   },
   switch: {
     margin: ISLANDSCAPE ? "2%" : "5%",
+    justifyContent:'space-evenly',
+    alignItems:'center',
+  },
+  text: {
+    fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
   },
   luminary: {
     borderRadius: WIDTH,
@@ -108,12 +149,26 @@ const styles = StyleSheet.create({
     height: ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     width : ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? HEIGHT*0.04 : -WIDTH*0.095,
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.04 : -WIDTH*0.06,
   },
   tree: {
     height: ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.75,
     width : ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.5,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? HEIGHT*0.04   : -WIDTH*0.095 ,
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.045 : -WIDTH*0.095 ,
   },
+
+  // LIST VIEW
+  container2: {
+    flex: 1,
+    backgroundColor: '#F1F0F0',
+  },
+  listTop:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  title: {
+    fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
+    margin: ISLANDSCAPE ? HEIGHT*0.045 : WIDTH*0.080,
+  }
 });

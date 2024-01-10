@@ -12,5 +12,8 @@
         "linkAccount":"Vincular contas",
         "searchPlaceHolder":"Procurar uma língua"
     },
-    "garden":"Jardim"
+    "projectView": {
+        "garden":"Jardim",
+        "list":"Lista"
+    }
 }

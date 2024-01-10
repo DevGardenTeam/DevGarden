@@ -12,5 +12,9 @@
         "linkAccount":"Link accounts",
         "searchPlaceHolder":"Search for a language"
     },
-    "garden":"Garden"
+    "projectView": {
+        "garden":"Garden",
+        "list":"List"
+    }
+    
 }
