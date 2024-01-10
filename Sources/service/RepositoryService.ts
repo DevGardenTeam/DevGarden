@@ -5,6 +5,10 @@ import { ApiResponse } from "../model/generic_repository/ApiReponse";
 export class RepositoryService extends BaseRepository<Repository>{
     collection = 'DevGardenRepositoryController';
 
+    constructor(){
+        super();
+    }
+
     async getMany(){
         const result = await super.getMany();
         const deserializedResult = this.deserialize(result);

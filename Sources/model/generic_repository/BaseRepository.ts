@@ -15,7 +15,9 @@ export abstract class BaseRepository<T> extends HttpClient implements IBaseRepos
   
     public async getMany(): Promise<ApiResponse<T[]>> {
       const instance = this.createInstance();
-      const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/`).then(transform);
+      console.log(`${CURRENT_BASE_URL}/${this.collection}/GetAllRepositories`);
+      const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/GetAllRepositories`).then(transform);
+      console.log("Base TOTO EST MA TATA");
       return result as ApiResponse<T[]>;
     }
   
