@@ -15,5 +15,6 @@
     "projectView": {
         "garden":"Jardin",
         "list":"Liste"
-    }
+    },
+    "project_management_title": "Gestion de projet"
 }
