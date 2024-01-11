@@ -1,6 +1,6 @@
 import { ApiResponse } from "./ApiReponse";
 
-export interface IBaseRepository<T> {
+export interface IBaseResources<T> {
     get(id: any): Promise<ApiResponse<T>>;
     getMany(): Promise<ApiResponse<T[]>>;
     create(id: any, item: T): Promise<ApiResponse<T>>;

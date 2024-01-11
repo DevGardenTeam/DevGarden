@@ -1,11 +1,16 @@
 import { AxiosResponse } from "axios";
-import { IBaseRepository } from "./IBaseRepository";
+import { IBaseResources } from "./IBaseResources";
 import { ApiResponse } from "./ApiReponse";
 import { HttpClient } from "./HttpClient";
 import { CURRENT_BASE_URL } from "../../constants/constants";
 
-export abstract class BaseRepository<T> extends HttpClient implements IBaseRepository<T> {
+export abstract class BaseResources<T> extends HttpClient implements IBaseResources<T> {
     protected collection: string | undefined;
+    protected getString: string | undefined; 
+    protected getManyString: string | undefined; 
+    protected createString: string | undefined; 
+    protected updateString: string | undefined; 
+    protected deleteString: string | undefined; 
   
     public async get(id: string): Promise<ApiResponse<T>> {
       const instance = this.createInstance();
@@ -15,8 +20,8 @@ export abstract class BaseRepository<T> extends HttpClient implements IBaseRepos
   
     public async getMany(): Promise<ApiResponse<T[]>> {
       const instance = this.createInstance();
-      console.log(`${CURRENT_BASE_URL}/${this.collection}/GetAllRepositories`);
-      const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/GetAllRepositories`).then(transform);
+      console.log(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`);
+      const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`).then(transform);
       console.log("Base TOTO EST MA TATA");
       return result as ApiResponse<T[]>;
     }
@@ -41,15 +46,27 @@ export abstract class BaseRepository<T> extends HttpClient implements IBaseRepos
   }
 
   const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
-    console.log("hello");  
+    console.log("hello");
     console.log(response);
-
+  
     return new Promise((resolve, reject) => {
+      if (!response) {
+        reject(new Error("Response is undefined"));
+        return;
+      }
+  
       const result: ApiResponse<any> = {
         data: response.data,
         succeeded: response.status === 200,
-        errors: response.data.errors,
+        errors: response.data ? response.data.errors : null,
       };
-      resolve(result);
+  
+      if (response.status === 200) {
+        resolve(result);
+      } else {
+        console.log('Request failed with status:' + response.status)
+        reject(new Error(`Request failed with status: ${response.status}`));
+      }
     });
   };
+  

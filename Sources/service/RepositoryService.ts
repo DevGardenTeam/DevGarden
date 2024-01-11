@@ -1,17 +1,21 @@
 import { Repository } from "../model/Repository";
-import { BaseRepository } from "../model/generic_repository/BaseRepository";
+import { BaseResources } from "../model/generic_repository/BaseResources";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
-export class RepositoryService extends BaseRepository<Repository>{
+export class RepositoryService extends BaseResources<Repository>{
     collection = 'DevGardenRepository';
+    getManyString = "GetAllRepositories"
 
     constructor(){
         super();
     }
 
     async getMany(){
+        console.log("GetMany 1");
         const result = await super.getMany();
+        console.log("GetMany 2");
         const deserializedResult = this.deserialize(result);
+        console.log("GetMany 3");
         return { data: deserializedResult, succeeded: result.succeeded, errors: result.errors };
     }
 
