@@ -14,7 +14,8 @@
     },
     "projectView": {
         "garden":"Garden",
-        "list":"List"
+        "list":"List",
+        "dashboard":"Dashboard"
     },
     "project_management_title": "Project management"
 }

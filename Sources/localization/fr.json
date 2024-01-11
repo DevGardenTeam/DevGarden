@@ -14,7 +14,8 @@
     },
     "projectView": {
         "garden":"Jardin",
-        "list":"Liste"
+        "list":"Liste",
+        "dashboard":"Tableau de bord"
     },
     "project_management_title": "Gestion de projet"
 }
