@@ -48,3 +48,22 @@ export class Repository{
         this.size = size;
       }
 }
+
+// Fonction de mapping
+export function mapApiObjectToRepository(apiObject: any): Repository {
+  return new Repository(
+    apiObject.id.toString(),
+    apiObject.name,
+    apiObject.owner,
+    apiObject.isPrivate,
+    apiObject.description || "",
+    apiObject.isFork,
+    apiObject.url,
+    [],
+    [],
+    [],
+    [],
+    apiObject.language,
+    apiObject.size
+  );
+}

@@ -22,7 +22,6 @@ export abstract class BaseResources<T> extends HttpClient implements IBaseResour
       const instance = this.createInstance();
       console.log(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`);
       const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`).then(transform);
-      console.log("Base TOTO EST MA TATA");
       return result as ApiResponse<T[]>;
     }
   
@@ -45,28 +44,21 @@ export abstract class BaseResources<T> extends HttpClient implements IBaseResour
     }
   }
 
-  const transform = (response: AxiosResponse): Promise<ApiResponse<any>> => {
-    console.log("hello");
-    console.log(response);
-  
+  const transform = (responseData: any): Promise<ApiResponse<any>> => {
     return new Promise((resolve, reject) => {
-      if (!response) {
-        reject(new Error("Response is undefined"));
+      if (!responseData) {
+        reject(new Error("Response data is undefined"));
         return;
       }
   
       const result: ApiResponse<any> = {
-        data: response.data,
-        succeeded: response.status === 200,
-        errors: response.data ? response.data.errors : null,
+        data: responseData,
+        succeeded: true,
+        errors: null,
       };
   
-      if (response.status === 200) {
-        resolve(result);
-      } else {
-        console.log('Request failed with status:' + response.status)
-        reject(new Error(`Request failed with status: ${response.status}`));
-      }
+      resolve(result);
     });
   };
+  
   
