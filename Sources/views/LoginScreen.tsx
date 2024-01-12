@@ -20,27 +20,27 @@ const LoginScreen: React.FC = () => {
         <View style={styles.image}>
           <BigSquare/>
           <View style={styles.overlay}>
-          <Text style={styles.title}>Bienvenue</Text>
-            <TextInputComponent
-              placeholder="Email Address"
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              iconSource={require('../assets/IconMail.png')}
-            />
-            <TextInputComponent
-              placeholder="Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              password = {true}
-              iconSource={require('../assets/IconLock.png')}
-            />
-            <CheckBox
-              title='Remember Password'
-              checkedColor='green'
-              checked={isChecked}
-              onPress={() => setChecked(!isChecked)}
-              >
-            </CheckBox>
+            <Text style={styles.title}>Bienvenue</Text>
+              <TextInputComponent
+                placeholder="Email Address"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                iconSource={require('../assets/IconMail.png')}
+              />
+              <TextInputComponent
+                placeholder="Password"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                password = {true}
+                iconSource={require('../assets/IconLock.png')}
+              />
+              <CheckBox
+                title='Remember Password'
+                checkedColor='green'
+                checked={isChecked}
+                onPress={() => setChecked(!isChecked)}
+                >
+              </CheckBox>
           </View>
         </View>
 
@@ -64,21 +64,21 @@ const LoginScreen: React.FC = () => {
   );
 };
 
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
-  title : {
-    fontSize: 20,
+  title: {
+    fontSize: ISLANDSCAPE ? 30 : 20,
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 10,
-    marginBottom: '20%',
+    marginBottom: ISLANDSCAPE ? '1%' : '20%',
   },
 
-  emailInput: { 
-    width: WIDTH * 0.6,
+  emailInput: {
+    width: ISLANDSCAPE ? WIDTH * 0.6 : WIDTH * 0.4,
     backgroundColor: '#F5F5F5',
     borderRadius: 8,
     elevation: 3,
@@ -89,27 +89,27 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    flex: 0,
+    flex: ISLANDSCAPE ? 1 : 0,
     resizeMode: 'contain',
     alignItems: 'center',
-    marginTop: '5%',
+    marginTop: ISLANDSCAPE ? '7%' : '5%',
   },
 
   overlay: {
     position: 'absolute',
-    top: WIDTH * 0.1,
+    top: ISLANDSCAPE ? WIDTH * 0.05 : WIDTH * 0.1,
     left: 0,
     right: 0,
-    alignItems: 'center', // Horizontalement
+    alignItems: 'center',
   },
 
   square1: {
-    width: WIDTH * 0.8,
-    height: HEIGHT * 0.6,
-    backgroundColor: 'white', // Couleur du carré
-    borderRadius: 15, // Bord arrondi
-    elevation: 5, // Élévation pour l'ombre
-    shadowColor: 'black', // Couleur de l'ombre
+    width: ISLANDSCAPE ? WIDTH * 0.6 : WIDTH * 0.8,
+    height: ISLANDSCAPE ? HEIGHT * 0.4 : HEIGHT * 0.6,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    elevation: 5,
+    shadowColor: 'black',
     shadowOffset: {
       width: 1,
       height: 2,
@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
   },
 
   square2: {
-    width: WIDTH * 0.8,
-    height: HEIGHT * 0.3,
+    width: ISLANDSCAPE ? WIDTH * 0.6 : WIDTH * 0.8,
+    height: ISLANDSCAPE ? HEIGHT * 0.3 : HEIGHT * 0.3,
     backgroundColor: 'white',
     borderRadius: 15,
     elevation: 5,
@@ -135,31 +135,31 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     color: 'green',
-    fontSize: 14,
+    fontSize: ISLANDSCAPE ? 16 : 14,
     textDecorationLine: 'underline',
-    left : WIDTH * 0.2,
+    left: ISLANDSCAPE ? WIDTH * 0.15 : WIDTH * 0.2,
   },
 
   buttonContainer: {
     flexDirection: 'row',
-    marginTop : '15%', // à changer apres pour le responsive
+    marginTop: ISLANDSCAPE ? '5%' : '15%',
   },
   button: {
     borderBottomWidth: 1,
     borderBottomColor: 'green',
     backgroundColor: 'green',
-    width : WIDTH * 0.3,
-    height : HEIGHT * 0.05,
-    borderRadius : 20,
-    alignItems: 'center', 
+    width: ISLANDSCAPE ? WIDTH * 0.2 : WIDTH * 0.3,
+    height: HEIGHT * 0.05,
+    borderRadius: 20,
+    alignItems: 'center',
     justifyContent: 'center',
-    margin : 10
+    margin: 10,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: ISLANDSCAPE ? 18 : 16,
   },
-
+  
 });
 
 export default LoginScreen;
