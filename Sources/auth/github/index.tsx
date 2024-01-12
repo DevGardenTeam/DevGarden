@@ -37,7 +37,13 @@ export default function GithubAuth() {
       console.log(`response code => ${code}`); // Debug
   
       // Send the authorization code to the .NET Web API
-      fetch('https://localhost:7260/api/v1/OAuth/token', {
+      //
+      // other way to add query parameters :
+      // const platform = "..."
+      // const url = new URL("https:...")
+      //
+      // url.searchParams.append('platform', platform);
+      fetch('https://localhost:7260/api/v1/OAuth/token?platform=github', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
