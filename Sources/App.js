@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import "./service/i18n"
 
 export default function App() {
@@ -7,7 +7,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>{t('welcome')}</Text>  
-      <TouchableOpacity style={styles.button} onPress={() => setVisible(true)}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>{t('supportedLanguages.en')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
