@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: devgardenci
+
+trigger:
+    event:
+      - push
+
+steps:
+  - name: install-dependencies
+    image: node:21
+    commands:
+      - npm install
+  - name: build
+    image: node:21
+    commands:
+      - pwd
+      - ls
+      - cd Sources
+      - npm install
+      - npm run build
