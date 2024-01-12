@@ -1,5 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import "./service/i18n"
 
 export default function App() {
   const {t} = useTranslation();     // A ajouter pour le multi langue

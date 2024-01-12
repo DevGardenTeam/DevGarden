@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions  } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
 import IconComponent from '../components/icon_component';

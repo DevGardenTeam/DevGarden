@@ -1,9 +1,10 @@
 import { SafeAreaView, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-import i18n from '../service/i18n';
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import '../service/i18n';
 import NavigationButton from '../components/button_component'
+import React from 'react';
 
-export default function App() {
+const ProjectManagementScreen: React.FC = () =>  {
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
     <SafeAreaView style={styles.container}>
@@ -38,3 +39,5 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     }
 });
+
+export default ProjectManagementScreen;
