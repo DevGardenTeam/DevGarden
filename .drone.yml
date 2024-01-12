@@ -12,6 +12,17 @@ steps:
     commands:
       - node -v
       - yarn -v
+
+  - name: type-check
+    image: node:21
+    commands:
+      - pwd
+      - ls
+      - cd Sources
+      - yarn tsc
+    depends_on:
+      - check-dependencies
+    
   - name: lint
     image: node:21
     commands:
@@ -23,13 +34,3 @@ steps:
       - yarn lint
     depends_on:
       - check-dependencies
-
-  - name: type-check
-    image: node:21
-    commands:
-      - pwd
-      - ls
-      - cd Sources
-      - yarn tsc
-    depends_on:
-      - lint
