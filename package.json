@@ -1,0 +1,8 @@
+{
+  "name": "DevGarden",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@codefirst.iut.uca.fr:DevGarden/DevGarden.git",
+  "author": "nicolnx <nicolas.franco@etu.uca.fr>",
+  "license": "MIT"
+}

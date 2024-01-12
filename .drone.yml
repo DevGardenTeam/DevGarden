@@ -10,12 +10,13 @@ steps:
   - name: install-dependencies
     image: node:21
     commands:
-      - npm install
+      - node -v
+      - yarn -v
   - name: build
     image: node:21
     commands:
       - pwd
       - ls
       - cd Sources
-      - npm install
-      - npm run build
+      - yarn install
+      - yarn build
