@@ -35,3 +35,22 @@ steps:
       - yarn lint
     depends_on:
       - type-check
+
+  - name: sonar-analysis
+    image: node:21
+    commands:
+      - export SONAR_SCANNER_VERSION=4.7.0.2747
+      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
+      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      - export SONAR_SCANNER_OPTS="-server"
+      - sonar-scanner -Dsonar.projectKey=DevGarden -Dsonar.sources=. -Dsonar.host.url=https://codefirst.iut.uca.fr/sonar
+    secrets: [ SECRET_SONAR_LOGIN ]
+    settings:
+      sonar_host: https://codefirst.iut.uca.fr/sonar
+      sonar_token:
+        from_secret: sonar_token_devgarden
+    depends_on:
+      - type-check
+
