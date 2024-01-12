@@ -7,16 +7,29 @@ trigger:
       - push
 
 steps:
-  - name: install-dependencies
+  - name: check-dependencies
     image: node:21
     commands:
       - node -v
       - yarn -v
-  - name: build
+  - name: lint
     image: node:21
     commands:
       - pwd
       - ls
       - cd Sources
       - yarn install
-      - yarn build
+      # npm init @eslint/config
+      - yarn lint
+    depends_on:
+      - check-dependencies
+
+  - name: type-check
+    image: node:21
+    commands:
+      - pwd
+      - ls
+      - cd Sources
+      - yarn tsc
+    depends_on:
+      - lint
