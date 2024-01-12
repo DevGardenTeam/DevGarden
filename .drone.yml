@@ -19,6 +19,7 @@ steps:
       - pwd
       - ls
       - cd Sources
+      - yarn install
       - yarn tsc
     depends_on:
       - check-dependencies
@@ -29,8 +30,8 @@ steps:
       - pwd
       - ls
       - cd Sources
-      - yarn install
+      # - yarn install
       # npm init @eslint/config
       - yarn lint
     depends_on:
-      - check-dependencies
+      - type-check
