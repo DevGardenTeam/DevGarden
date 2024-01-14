@@ -1,22 +1,41 @@
-import { SafeAreaView, StyleSheet, Button, View, StatusBar, Text, TouchableOpacity } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-import { RepositoryService } from './service/RepositoryService';
+// App.js
+import React, { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { RepositoryController } from './view-controllers/RepositoryViewController';
 
 export default function App() {
-  const {t} = useTranslation();     // A ajouter pour le multi langue
-  const repo = new RepositoryService()
+  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
+
+  useEffect(() => {
+    fetchRepositories();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
+
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Button title='Enter with Github' onPress={() => repo.getMany()} />
-        <StatusBar />
-      </View>
-    </SafeAreaView>
+    <View>
+      <Text>Repository List</Text>
+      <FlatList
+        data={repositories}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleRepositoryPress(item.id)}>
+            <View>
+              <Text>{item.name}</Text>
+              <Text>{item.description}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 }
-
-// t('[key]') => valeur directe dans le json
-// t('[key].[2nd_key]') => valeur indirecte dans le json
 
 const styles = StyleSheet.create({
   container: {
