@@ -1,3 +1,4 @@
+import 'intl-pluralrules';
 import { SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import "./service/i18n"
