@@ -17,5 +17,8 @@
         "list":"Lista",
         "dashboard":"Painel de instrumentos"
     },
-    "project_management_title": "Gestão de projetos"
+    "project_management_title": "Gestão de projetos",
+    "dashboard":{
+        "activityTitle":"Actividade"
+    }
 }

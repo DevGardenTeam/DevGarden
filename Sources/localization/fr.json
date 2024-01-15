@@ -17,5 +17,8 @@
         "list":"Liste",
         "dashboard":"Tableau de bord"
     },
-    "project_management_title": "Gestion de projet"
+    "project_management_title": "Gestion de projet",
+    "dashboard":{
+        "activityTitle":"Activité"
+    }
 }
