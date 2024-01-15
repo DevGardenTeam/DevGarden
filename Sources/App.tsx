@@ -11,22 +11,22 @@ const DashBoardScreen: React.FC = () => {
   // Activity Data
 
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["January", "February", "March", "test", 'value', 'pourquoi'],
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43]
+        data: [20, 45, 28],
       }
     ]
   };
 
   const chartConfig = {
     backgroundGradientFrom: "#FFFFFF",
-    backgroundGradientFromOpacity: 1,
+    backgroundGradientFromOpacity: 0,
     backgroundGradientTo: "#FFFFFF",
-    backgroundGradientToOpacity: 1,
+    backgroundGradientToOpacity: 0,
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    strokeWidth: 3, // optional, default 3
-    barPercentage: 1,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
     barRadius: 5
   };
@@ -44,16 +44,17 @@ const DashBoardScreen: React.FC = () => {
           <Text style={styles.boxTitle}>{t('dashboard.activityTitle')} </Text>
           <BarChart 
               data={data}
-              width={500}
-              height={350}              
+              width={ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.90}
+              height={200}              
               chartConfig={chartConfig}
               showValuesOnTopOfBars={true}
               withHorizontalLabels={false}
               showBarTops={false}
               fromZero={true}
               withInnerLines={false}
-              yAxisLabel={'test'}
-              yAxisSuffix={'test'}
+              yAxisLabel=''
+              yAxisSuffix=''
+              style={styles.barchart}
           />
         </View>
         <View></View>
@@ -129,6 +130,9 @@ const styles = StyleSheet.create({
   },
   boxTitle :{
     alignSelf:'flex-start'
+  },
+  barchart: {
+    alignSelf:'flex-end',
   }
 });
 
