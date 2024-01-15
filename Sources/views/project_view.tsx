@@ -32,7 +32,7 @@ const ProjectScreen: React.FC = () =>  {
   const {t} = useTranslation();     // A ajouter pour le multi langue
 
   if (!view) {
-    var type = t('projectView.list');
+    const type = t('projectView.list');
     return (
       <SafeAreaView style={styles.container2}>
         <View style={styles.listTop}>
@@ -57,7 +57,7 @@ const ProjectScreen: React.FC = () =>  {
     );
   }
 
-  var type = t('projectView.garden');
+  const type = t('projectView.garden');
 
   return (
     <SafeAreaView style={styles.container}>
