@@ -1,0 +1,37 @@
+kind: pipeline
+type: docker
+name: devgardenci
+
+trigger:
+    event:
+      - push
+
+steps:
+  - name: check-dependencies
+    image: node:21
+    commands:
+      - node -v
+      - yarn -v
+
+  - name: type-check
+    image: node:21
+    commands:
+      - pwd
+      - ls
+      - cd Sources
+      - yarn install
+      - yarn tsc
+    depends_on:
+      - check-dependencies
+    
+  - name: lint
+    image: node:21
+    commands:
+      - pwd
+      - ls
+      - cd Sources
+      # - yarn install
+      # npm init @eslint/config
+      - yarn lint
+    depends_on:
+      - type-check

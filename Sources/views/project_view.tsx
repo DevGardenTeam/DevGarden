@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle } from 'react-native';
-import { I18nextProvider, useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-import i18n from '../service/i18n';
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 
@@ -12,7 +12,7 @@ const ProjectScreen: React.FC = () =>  {
 
   // Changement de fond selon l'horaire
 
-  const [isDaytime, setIsDaytime] = useState<boolean>(true);
+  const [isDaytime, setIsDaytime] = useState(true);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -22,9 +22,9 @@ const ProjectScreen: React.FC = () =>  {
 
   // Switch
 
-  const [view, setView] = useState<boolean>(true);
-  const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const toggleSwitch = (): void => {
+  const [view, setView] = useState(true);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
     setView(!view); // Ajoutez cette ligne pour mettre à jour la variable view
   };
@@ -45,10 +45,14 @@ const ProjectScreen: React.FC = () =>  {
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
             </Switch>
-            <Text style={styles.text}>{type}</Text>
+            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
           </View>
         </View>
-        
+        <View style={styles.mainContent}>
+          <NavigationButton title={t('projectView.dashboard')} />
+          <NavigationButton title='Commits'/>
+          <NavigationButton title={t('project_management_title')}/>
+        </View>
       </SafeAreaView>
     );
   }
@@ -69,7 +73,7 @@ const ProjectScreen: React.FC = () =>  {
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
             </Switch>
-            <Text style={styles.text}>{type}</Text>
+            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
           </View>
         </View>
         <View style={styles.bottom}>
@@ -100,7 +104,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height:'20%',
     backgroundImage: 'linear-gradient(to bottom, #7E6200 25%, transparent )'
-    // 'linear-gradient(to bottom, #7E6200 75%, tra,sparent )'
   } as CustomStyle,
   days: {
     width: '100%',
@@ -128,6 +131,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
   },
+  textDay: {
+    color:'black'
+  },
+  textNight: {
+    color:'white'
+  },
   luminary: {
     borderRadius: WIDTH,
     height: ISLANDSCAPE ? HEIGHT*0.20 : WIDTH*0.25,
@@ -142,7 +151,7 @@ const styles = StyleSheet.create({
   moon:{
     backgroundColor: '#fae4a8',
     backgroundImage: 'radial-gradient(circle at 40% 80%, #ddc997 10%, transparent 0), radial-gradient(circle at 55% 70%, #ddc997 5%, transparent 0), radial-gradient(circle at 58% 85%, #ddc997 6%, transparent 0), radial-gradient(circle at 80% 40%, #ddc997 12%, transparent 0), radial-gradient(circle at 87% 58%, #ddc997 4%, transparent 0)',
-  },
+  }as CustomStyle,
   bottom:{
     width: '100%',
     height: ISLANDSCAPE ? HEIGHT - (HEIGHT*0.20+HEIGHT*0.037+HEIGHT*0.2) : HEIGHT - (WIDTH*0.25+WIDTH*0.065+HEIGHT*0.2),
@@ -175,6 +184,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
     margin: ISLANDSCAPE ? HEIGHT*0.045 : WIDTH*0.080,
+  },
+  mainContent:{
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.2,
   }
 });
 

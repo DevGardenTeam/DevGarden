@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, StyleSheet, ImageSourcePropType, DimensionValue  } from 'react-native';
+import { Image, ImageSourcePropType, DimensionValue  } from 'react-native';
 
 type Icon = {
     iconSource: ImageSourcePropType
