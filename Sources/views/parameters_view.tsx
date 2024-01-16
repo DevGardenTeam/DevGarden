@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   //DropDownPicker
   DropDownPicker:{
     borderRadius: 30,
-    //border:"none",
+    border:"none",
     boxShadow: "0px 5px 10px 1px rgba(0,0,0,0.5)",
     width: '100%',
     marginLeft: ISLANDSCAPE ? "1%" : "3%",
@@ -184,10 +184,10 @@ const styles = StyleSheet.create({
     fontWeight:"500",
   },
   searchTextInputStyle:{
-   // border : "none",
+    border : "none",
     width: ISLANDSCAPE ? "20%" : "25%",
     flexWrap:"wrap",
-    //textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis'
   },
   //ListView
   listview:{
