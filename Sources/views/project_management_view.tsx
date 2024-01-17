@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import NavigationButton from '../components/button_component'
 import React from 'react';
+import 'intl-pluralrules';
 
 const ProjectManagementScreen: React.FC = () =>  {
   const {t} = useTranslation();     // A ajouter pour le multi langue

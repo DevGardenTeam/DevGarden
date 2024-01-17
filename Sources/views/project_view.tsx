@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
+import 'intl-pluralrules';
 
 interface CustomStyle extends ImageStyle {
     backgroundImage?: string;
