@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 
 const AllPlatformsNeutralView: React.FC = () => {
 
@@ -15,7 +16,7 @@ const AllPlatformsNeutralView: React.FC = () => {
 
                 </View>  
                 <View style={styles.slidingButton}>
-
+                  <ButtonMultiSelectPlatformComponent></ButtonMultiSelectPlatformComponent>
                 </View>  
             </View>
         </SafeAreaView>
