@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from "@react-navigation/native"; 
 import HomeScreen from '../views/HomeScreen';
 import LoginScreen from '../views/LoginScreen';
+import RegisterView from '../views/register_view';
 import AllProjectsNeutralView from '../views/all_projects_neutral_view';
 import AllPlatformsNeutralView from '../views/all_plaforms_neutral_view';
 
@@ -29,6 +30,12 @@ export default function Navigation() {
                                            <BottomTabNavigator.Screen name="AllPlatforms"  component={AllPlatformsNeutralView}
                                            options={{
                                                 title: 'AllPlatforms',
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="Register"  component={RegisterView}
+                                           options={{
+                                                title: 'Register',
+                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
             </BottomTabNavigator.Navigator>
