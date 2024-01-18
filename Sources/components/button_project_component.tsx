@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         marginLeft: '1%',
         fontSize: 20,
+        overflow: 'hidden',
       }, 
 })
 
