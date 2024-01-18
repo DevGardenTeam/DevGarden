@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 
 const AllPlatformsNeutralView: React.FC = () => {
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
-    return (
-        <SafeAreaView style={styles.safeAreaView}>
-            <View style={styles.mainView}>
-                <View>
-                    <View>
-                        <Text style={styles.titleText}>Gitlab</Text>
-                    </View>
-                </View>
-                <View style={styles.mainContent}>
+  return (
+      <SafeAreaView style={styles.safeAreaView}>
+          <View style={styles.mainView}>
+              <View>
+                  <View>
+                      <Text style={styles.titleText}>{selectedPlatform}</Text>
+                  </View>
+              </View>
+              <View style={styles.mainContent}>
 
-                </View>  
-                <View style={styles.slidingButton}>
-                  <ButtonMultiSelectPlatformComponent></ButtonMultiSelectPlatformComponent>
-                </View>  
-            </View>
-        </SafeAreaView>
-    );
+              </View>  
+              <View style={styles.slidingButton}>
+                <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
+              </View>  
+          </View>
+      </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
