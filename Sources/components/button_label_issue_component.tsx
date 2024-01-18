@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type ButtonLabelIssueComponent = {
-    title: string;
-    image: string;
+    name: string;
+    isOpen: boolean;
+    userCount: Int32Array;
     onSelect?: (platform: string) => void;
 }
 
-const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ title, image, onSelect }) => {
+const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, isOpen, userCount, onSelect }) => {
 
   return (
     <TouchableOpacity style={styles.container}>
-      <View style={styles.squareContainer}>
-        <Image source={{ uri: 'https://example.com/your-image.jpg' }}
-          style={styles.image}
-        />
-      </View>
-      <View style={styles.rectangularContainer}>
-        <Text style={styles.text}>{title}</Text>
+      <View style={[styles.statusIndicator, isOpen ? styles.openStatus : styles.closedStatus]} />
+      <Text style={styles.issueName}>{name}</Text>
+      <View style={styles.userCountContainer}>
+        <Image source={require('../assets/IconMail.png')} style={styles.userIcon} />
+        <Text style={styles.userCount}>{userCount}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -25,47 +24,54 @@ const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ title,
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: 10,
-    height: '100%',
-    width: '100%',
-  },
-  squareContainer: {
-    width: 100,
-    height: 100,
-    borderWidth: 2,
-    borderColor: 'black',
-    marginRight: 16,
-    overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas les bordures
-  },
-  image: {
-    flex: 1,
-    width: undefined,
-    height: undefined,
-  },
-  rectangularContainer: {
-    flex: 1,
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: 'white',
     borderRadius: 10,
-    shadowColor: 'black',
+    padding: 15,
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
     elevation: 5,
-    padding: 16,
-    height: '80%',
-    overflow: 'hidden'
   },
-  text: {
-    fontSize: 40,
+  statusIndicator: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 15,
+  },
+  openStatus: {
+    backgroundColor: 'green',
+  },
+  closedStatus: {
+    backgroundColor: 'red',
+  },
+  issueDetails: {
+    flex: 1,
+  },
+  issueName: {
+    fontSize: 30,
+  },
+  userCountContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    marginTop: 5,
+  },
+  userIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  userCount: {
+    fontSize: 14,
   },
 });
 

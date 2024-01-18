@@ -6,6 +6,7 @@ import LoginScreen from '../views/LoginScreen';
 import AllProjectsNeutralView from '../views/all_projects_neutral_view';
 import AllPlatformsNeutralView from '../views/all_plaforms_neutral_view';
 import AllCommitsView from '../views/all_commits_view';
+import AllIssuesView from '../views/all_issues_view';
 
 export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
@@ -35,6 +36,11 @@ export default function Navigation() {
                                            <BottomTabNavigator.Screen name="AllCommits"  component={AllCommitsView}
                                            options={{
                                                 title: 'AllCommits',
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="AllIssues"  component={AllIssuesView}
+                                           options={{
+                                                title: 'AllIssues',
                                                 headerShown: false
                                            }}/>
             </BottomTabNavigator.Navigator>

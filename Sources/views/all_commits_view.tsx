@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
-import ButtonLabelIssueComponent from '../components/button_label_issue_component';
+import ButtonLabelCommitComponent from '../components/button_label_commit_component';
 
 const AllCommitsView: React.FC = () => {
   
@@ -12,11 +12,8 @@ const AllCommitsView: React.FC = () => {
                     <Text style={styles.titleTextBis}>(master)</Text>
                 </View> 
                 <View style={styles.contentView}>
-                    <View style={styles.masterGraph}>
-                        <Text>Toto</Text>
-                    </View>
                     <View style={styles.masterLabel}>
-                        <ButtonLabelIssueComponent title='#1565s8' image='test'></ButtonLabelIssueComponent>
+                        <ButtonLabelCommitComponent title='#1565s8' image='test'></ButtonLabelCommitComponent>
                     </View>
                 </View>  
             </View>
@@ -53,15 +50,10 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-    masterGraph: {
-        display: 'flex',
-        width: '50%',
-        height: '100%',
-    },
     masterLabel: {
         display: 'flex',
         flexDirection: 'column',
-        width: '50%',
+        width: '100%',
         height: '100%',
     }
 })
