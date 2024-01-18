@@ -1,5 +1,16 @@
 # DevGarden
 
+## :calendar: Last Meeting Notes
+* https://codefirst.iut.uca.fr/git/DevGarden/DevGarden/wiki/reu180124
+
+## Unhandled Package Warnings
+```
+warning @expo/webpack-config > source-map-loader > abab@2.0.6: Use your platform's native atob() and btoa() methods instead
+warning @expo/webpack-config > webpack-dev-server > webpack-dev-middleware > memfs@3.6.0: this will be v4
+warning @expo/webpack-config > css-minimizer-webpack-plugin > cssnano > cssnano-preset-default > postcss-svgo > svgo > stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+```
+
+
 ## Diagrammes de classes
 
 - Repository
