@@ -1,59 +1,56 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { View, Image, StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
 import TextInputComponent from '../components/text_input_component';
 
-const LoginScreen: React.FC = () => {
+const RegisterView: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isChecked, setChecked] = useState(false);
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
           <View style={styles.square1}>
-            <Text style={styles.title}>Bienvenue</Text>
+
+            <Text style={styles.title}>Create account</Text>
             <View style={styles.emailContainer}>
-                <TextInputComponent
+              <TextInputComponent
                   placeholder="Email Address"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                   iconSource={require('../assets/IconMail.png')}
-                />
-                <TextInputComponent
+              />
+              <TextInputComponent
                   placeholder="Password"
                   value={password}
                   onChangeText={(text) => setPassword(text)}
                   password = {true}
                   iconSource={require('../assets/IconLock.png')}
-                />
-              </View>
-              <CheckBox
-                  title='Remember Password'
-                  checkedColor='green'
-                  checked={isChecked}
-                  onPress={() => setChecked(!isChecked)}
-                  >
-                </CheckBox>
-          </View>
-
-          <View style={styles.square2}>
-            <TouchableOpacity>
-              <Text style={styles.forgotPasswordText}>Forget Password</Text>
-            </TouchableOpacity>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Register</Text>
-              </TouchableOpacity>
+              />
+              <TextInputComponent
+                  placeholder="Confirm Password"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  password = {true}
+                  iconSource={require('../assets/IconLock.png')}
+              />
             </View>
+            <View style={styles.alreadyAccount}>
+                <Text>Already have an account?  </Text>
+                <TouchableOpacity>
+                    <Text style={styles.loginText}>Log in</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
+
+        <View style={styles.square2}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Create Account</Text>
+            </TouchableOpacity>
+        </View>
+
     </SafeAreaView>
   );
 };
-
 
 
 const styles = StyleSheet.create({
@@ -63,7 +60,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 5,
   },
-
 
   safeArea: {
     flex: 1,
@@ -109,23 +105,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
-  forgotPasswordText: {
-    color: 'green',
-    fontSize: 14,
-    textDecorationLine: 'underline',
+    alreadyAccount: {
+      flexDirection: 'row',
     },
-
-  buttonContainer: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-
+  
   button: {
     borderBottomWidth: 1,
     borderBottomColor: 'green',
@@ -133,15 +120,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '35%',
-    height: '75%',
-    
+    width: '70%',
+    height: '30%',
   },
+
   buttonText: {
     color: 'white',
     fontSize: 16,
   },
+  loginText: {
+    color: 'green',
+    textDecorationLine: 'underline',
+  },
   
 });
 
-export default LoginScreen;
+export default RegisterView;
