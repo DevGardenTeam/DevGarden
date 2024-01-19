@@ -3,7 +3,7 @@ import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-na
 import { CheckBox } from 'react-native-elements';
 import TextInputComponent from '../components/text_input_component';
 
-const LoginScreen: React.FC = () => {
+export default function LoginScreen ({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
@@ -42,7 +42,7 @@ const LoginScreen: React.FC = () => {
               <Text style={styles.forgotPasswordText}>Forget Password</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AllPlatformsNeutral")}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button}>
@@ -143,5 +143,3 @@ const styles = StyleSheet.create({
   },
   
 });
-
-export default LoginScreen;
