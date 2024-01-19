@@ -44,7 +44,7 @@ const RegisterView: React.FC = () => {
 
         <View style={styles.square2}>
             <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Create Account</Text>
+              <Text style={styles.buttonText}>Create Account</Text>
             </TouchableOpacity>
         </View>
 
