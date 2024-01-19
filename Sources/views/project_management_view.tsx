@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import NavigationButton from '../components/button_component'
 import React from 'react';
-import 'intl-pluralrules';
 
 const ProjectManagementScreen: React.FC = () =>  {
   const {t} = useTranslation();     // A ajouter pour le multi langue
@@ -32,12 +31,14 @@ const styles = StyleSheet.create({
       fontSize: ISLANDSCAPE ? WIDTH * 0.06 : WIDTH * 0.1,
       color:"#414141",
       marginTop: ISLANDSCAPE ? "5%" : "15%",
-      marginLeft: ISLANDSCAPE ? "5%" : "10%",
-      marginBottom: ISLANDSCAPE ? "7%" : HEIGHT*0.2,
+      marginLeft: ISLANDSCAPE ? "5%" : "5%",
+      marginBottom: ISLANDSCAPE ? "7%" : '10%',
     },
     mainContent:{
       display: 'flex',
+      justifyContent:'space-evenly',
       alignItems: 'center',
+      height:'75%'
     }
 });
 

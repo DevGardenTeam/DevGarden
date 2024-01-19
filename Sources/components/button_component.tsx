@@ -37,15 +37,15 @@ const styles = StyleSheet.create({
       }),
       boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.5)",
       width: '80%',
-      marginBottom:ISLANDSCAPE ? "5%" : "10%",
       display: "flex",
       flexDirection: 'row',
       alignItems: "center",
       justifyContent: "space-between",
-      height: ISLANDSCAPE ? "20%" : "25%",
+      height: ISLANDSCAPE ? "20%" : HEIGHT*0.125,
       padding: ISLANDSCAPE ? "1%" : "3.5%"
     },
     icon: {
+      resizeMode: 'contain',
       width: ISLANDSCAPE ? "10%" : "20%",
       height: "100%",
       marginRight: 8,
