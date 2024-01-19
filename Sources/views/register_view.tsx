@@ -11,26 +11,28 @@ const RegisterView: React.FC = () => {
           <View style={styles.square1}>
 
             <Text style={styles.title}>Create account</Text>
-            <TextInputComponent
-                placeholder="Email Address"
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                iconSource={require('../assets/IconMail.png')}
-            />
-            <TextInputComponent
-                placeholder="Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                password = {true}
-                iconSource={require('../assets/IconLock.png')}
-            />
-            <TextInputComponent
-                placeholder="Confirm Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                password = {true}
-                iconSource={require('../assets/IconLock.png')}
-            />
+            <View style={styles.emailContainer}>
+              <TextInputComponent
+                  placeholder="Email Address"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  iconSource={require('../assets/IconMail.png')}
+              />
+              <TextInputComponent
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  password = {true}
+                  iconSource={require('../assets/IconLock.png')}
+              />
+              <TextInputComponent
+                  placeholder="Confirm Password"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  password = {true}
+                  iconSource={require('../assets/IconLock.png')}
+              />
+            </View>
             <View style={styles.alreadyAccount}>
                 <Text>Already have an account?  </Text>
                 <TouchableOpacity>
@@ -57,13 +59,19 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 5,
-    marginBottom: '10%',
   },
 
   safeArea: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight * 1.5,
     alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+  },
+
+  emailContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 
   square1: {
@@ -79,10 +87,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    left: 0,
-    right: 0,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
 
   square2: {
@@ -98,14 +105,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    marginTop: '20%',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
     alreadyAccount: {
-        flexDirection: 'row',
-        marginTop: '10%',
+      flexDirection: 'row',
     },
   
   button: {
