@@ -69,8 +69,12 @@ const ProjectScreen: React.FC = () =>  {
         end={{x: 0, y: 1}}
         style={styles.ground}
       /> 
-      <View style={[styles.days,isDaytime ? styles.day : styles.night]}>
-        <View style={styles.top}>
+      <LinearGradient colors={isDaytime ? [ '#B1E3FF', 'transparent'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
+        locations={isDaytime ? [0,1] :[0,0.2,0.4,0.6,1]}
+        start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
+        end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
+        style={[styles.days]}>
+          <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
           <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -91,7 +95,7 @@ const ProjectScreen: React.FC = () =>  {
               <Image source={require('./assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
             </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </SafeAreaView>
   );
 }
@@ -117,12 +121,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection:'column',
   },
-  day:{
-    backgroundColor: "#B1E3FF",
-  },
-  night:{
-    backgroundColor: "linear-gradient(to bottom, #020107 , #201b46)",
-  } as CustomStyle,
+  // day:{
+  //   backgroundColor: "#B1E3FF",
+  // },
+  // night:{
+  //   backgroundColor: "linear-gradient(to bottom, #020107 , #201b46)",
+  // } as CustomStyle,
   top:{
     width: '100%',
     height: ISLANDSCAPE ? HEIGHT*0.20+HEIGHT*0.037 : WIDTH*0.25+WIDTH*0.07,
