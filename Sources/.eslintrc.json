@@ -18,5 +18,13 @@
         "react"
     ],
     "rules": {
+        // If variables are declared but not used.
+        "@typescript-eslint/no-unused-vars": "warn",
+        // If any type is used.	Try to avoid using any type.
+        "@typescript-eslint/no-explicit-any": "warn",
+        // If console.log is used. Try to avoid letting console.log in the code after debugging.
+        "no-console": "warn",
+        // Same as above but for debugger statements.
+        "no-debugger": "warn"
     }
 }

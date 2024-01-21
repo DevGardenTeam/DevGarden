@@ -43,8 +43,9 @@ const ParametersScreen: React.FC = () =>  {
                 {/* ListView */}
                 <FlatList
                   data={[
-                    {title: 'Mon projet perso',icon: require('../assets/platform_icon/github.png')},
-                    {title: "Dev'Garden",icon: require('../assets/platform_icon/gitlab.png')},
+                    {title: 'Mon projet perso',icon: require('../assets/platforms/github.png')},
+                    {title: "Dev'Garden",icon: require('../assets/platforms/gitlab.png')},
+                    {title: "Alibaba",icon: require('../assets/platforms/gitea.png')},
                   ]}
                   // Pour le binding remplacer l'item.title et le chemin de l'icon
                   renderItem={({item}) => <TouchableOpacity style={styles.listview}>
