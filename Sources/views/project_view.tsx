@@ -60,19 +60,21 @@ const ProjectScreen: React.FC = () =>  {
   }
 
   const type = t('projectView.garden');
+  // [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
+  //       locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
 
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
         colors={[ '#7E6200', 'transparent']}
-        start={{x:0, y: 0}}
-        end={{x: 0, y: 1}}
+        // start={{x:0, y: 0}}
+        // end={{x: 0, y: 1}}
         style={styles.ground}
       /> 
-      <LinearGradient colors={isDaytime ? [ '#B1E3FF', 'transparent'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
-        locations={isDaytime ? [0,1] :[0,0.2,0.4,0.6,1]}
-        start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
-        end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
+      <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
+        locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
+        // start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
+        // end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
         style={[styles.days]}>
           <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
