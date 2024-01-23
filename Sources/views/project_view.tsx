@@ -51,8 +51,8 @@ const ProjectScreen: React.FC = () =>  {
         </View>
         <View style={styles.mainContent}>
           <NavigationButton title={t('projectView.dashboard')} />
-          <NavigationButton title='Commits'/>
-          <NavigationButton title={t('project_management_title')}/>
+          <NavigationButton title='Commits' />
+          <NavigationButton title={t('project_management_title')} />
           <NavigationButton title='???'/>
         </View>
       </SafeAreaView>
@@ -121,12 +121,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection:'column',
   },
-  // day:{
-  //   backgroundColor: "#B1E3FF",
-  // },
-  // night:{
-  //   backgroundColor: "linear-gradient(to bottom, #020107 , #201b46)",
-  // } as CustomStyle,
   top:{
     width: '100%',
     height: ISLANDSCAPE ? HEIGHT*0.20+HEIGHT*0.037 : WIDTH*0.25+WIDTH*0.07,
@@ -205,7 +199,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent:'space-evenly',
-    height:'70%',
+    height:'80%',
   }
 });
 

@@ -23,7 +23,7 @@ const ParametersScreen: React.FC = () =>  {
       {label: t('supportedLanguages.pt'), value: 'pt'}
     ]);
 
-  const changeLanguage = (selectedLanguage: string) => {
+  const changeLanguage = (selectedLanguage: string) => { 
     i18n.changeLanguage(selectedLanguage);
     setValue(selectedLanguage);
   };
