@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } fro
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import ButtonProjectComponent from '../components/button_project_component'
 
-const AllProjectsNeutralView: React.FC = () => {
+const AllProjectsNeutralView = ({navigation}) => {
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const AllProjectsNeutralView: React.FC = () => {
             data={repositories}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={handleRepositoryPress}></ButtonProjectComponent>             
+              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project")}></ButtonProjectComponent>             
             )}
           />
         </View>  

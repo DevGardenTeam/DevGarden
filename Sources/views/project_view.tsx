@@ -8,7 +8,7 @@ interface CustomStyle extends ImageStyle {
     backgroundImage?: string;
   }
 
-const ProjectScreen: React.FC = () =>  {
+const ProjectScreen = ({navigation}) =>  {
 
   // Changement de fond selon l'horaire
 
@@ -49,9 +49,10 @@ const ProjectScreen: React.FC = () =>  {
           </View>
         </View>
         <View style={styles.mainContent}>
-          <NavigationButton title={t('projectView.dashboard')} />
-          <NavigationButton title='Commits'/>
-          <NavigationButton title={t('project_management_title')}/>
+          <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
+          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits")}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues")}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("Project")}/>
         </View>
       </SafeAreaView>
     );

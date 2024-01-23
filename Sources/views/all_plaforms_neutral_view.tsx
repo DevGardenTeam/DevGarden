@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AllPlatformsNeutralView = ({navigation}) => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
@@ -13,9 +14,12 @@ const AllPlatformsNeutralView = ({navigation}) => {
                       <Text style={styles.titleText}>{selectedPlatform}</Text>
                   </View>
               </View>
-              <View style={styles.mainContent}>
+              <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects")}>
+                <View >
 
-              </View>  
+                </View>                
+              </TouchableOpacity>
+  
               <View style={styles.slidingButton}>
                 <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
               </View>  
