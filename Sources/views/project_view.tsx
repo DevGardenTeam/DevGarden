@@ -46,7 +46,7 @@ const ProjectScreen: React.FC = () =>  {
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
             </Switch>
-            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
+            <Text style={[styles.text,styles.textDay]}>{type}</Text>
           </View>
         </View>
         <View style={styles.mainContent}>
@@ -60,8 +60,6 @@ const ProjectScreen: React.FC = () =>  {
   }
 
   const type = t('projectView.garden');
-  // [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
-  //       locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
 
   return (
     <SafeAreaView style={styles.container}>

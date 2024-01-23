@@ -1,5 +1,5 @@
 import 'intl-pluralrules';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image  } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
@@ -16,12 +16,17 @@ const ParametersScreen: React.FC = () =>  {
     // DropDownPicker
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("null");
+    const [value, setValue] = useState<string>(i18n.language); 
     const [items, setItems] = useState([
-    {label: t('supportedLanguages.en'), value: t('supportedLanguages.en')},
-    {label: t('supportedLanguages.fr'), value: t('supportedLanguages.fr')},
-    {label: t('supportedLanguages.pt'), value: t('supportedLanguages.pt')}
-  ]);
+      {label: t('supportedLanguages.en'), value: 'en'},
+      {label: t('supportedLanguages.fr'), value: 'fr'},
+      {label: t('supportedLanguages.pt'), value: 'pt'}
+    ]);
+
+  const changeLanguage = (selectedLanguage: string) => {
+    i18n.changeLanguage(selectedLanguage);
+    setValue(selectedLanguage);
+  };
 
     // Switch
 
@@ -83,6 +88,7 @@ const ParametersScreen: React.FC = () =>  {
                     setOpen={setOpen}
                     setValue={setValue}
                     setItems={setItems}
+                    onChangeValue={(value: string)=> {changeLanguage(value)}}
                     placeholder={t('supportedLanguages.'+i18n.language)}
                     searchable={true}
                     searchPlaceholder={t('settings.searchPlaceHolder')}
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection : "row",
     justifyContent:"center",
     alignItems:"center",
-    marginTop: ISLANDSCAPE ? "-5%" : "-10%",
+    marginTop: ISLANDSCAPE ? "-5%" : "-20%",
     marginBottom: ISLANDSCAPE ? "2%" : "5%",
   },
   title:{
@@ -161,7 +167,17 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     flexDirection: 'column-reverse',
     width: "80%",
-    boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   part:{
     padding: ISLANDSCAPE ? 5 : 10,
@@ -189,8 +205,18 @@ const styles = StyleSheet.create({
   },
   DropDownPicker:{
     borderRadius: 30,
-    border:"none",
-    boxShadow: "0px 5px 10px 1px rgba(0,0,0,0.5)",
+    borderBlockColor:'none',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
     width: WIDTH * 0.30,
     height : '15%',
     marginLeft: ISLANDSCAPE ? "1%" : 0,
