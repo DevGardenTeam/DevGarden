@@ -1,4 +1,4 @@
-import { CLIENT_ID } from "../config"
+import { GITHUB_CLIENT_ID } from "../config"
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
@@ -15,7 +15,7 @@ WebBrowser.maybeCompleteAuthSession();
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',
-  revocationEndpoint: `https://github.com/settings/connections/applications/${CLIENT_ID}`,
+  revocationEndpoint: `https://github.com/settings/connections/applications/${GITHUB_CLIENT_ID}`,
 }
 
 export default function GithubAuth() {
@@ -24,7 +24,7 @@ export default function GithubAuth() {
 
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: CLIENT_ID,
+      clientId: GITHUB_CLIENT_ID,
       scopes: ['identity', 'repo'],
       redirectUri: 'http://localhost:19006/auth/callback',
     },
