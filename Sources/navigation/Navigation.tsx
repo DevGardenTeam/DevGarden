@@ -16,7 +16,7 @@ export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
     return (
         <NavigationContainer >
-            <BottomTabNavigator.Navigator initialRouteName="Home" >
+            <BottomTabNavigator.Navigator initialRouteName="Login" >
                 <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
                                                 title: 'Home',

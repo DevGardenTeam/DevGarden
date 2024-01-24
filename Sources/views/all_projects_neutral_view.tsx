@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import ButtonProjectComponent from '../components/button_project_component'
+import BackNavigationButton from '../components/button_back_navigation_component';
 
 const AllProjectsNeutralView = ({navigation}) => {
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
@@ -20,6 +21,9 @@ const AllProjectsNeutralView = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.backButton}>
+        <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
+      </View>
       <View style={styles.mainView}>
         <View>
           <Text style={styles.titleText}>Choisissez un projet</Text>
@@ -44,6 +48,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+  },
+  backButton:{
+    margin: 20,
   },
   mainView: {
     flex: 1,

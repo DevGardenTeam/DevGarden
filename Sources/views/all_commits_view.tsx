@@ -3,8 +3,9 @@ import { SafeAreaView, StyleSheet, View, Text, Modal, Image } from 'react-native
 import ButtonLabelCommitComponent from '../components/button_label_commit_component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ModalCommitComponent from '../components/modal_commit_component';
+import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllCommitsView = () => {
+const AllCommitsView = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -13,6 +14,9 @@ const AllCommitsView = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.backButton}>
+        <BackNavigationButton onPress={() => navigation.navigate("Project")}/> 
+      </View>
       <View style={styles.mainView}>
         <View style={styles.titleView}>
           <Text style={styles.titleText}>Commits</Text>
@@ -41,6 +45,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+  },
+  backButton:{
+    margin: 20,
   },
   mainView: {
     flex: 1,

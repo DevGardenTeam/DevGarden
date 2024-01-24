@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
+import BackNavigationButton from '../components/button_back_navigation_component';
 
 interface CustomStyle extends ImageStyle {
     backgroundImage?: string;
@@ -35,6 +36,10 @@ const ProjectScreen = ({navigation}) =>  {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={styles.container2}>
+        <View style={styles.backButton}>
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
+        </View>
+
         <View style={styles.listTop}>
           <Text style={styles.title}>DevGarden</Text>
           <View style={styles.switch}>
@@ -86,6 +91,9 @@ const ProjectScreen = ({navigation}) =>  {
             </TouchableOpacity>
         </View>
       </View>
+      <View style={styles.backButton}>
+        <BackNavigationButton onPress={() => navigation.goBack()}/> 
+      </View>
     </SafeAreaView>
   );
 }
@@ -96,6 +104,11 @@ const HEIGHT = Dimensions.get('window').height ;
 const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
+  
+  backButton:{
+    margin: 20,
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#F1F0F0',

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import BackNavigationButton from '../components/button_back_navigation_component';
 
 const AllPlatformsNeutralView = ({navigation}) => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
   return (
       <SafeAreaView style={styles.safeAreaView}>
+          <View style={styles.backButton}>
+            <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+          </View>
           <View style={styles.mainView}>
               <View>
                   <View>
@@ -32,6 +36,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+  },
+  backButton:{
+    margin: 20,
   },
   mainView: {
     flex: 1,

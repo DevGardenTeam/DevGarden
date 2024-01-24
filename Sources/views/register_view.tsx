@@ -10,7 +10,7 @@ const RegisterView = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.goBack()}/> 
+        <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
       </View>
 
       <View style={styles.mainBody}>
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
 
   safeArea: {
     flexDirection: 'column',
+    justifyContent: 'space-evenly',
     height: '100%',
     paddingTop: StatusBar.currentHeight || 0,
   },
