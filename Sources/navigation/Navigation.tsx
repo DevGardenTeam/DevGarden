@@ -10,7 +10,7 @@ import AllCommitsView from '../views/all_commits_view';
 import AllIssuesView from '../views/all_issues_view';
 
 import ParametersScreen from '../views/parameters_view';
-import ProjectScreen from '../views/project_view'
+import DashBoardScreen from '../views/dashboard_view'
 
 export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
@@ -27,7 +27,7 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllProjects"  component={ProjectScreen}
+                                           <BottomTabNavigator.Screen name="AllProjects"  component={DashBoardScreen}
                                            options={{
                                                 title: 'AllProjects',
                                                 headerShown: false
