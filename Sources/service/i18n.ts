@@ -20,7 +20,7 @@ export const languageResources = {
 i18n.use(initReactI18next)
     .init({
         compatibilityJSON:"v4",
-        lng: "fr",
+        lng: "en",
         fallbackLng: "en",
         defaultNS: "translation",
         interpolation: {

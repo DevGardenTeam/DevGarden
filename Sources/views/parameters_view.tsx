@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 
@@ -27,6 +27,14 @@ const ParametersScreen: React.FC = () =>  {
     i18n.changeLanguage(selectedLanguage);
     setValue(selectedLanguage);
   };
+
+  useEffect(() => {
+    setItems([
+      { label: t('supportedLanguages.en'), value: 'en' },
+      { label: t('supportedLanguages.fr'), value: 'fr' },
+      { label: t('supportedLanguages.pt'), value: 'pt' }
+    ]);
+  }, [i18n.language]);
 
     // Switch
 
