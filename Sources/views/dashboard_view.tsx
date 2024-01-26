@@ -1,5 +1,5 @@
 import 'intl-pluralrules';
-import { SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform, ScrollView  } from 'react-native';
+import { StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform, ScrollView  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import "../service/i18n"
 import React from 'react';
@@ -96,8 +96,7 @@ const DashBoardScreen: React.FC = () => {
   
   // Build Stats
 
-  var isBuild = false
-
+  const isBuild = false
 
   return (
     <ScrollView  style={styles.container}>
