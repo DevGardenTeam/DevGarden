@@ -19,6 +19,7 @@
     },
     "project_management_title": "Gestão de projetos",
     "dashboard":{
-        "activityTitle":"Actividade"
+        "activityTitle":"Actividade",
+        "languagesTitle":"Línguas"
     }
 }

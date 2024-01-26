@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import "../service/i18n"
 import React from 'react';
 import { BarChart, PieChart } from "react-native-gifted-charts";
+import BuildItem from "../components/build_item_component"
 
 const DashBoardScreen: React.FC = () => {
   const {t} = useTranslation();     // A ajouter pour le multi langue
@@ -110,13 +111,17 @@ const DashBoardScreen: React.FC = () => {
     );
   };
   
+  // Build Stats
+
+  var isBuild = false
+
 
   return (
     <ScrollView  style={styles.container}>
       <View style={styles.listTop}>
           <Text style={styles.title}>{t('projectView.dashboard')}</Text>
           <TouchableOpacity style={styles.cercle}>
-            <Image source={require('../assets/tree.png')} style={styles.treeIcone}></Image>
+            <Image source={require('../assets/dashboard_page_icon/tree.png')} style={styles.treeIcone}></Image>
           </TouchableOpacity>
       </View>
       <View style={styles.contentContainer}>
@@ -132,7 +137,7 @@ const DashBoardScreen: React.FC = () => {
             />
         </View>
         <View style={styles.box}>
-          <Text style={styles.boxTitle}>{t('dashboard.activityTitle')}</Text>
+          <Text style={styles.boxTitle}>{t('dashboard.languagesTitle')}</Text>
           <PieChart
             data={pieData}
             donut
@@ -143,7 +148,15 @@ const DashBoardScreen: React.FC = () => {
           />
           {renderLegendComponent()}
         </View>
-        <View></View>
+        <View style={styles.box}>
+          <View style={styles.buildHeader}>
+            <Image source={isBuild ? require("../assets/dashboard_page_icon/check_circle.png") : require("../assets/dashboard_page_icon/cross_circle.png")} style={styles.buildIcon}></Image>
+            <Text style={[styles.buildTitle,isBuild ? { color: '#00D415' } : { color: '#FF0202' }]}>{isBuild ? "Build Passing" : "Build Error"}</Text>
+          </View>
+          <View>
+            <BuildItem title='Bugs' iconSource={require("../assets/dashboard_page_icon/check_circle.png")} value={0} mark="A"></BuildItem>
+          </View>
+        </View>
       </View>
       
     </ScrollView >
@@ -196,22 +209,22 @@ const styles = StyleSheet.create({
   },
   box : {
     backgroundColor: '#FFFFFF',
-      borderRadius: 10,
-      padding: 10,
-      alignItems: 'center',
-      ...Platform.select({
-        ios: {
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.3,
-          shadowRadius: 4,
-        },
-        android: {
-          elevation: 4,
-        },
-      }),
-      width: '80%',
-      marginBottom:'10%'
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+    width: '80%',
+    marginBottom:'10%'
   },
   boxTitle :{
     alignSelf:'flex-start',
@@ -219,6 +232,27 @@ const styles = StyleSheet.create({
   },
   barchart: {
     alignSelf:'flex-end',
+  },
+  buildHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignSelf:'flex-start',
+    width:'60%',
+    backgroundColor:'#F9F9F9',
+    borderColor:'#EBEBEB',
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: ISLANDSCAPE ? 4 : 2,
+  },
+  buildIcon: {
+    resizeMode: 'contain',
+    height: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.1,
+    width: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.1
+  },
+  buildTitle: {
+    fontSize: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.06,
+    fontWeight:'bold',
+    alignSelf:'center'
   }
 });
 
