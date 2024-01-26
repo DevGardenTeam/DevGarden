@@ -34,23 +34,6 @@ const DashBoardScreen: React.FC = () => {
     {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
   ];
 
-  const progressChartData = {
-    labels: ["Swim", "Bike", "Run"], // optional
-    data: [0.4, 0.6, 0.8]
-  };
-
-  const progressChartConfig = {
-    backgroundGradientFrom: "#FFFFFF",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#FFFFFF",
-    backgroundGradientToOpacity: 0,
-    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-    barRadius: 5
-  };
-
   const renderDot = (color: string) => {
     return (
       <View
@@ -154,7 +137,14 @@ const DashBoardScreen: React.FC = () => {
             <Text style={[styles.buildTitle,isBuild ? { color: '#00D415' } : { color: '#FF0202' }]}>{isBuild ? "Build Passing" : "Build Error"}</Text>
           </View>
           <View>
-            <BuildItem title='Bugs' iconSource={require("../assets/dashboard_page_icon/check_circle.png")} value={0} mark="A"></BuildItem>
+            <View style={styles.itemsBox}>
+              <BuildItem title='Bugs' iconSource={require("../assets/dashboard_page_icon/bug.png")} value={"0"} mark="A"></BuildItem>
+              <BuildItem title={t('dashboard.security')} iconSource={require("../assets/dashboard_page_icon/lock_open.png")} value={"20"} mark="C"></BuildItem>
+            </View>
+            <View style={styles.itemsBox}>
+              <BuildItem title='Smells' iconSource={require("../assets/dashboard_page_icon/bug.png")} value={"50"} mark="D"></BuildItem>
+              <BuildItem title={t('dashboard.duplication')} iconSource={require("../assets/dashboard_page_icon/lock_open.png")} value={'5%'} mark="B"></BuildItem>
+            </View>
           </View>
         </View>
       </View>
@@ -253,6 +243,12 @@ const styles = StyleSheet.create({
     fontSize: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.06,
     fontWeight:'bold',
     alignSelf:'center'
+  },
+  itemsBox: {
+    flexDirection:'row',
+    width:'100%',
+    marginTop:'5%',
+    marginBottom:'5%'
   }
 });
 

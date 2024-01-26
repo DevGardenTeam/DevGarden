@@ -68,14 +68,18 @@ const ParametersScreen: React.FC = () =>  {
                 />
               </View>
               <TouchableOpacity>
-                  <View style={styles.part}>
+                <View style={styles.part}>
+                  <View style={styles.leftPart}>
                     <Image source={require('../assets/setting_page_icon/link.png')} style={styles.partIcon}/>
                     <Text style={styles.text}>{t('settings.linkAccount')}</Text>
+                  </View>
                 </View>
               </TouchableOpacity>
               <View style={styles.part}>
-                <Image source={require('../assets/setting_page_icon/half_moon.png')} style={styles.partIcon}/>
-                <Text style={styles.text}>{t('settings.nightMode')}</Text>
+                <View style={styles.leftPart}>
+                  <Image source={require('../assets/setting_page_icon/half_moon.png')} style={styles.partIcon}/>
+                  <Text style={styles.text}>{t('settings.nightMode')}</Text>
+                </View>
                 <View>
                   <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
                   thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
@@ -86,8 +90,10 @@ const ParametersScreen: React.FC = () =>  {
                 </View>
               </View>
               <View style={styles.part}>
-                <Image source={require('../assets/setting_page_icon/internet.png')} style={styles.partIcon}/>
-                <Text style={styles.text}>{t('settings.language')}</Text>
+                <View style={styles.leftPart}>
+                  <Image source={require('../assets/setting_page_icon/internet.png')} style={styles.partIcon}/>
+                  <Text style={styles.text}>{t('settings.language')}</Text>
+                </View>
                 <View style={styles.dropDownContainer}>
                   <DropDownPicker
                     open={open}
@@ -101,8 +107,8 @@ const ParametersScreen: React.FC = () =>  {
                     searchable={true}
                     searchPlaceholder={t('settings.searchPlaceHolder')}
                     style={styles.DropDownPicker}
-                    listItemLabelStyle={styles.ItemsStyle}
-                    placeholderStyle={styles.ItemsStyle}
+                    listItemLabelStyle={styles.itemsStyle}
+                    placeholderStyle={styles.itemsStyle}
                     searchTextInputStyle={styles.searchTextInputStyle}/>
                 </View>
               </View>
@@ -171,8 +177,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     display: 'flex',
-    paddingLeft: 5,
-    paddingRight: 5,
     flexDirection: 'column-reverse',
     width: "80%",
     ...Platform.select({
@@ -193,14 +197,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     margin: ISLANDSCAPE ? "0.2%" : "1%",
+  },
+  leftPart:{
+    display:'flex',
+    flexDirection:'row',justifyContent:'center',
+    alignItems:'center'
   },
   text:{
     fontSize: ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.055,
     fontWeight:"bold",
-    marginLeft: ISLANDSCAPE ? "1%" : "3%",
-    flex:2,
+    marginLeft: ISLANDSCAPE ? "1%" : "2%",
+    flexWrap:'nowrap'
   },
   partIcon: {
     resizeMode: 'contain',
@@ -212,7 +221,7 @@ const styles = StyleSheet.create({
     height:'100%',
   },
   DropDownPicker:{
-    borderRadius: 30,
+    borderRadius: 20,
     borderBlockColor:'none',
     ...Platform.select({
       ios: {
@@ -225,11 +234,10 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
-    width: WIDTH * 0.30,
+    width: WIDTH * 0.31,
     height : '15%',
-    marginLeft: ISLANDSCAPE ? "1%" : 0,
   },
-  ItemsStyle:{
+  itemsStyle:{
     fontSize: ISLANDSCAPE ? WIDTH * 0.015 : WIDTH * 0.035,
     fontWeight:"500",
   },

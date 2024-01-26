@@ -20,6 +20,8 @@
     "project_management_title": "Gestão de projetos",
     "dashboard":{
         "activityTitle":"Actividade",
-        "languagesTitle":"Línguas"
+        "languagesTitle":"Línguas",
+        "security":"Segurança",
+        "duplication":"Duplicação"
     }
 }
