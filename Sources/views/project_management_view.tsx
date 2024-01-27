@@ -31,12 +31,14 @@ const styles = StyleSheet.create({
       fontSize: ISLANDSCAPE ? WIDTH * 0.06 : WIDTH * 0.1,
       color:"#414141",
       marginTop: ISLANDSCAPE ? "5%" : "15%",
-      marginLeft: ISLANDSCAPE ? "5%" : "10%",
-      marginBottom: ISLANDSCAPE ? "7%" : HEIGHT*0.2,
+      marginLeft: ISLANDSCAPE ? "5%" : "5%",
+      marginBottom: ISLANDSCAPE ? "7%" : '10%',
     },
     mainContent:{
       display: 'flex',
+      justifyContent:'space-evenly',
       alignItems: 'center',
+      height:'75%'
     }
 });
 

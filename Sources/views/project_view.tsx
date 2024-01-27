@@ -4,6 +4,7 @@ import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface CustomStyle extends ImageStyle {
     backgroundImage?: string;
@@ -17,7 +18,7 @@ const ProjectScreen = ({navigation}) =>  {
 
   useEffect(() => {
     const currentHour = new Date().getHours();
-    const isDay = currentHour >= 5 && currentHour < 18;
+    const isDay = currentHour >= 8 && currentHour < 18;
     setIsDaytime(isDay);
   }, []); 
 
@@ -50,7 +51,7 @@ const ProjectScreen = ({navigation}) =>  {
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
             </Switch>
-            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
+            <Text style={[styles.text,styles.textDay]}>{type}</Text>
           </View>
         </View>
         <View style={styles.mainContent}>
@@ -67,8 +68,17 @@ const ProjectScreen = ({navigation}) =>  {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.ground}/> 
-      <View style={[styles.days,isDaytime ? styles.day : styles.night]}>
+      <LinearGradient
+        colors={[ '#7E6200', 'transparent']}
+        // start={{x:0, y: 0}}
+        // end={{x: 0, y: 1}}
+        style={styles.ground}
+      /> 
+      <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
+        locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
+        // start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
+        // end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
+        style={[styles.days]}>
         <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
           <View style={styles.switch}>
@@ -90,10 +100,10 @@ const ProjectScreen = ({navigation}) =>  {
               <Image source={require('../assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
             </TouchableOpacity>
         </View>
-      </View>
       <View style={styles.backButton}>
         <BackNavigationButton onPress={() => navigation.goBack()}/> 
       </View>
+      </LinearGradient>
     </SafeAreaView>
   );
 }
@@ -112,25 +122,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F1F0F0',
-    flexDirection: 'column-reverse'
+    flexDirection: 'column-reverse',
   },
   ground:{
     width: '100%',
     height:'20%',
-    backgroundImage: 'linear-gradient(to bottom, #7E6200 25%, transparent )'
-  } as CustomStyle,
+  },
   days: {
     width: '100%',
     height:'80%',
     display: 'flex',
-    flexDirection:'column'
+    flexDirection:'column',
   },
-  day:{
-    backgroundColor: "#B1E3FF",
-  },
-  night:{
-    backgroundImage: "linear-gradient(to bottom, #020107 , #201b46)",
-  } as CustomStyle,
   top:{
     width: '100%',
     height: ISLANDSCAPE ? HEIGHT*0.20+HEIGHT*0.037 : WIDTH*0.25+WIDTH*0.07,
@@ -160,7 +163,12 @@ const styles = StyleSheet.create({
   },
   sun:{
     backgroundColor: 'orange',
-    boxShadow: '0 0 5px rgba(255,127,0,1), 0 0 30px rgba(255,127,0,1), 0 0 100px rgba(255,255,0,1), inset 0 0 40px rgba(255,255,0,1)',
+    elevation: 100,
+    shadowColor: 'rgba(255, 127, 0, 1)',
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 5,
+    shadowOpacity: 1,
+    // boxShadow: '0 0 5px rgba(255,127,0,1), 0 0 30px rgba(255,127,0,1), 0 0 100px rgba(255,255,0,1), inset 0 0 40px rgba(255,255,0,1)',
   },
   moon:{
     backgroundColor: '#fae4a8',
@@ -177,13 +185,13 @@ const styles = StyleSheet.create({
     height: ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     width : ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.04 : -WIDTH*0.06,
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.04 : '-30%',
   },
   tree: {
     height: ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.75,
     width : ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.5,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.045 : -WIDTH*0.095 ,
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.045 : '-25%' ,
   },
 
   // LIST VIEW
@@ -194,6 +202,7 @@ const styles = StyleSheet.create({
   listTop:{
     flexDirection:'row',
     justifyContent:'space-between',
+    marginTop: ISLANDSCAPE ? HEIGHT*0.045 : '5%',
   },
   title: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
@@ -202,7 +211,8 @@ const styles = StyleSheet.create({
   mainContent:{
     display: 'flex',
     alignItems: 'center',
-    marginTop: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.2,
+    justifyContent:'space-evenly',
+    height:'80%',
   }
 });
 

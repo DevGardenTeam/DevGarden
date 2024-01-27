@@ -1,17 +1,18 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform  } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
 
 type ParmetersButton = {
     title: string,
-    iconSource: ImageSourcePropType
+    iconSource: ImageSourcePropType,
+    tint : ColorValue,
     onPress?: ((event: GestureResponderEvent) => void)
 }
   
-const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, onPress }) => {
+const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <View style={styles.buttonContent}>
-                <Image source={iconSource} style={styles.icon} />
+                <Image source={iconSource} style={[styles.icon,{tintColor:tint}]} />
                 <Text style={styles.text}>{title}</Text>
             </View>
         </TouchableOpacity>
