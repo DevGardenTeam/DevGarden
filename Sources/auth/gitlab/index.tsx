@@ -2,9 +2,9 @@ import { GITLAB_CLIENT_ID } from "../config"
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { useAuthRequest } from 'expo-auth-session';
 import { View, Button, StatusBar,  } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 
@@ -27,15 +27,16 @@ export default function GitlabAuth() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: GITLAB_CLIENT_ID,
-      scopes: ['read_api', 'read_user', 'read_repository'],
+      scopes: ['read_api'],
       redirectUri: 'http://localhost:19006/auth/callback',
+      usePKCE: false,
     },
     discovery
   );
 
+  // console.log(request);
+
   // generate a state for the request
-  const state = generateState();
-  console.log(`state => ${state}`); // Debug
 
   React.useEffect(() => {
     if (response?.type === 'success') {
@@ -53,7 +54,6 @@ export default function GitlabAuth() {
         },
         body: JSON.stringify({
           code: code,
-          state: state,
         }),
       })
         .then((response) => response.json())

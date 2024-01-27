@@ -34,6 +34,7 @@ export default function GithubAuth() {
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params;
+      console.log(response);
       console.log(`response code => ${code}`); // Debug
   
       // Send the authorization code to the .NET Web API
