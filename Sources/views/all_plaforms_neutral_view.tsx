@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import BackNavigationButton from '../components/button_back_navigation_component';
 
 const AllPlatformsNeutralView = ({navigation}) => {

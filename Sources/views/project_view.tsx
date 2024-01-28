@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
 
   // LIST VIEW
   container2: {
-    flex: 1,
     backgroundColor: '#F1F0F0',
   },
   listTop:{

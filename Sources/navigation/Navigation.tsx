@@ -12,9 +12,6 @@ import DetailsIssueView from '../views/details_issue_view';
 import ProjectScreen from '../views/project_view';
 import ParametersScreen from '../views/parameters_view';
 
-import ParametersScreen from '../views/parameters_view';
-import ProjectScreen from '../views/project_view'
-
 export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
     return (
@@ -36,7 +33,7 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllProjects"  component={ProjectScreen}
+                                           <BottomTabNavigator.Screen name="AllProjects"  component={AllProjectsNeutralView}
                                            options={{
                                                 title: 'AllProjects',
                                                 tabBarStyle : {display : "none"},
@@ -48,7 +45,7 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllCommits"  component={ParametersScreen}
+                                           <BottomTabNavigator.Screen name="AllCommits"  component={AllCommitsView}
                                            options={{
                                                 title: 'AllCommits',
                                                 tabBarStyle : {display : "none"},
