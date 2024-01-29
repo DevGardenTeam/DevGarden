@@ -3,11 +3,10 @@ type: docker
 name: devgardenci
 
 trigger:
-    event:
-      - push
+  event:
+    - push
 
 steps:
-
   - name: check-dependencies
     image: node:21
     commands:
@@ -24,7 +23,7 @@ steps:
       - yarn tsc
     depends_on:
       - check-dependencies
-    
+
   - name: lint
     image: node:21
     commands:
@@ -38,11 +37,11 @@ steps:
       - type-check
 
   - name: sonarqube
-    imgae: reactnativecommunity/react-native-android
-    environement: 
+    image: reactnativecommunity/react-native-android
+    environment:
       SONAR_TOKEN:
         from_secret: DEVGARDEN_TOKEN
-    
+
     commands:
       - export SONAR_SCANNER_VERSION=4.7.0.2747
       - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
