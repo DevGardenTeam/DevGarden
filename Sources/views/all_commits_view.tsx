@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonLabelCommitComponent from '../components/button_label_commit_component';
 import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllCommitsView = ({navigation}) => {
+interface AllCommitsViewProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   return (

@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonProjectComponent from '../components/button_project_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllProjectsNeutralView = ({navigation}) => {
+interface AllProjectsNeutralViewProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigation }) => {
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
 
   useEffect(() => {

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { View, Image, StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 
-const RegisterView = ({navigation}) => {
+interface RegisterViewProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

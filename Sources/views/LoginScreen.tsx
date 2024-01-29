@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 
-export default function LoginScreen ({navigation}) {
+interface LoginScreenProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
@@ -52,7 +57,7 @@ export default function LoginScreen ({navigation}) {
         </View>
     </SafeAreaView>
   );
-};
+}
 
 
 
@@ -143,3 +148,5 @@ const styles = StyleSheet.create({
   },
   
 });
+
+export default LoginScreen;

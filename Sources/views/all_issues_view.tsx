@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonLabelIssueComponent from '../components/button_label_issue_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllIssuesView = ({navigation}) => {
+interface AllIssuesViewProps {
+    navigation: StackNavigationProp<any>;
+}
+
+const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
   
     return (
         <SafeAreaView style={styles.safeAreaView}>

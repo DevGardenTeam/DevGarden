@@ -4,14 +4,19 @@ import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 
 interface CustomStyle extends ImageStyle {
-    backgroundImage?: string;
-  }
+  backgroundImage?: string;
+}
 
-const ProjectScreen = ({navigation}) =>  {
+interface ProjectScreenProps {
+  navigation: StackNavigationProp<any>;
+}
 
+const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
+  
   // Changement de fond selon l'horaire
 
   const [isDaytime, setIsDaytime] = useState(true);

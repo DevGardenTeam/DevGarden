@@ -1,3 +1,4 @@
+import React from 'react';
 import { createStackNavigator, Header } from "@react-navigation/stack";
 import AllPlatformsNeutralView from "../views/all_plaforms_neutral_view";
 import AllCommitsView from "../views/all_commits_view";

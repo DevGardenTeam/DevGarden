@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllPlatformsNeutralView = ({navigation}) => {
+interface AllPlatformsNeutralViewProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navigation }) => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
   return (
