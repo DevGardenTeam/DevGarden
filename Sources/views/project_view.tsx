@@ -3,14 +3,20 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
+import BackNavigationButton from '../components/button_back_navigation_component';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 
 interface CustomStyle extends ImageStyle {
-    backgroundImage?: string;
-  }
+  backgroundImage?: string;
+}
 
-const ProjectScreen: React.FC = () =>  {
+interface ProjectScreenProps {
+  navigation: StackNavigationProp<any>;
+}
 
+const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
+  
   // Changement de fond selon l'horaire
 
   const [isDaytime, setIsDaytime] = useState(true);
@@ -36,6 +42,10 @@ const ProjectScreen: React.FC = () =>  {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={styles.container2}>
+        <View style={styles.backButton}>
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
+        </View>
+
         <View style={styles.listTop}>
           <Text style={styles.title}>DevGarden</Text>
           <View style={styles.switch}>
@@ -50,10 +60,10 @@ const ProjectScreen: React.FC = () =>  {
           </View>
         </View>
         <View style={styles.mainContent}>
-          <NavigationButton title={t('projectView.dashboard')} />
-          <NavigationButton title='Commits' />
-          <NavigationButton title={t('project_management_title')} />
-          <NavigationButton title='???'/>
+          <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
+          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits")}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues")}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("Project")}/>
         </View>
       </SafeAreaView>
     );
@@ -74,7 +84,7 @@ const ProjectScreen: React.FC = () =>  {
         // start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
         // end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
         style={[styles.days]}>
-          <View style={styles.top}>
+        <View style={styles.top}>
           <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
           <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -95,6 +105,9 @@ const ProjectScreen: React.FC = () =>  {
               <Image source={require('../assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
             </TouchableOpacity>
         </View>
+      <View style={styles.backButton}>
+        <BackNavigationButton onPress={() => navigation.goBack()}/> 
+      </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -106,6 +119,11 @@ const HEIGHT = Dimensions.get('window').height ;
 const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
+  
+  backButton:{
+    margin: 20,
+  },
+
   container: {
     flex: 1,
     backgroundColor: '#F1F0F0',
@@ -183,7 +201,6 @@ const styles = StyleSheet.create({
 
   // LIST VIEW
   container2: {
-    flex: 1,
     backgroundColor: '#F1F0F0',
   },
   listTop:{

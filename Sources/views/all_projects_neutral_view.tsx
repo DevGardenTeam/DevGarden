@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
+import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonProjectComponent from '../components/button_project_component'
+import BackNavigationButton from '../components/button_back_navigation_component';
 
-const AllProjectsNeutralView: React.FC = () => {
+interface AllProjectsNeutralViewProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigation }) => {
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
 
   useEffect(() => {
@@ -20,6 +26,9 @@ const AllProjectsNeutralView: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.backButton}>
+        <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
+      </View>
       <View style={styles.mainView}>
         <View>
           <Text style={styles.titleText}>Choisissez un projet</Text>
@@ -30,7 +39,7 @@ const AllProjectsNeutralView: React.FC = () => {
             data={repositories}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={handleRepositoryPress}></ButtonProjectComponent>             
+              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project")}></ButtonProjectComponent>             
             )}
           />
         </View>  
@@ -44,6 +53,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+  },
+  backButton:{
+    margin: 20,
   },
   mainView: {
     flex: 1,

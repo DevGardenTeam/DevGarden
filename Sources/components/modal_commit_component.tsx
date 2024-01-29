@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type ModalCommitComponent = {
     image: string;
