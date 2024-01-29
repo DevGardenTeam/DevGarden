@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
-      boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
+      // boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
       width: '80%',
       margin:"8%"
     },
