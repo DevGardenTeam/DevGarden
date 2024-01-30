@@ -9,21 +9,18 @@ type DonutLegendProps = {
 
 const DonutLegend: React.FC<DonutLegendProps> = ({ color, value }) => {
 
-    var elements: React.ReactNode[] = [];
+    const elements: React.ReactNode[] = [];
 
-    var previousKey: string
+    let previousKey: string
 
     for (const [idx, key] of Object.keys(value).entries()) {
         if (value.hasOwnProperty(key)) {
             if (idx%2 === 0 && idx === (Object.keys(value).length-1)){
                 elements.push(
                     <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            marginBottom: 10,
-                        }}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
+                    key={key}
+                        style={styles.main}>
+                        <View style={styles.second}>
                             <Dot color={color[idx]}/>
                             <Text style={{color: 'black'}}>{key}: {value[key]}%</Text>
                         </View>
@@ -37,23 +34,14 @@ const DonutLegend: React.FC<DonutLegendProps> = ({ color, value }) => {
             }
             elements.push(
                 <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        marginBottom: 10,
-                    }}>
-                    <View
-                        style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 120,
-                        marginRight:20
-                        }}>
+                    key={key}
+                    style={styles.main}>
+                    <View style={[styles.second,{marginRight:20}]}>
                         <Dot color={color[idx-1]}/>
                         <Text style={{color: 'black'}}>{previousKey}: {value[previousKey]}%</Text>
                     </View>
                     <View
-                        style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
+                        style={styles.second}>
                         <Dot color={color[idx]}/>
                         <Text style={{color: 'black'}}>{key}: {value[key]}%</Text>
                     </View>
@@ -75,11 +63,15 @@ const HEIGHT = Dimensions.get('window').height ;
 const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
-    dot: {
-        height: 10,
-        width: 10,
-        marginRight: 10,
-        borderRadius: 5,
+    main : {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    second : {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: ISLANDSCAPE ? HEIGHT * 0.1 : WIDTH *0.33 ,
     }
 })
 

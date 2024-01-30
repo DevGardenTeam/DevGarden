@@ -20,8 +20,8 @@ const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
     dot: {
-        height: 10,
-        width: 10,
+        height: ISLANDSCAPE ? HEIGHT * 0.1 : WIDTH *0.04 ,
+        width: ISLANDSCAPE ? HEIGHT * 0.1 : WIDTH *0.04 ,
         marginRight: 10,
         borderRadius: WIDTH,
     }
