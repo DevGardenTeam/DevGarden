@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, StyleSheet, Dimensions, View  } from 'react-native';
 import Dot from "./dot_component"
 
-type DonutLegend = {
+type DonutLegendProps = {
     color: string[],
     value: {[key: string]: string}
 }
 
-const DonutLegend: React.FC<DonutLegend> = ({ color, value }) => {
+const DonutLegend: React.FC<DonutLegendProps> = ({ color, value }) => {
 
     var elements: React.ReactNode[] = [];
 

@@ -5,7 +5,6 @@ import "../service/i18n"
 import React from 'react';
 import { BarChart, PieChart } from "react-native-gifted-charts";
 import BuildItem from "../components/dashboard_components/build_item_component"
-import Dot from "../components/dashboard_components/dot_component"
 import DonutLegend from "../components/dashboard_components/donut_legend_component"
 
 const DashBoardScreen: React.FC = () => {
@@ -36,51 +35,6 @@ const DashBoardScreen: React.FC = () => {
     {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
   ];
   
-  const renderLegendComponent = (color:string,value:string) => {
-    return (
-      <>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: 120,
-              marginRight: 20,
-            }}>
-            <Dot color='#006DFF'/>
-            <Text style={{color: 'black'}}>React Native: {pieData[0].value}%</Text>
-          </View>
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-            <Dot color='#8F80F3'/>
-            <Text style={{color: 'black'}}>Typescripts: {pieData[1].value}%</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: 120,
-              marginRight: 20,
-            }}>
-            <Dot color='#3BE9DE'/>
-            <Text style={{color: 'black'}}>C#: {pieData[2].value}%</Text>
-          </View>
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-            <Dot color='#FF7F97'/>
-            <Text style={{color: 'black'}}>Bash: {pieData[3].value}%</Text>
-          </View>
-        </View>
-      </>
-    );
-  };
   
   // Build Stats
 
@@ -116,12 +70,12 @@ const DashBoardScreen: React.FC = () => {
             radius={90}
             innerRadius={60}   
           />
-          <DonutLegend color={["#006DFF","#8F80F3","#3BE9DE","#FF7F97"]} 
+          <DonutLegend color={["#006DFF","#8F80F3","#3BE9DE","#FF7F97","blue"]} 
             value={{'React Native':String(pieData[0].value),
                     'TypeScripts':String(pieData[1].value),
                     'C#':String(pieData[2].value),
-                    'Java':String(pieData[3].value)}} />
-          {/* {renderLegendComponent("","")} */}
+                    'Java':String(pieData[3].value),
+                    'JavaScript':String(pieData[3].value)}} />
         </View>
         <View style={styles.box}>
           <View style={styles.buildHeader}>
