@@ -1,11 +1,6 @@
 import { File } from "./File";
 
 export class Folder extends File{
-    id: string;
-    name: string;
-    size: number;
-    encoding: string;
-    content: string;
     files: File[]
     folders: Folder[]
 

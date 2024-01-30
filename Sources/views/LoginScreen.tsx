@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 
-const LoginScreen: React.FC = () => {
+interface LoginScreenProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
@@ -42,17 +47,17 @@ const LoginScreen: React.FC = () => {
               <Text style={styles.forgotPasswordText}>Forget Password</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AllPlatforms")}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.buttonText}>Register</Text>
               </TouchableOpacity>
             </View>
         </View>
     </SafeAreaView>
   );
-};
+}
 
 
 
