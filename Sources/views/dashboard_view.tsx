@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import "../service/i18n"
 import React from 'react';
 import { BarChart, PieChart } from "react-native-gifted-charts";
-import BuildItem from "../components/build_item_component"
+import BuildItem from "../components/dashboard_components/build_item_component"
+import Dot from "../components/dashboard_components/dot_component"
 
 const DashBoardScreen: React.FC = () => {
   const {t} = useTranslation();     // A ajouter pour le multi langue
@@ -33,20 +34,6 @@ const DashBoardScreen: React.FC = () => {
     {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
     {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
   ];
-
-  const renderDot = (color: string) => {
-    return (
-      <View
-        style={{
-          height: 10,
-          width: 10,
-          borderRadius: 5,
-          backgroundColor: color,
-          marginRight: 10,
-        }}
-      />
-    );
-  }
   
   const renderLegendComponent = () => {
     return (
@@ -64,12 +51,12 @@ const DashBoardScreen: React.FC = () => {
               width: 120,
               marginRight: 20,
             }}>
-            {renderDot('#006DFF')}
+            <Dot color='#006DFF'/>
             <Text style={{color: 'black'}}>React Native: {pieData[0].value}%</Text>
           </View>
           <View
             style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-            {renderDot('#8F80F3')}
+            <Dot color='#8F80F3'/>
             <Text style={{color: 'black'}}>Typescripts: {pieData[1].value}%</Text>
           </View>
         </View>
@@ -81,12 +68,12 @@ const DashBoardScreen: React.FC = () => {
               width: 120,
               marginRight: 20,
             }}>
-            {renderDot('#3BE9DE')}
+            <Dot color='#3BE9DE'/>
             <Text style={{color: 'black'}}>C#: {pieData[2].value}%</Text>
           </View>
           <View
             style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-            {renderDot('#FF7F97')}
+            <Dot color='#FF7F97'/>
             <Text style={{color: 'black'}}>Bash: {pieData[3].value}%</Text>
           </View>
         </View>
