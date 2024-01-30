@@ -6,6 +6,7 @@ import React from 'react';
 import { BarChart, PieChart } from "react-native-gifted-charts";
 import BuildItem from "../components/dashboard_components/build_item_component"
 import Dot from "../components/dashboard_components/dot_component"
+import DonutLegend from "../components/dashboard_components/donut_legend_component"
 
 const DashBoardScreen: React.FC = () => {
   const {t} = useTranslation();     // A ajouter pour le multi langue
@@ -35,7 +36,7 @@ const DashBoardScreen: React.FC = () => {
     {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
   ];
   
-  const renderLegendComponent = () => {
+  const renderLegendComponent = (color:string,value:string) => {
     return (
       <>
         <View
@@ -115,7 +116,12 @@ const DashBoardScreen: React.FC = () => {
             radius={90}
             innerRadius={60}   
           />
-          {renderLegendComponent()}
+          <DonutLegend color={["#006DFF","#8F80F3","#3BE9DE","#FF7F97"]} 
+            value={{'React Native':String(pieData[0].value),
+                    'TypeScripts':String(pieData[1].value),
+                    'C#':String(pieData[2].value),
+                    'Java':String(pieData[3].value)}} />
+          {/* {renderLegendComponent("","")} */}
         </View>
         <View style={styles.box}>
           <View style={styles.buildHeader}>
