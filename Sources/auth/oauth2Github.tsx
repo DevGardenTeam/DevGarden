@@ -1,9 +1,9 @@
+/* MAIN VIEW USED IN POC TO TEST OAUTH2 AUTHENTICATION --   
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button} from 'react-native';
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
-
-
 
 export default function App() {
 
@@ -35,3 +35,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+*/

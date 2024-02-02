@@ -14,7 +14,7 @@ const DonutLegend: React.FC<DonutLegendProps> = ({ color, value }) => {
     let previousKey: string
 
     for (const [idx, key] of Object.keys(value).entries()) {
-        if (value.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(value, key)) {
             if (idx%2 === 0 && idx === (Object.keys(value).length-1)){
                 elements.push(
                     <View

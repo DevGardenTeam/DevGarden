@@ -18,7 +18,7 @@ const discovery = {
 }
 
 export default function GiteaAuth() {
-	
+  
   // [POC]
   //const navigation = useNavigation();
 
@@ -49,7 +49,7 @@ export default function GiteaAuth() {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-	  // get the token from the response data
+    // get the token from the response data
           const accessToken = data.access_token;
           console.log(`Access token => ${accessToken}`); // Debug
   

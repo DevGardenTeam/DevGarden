@@ -18,7 +18,7 @@ const discovery = {
 }
 
 export default function GitlabAuth() {
-	
+  
   // [POC]
   //const navigation = useNavigation();
 
@@ -57,7 +57,7 @@ export default function GitlabAuth() {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-	  // get the token from the response data
+    // get the token from the response data
           const accessToken = data.access_token;
           console.log(`Access token => ${accessToken}`); // Debug
   
