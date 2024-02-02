@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { useAuthRequest } from 'expo-auth-session';
 import { View, Button, StatusBar,  } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 
@@ -20,7 +19,8 @@ const discovery = {
 
 export default function GithubAuth() {
 	
-  const navigation = useNavigation();
+  // [POC]
+  //const navigation = useNavigation();
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -49,13 +49,14 @@ export default function GithubAuth() {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-	  // get the token from the response data
+	        // get the token from the response data
           const accessToken = data.access_token;
           console.log(`Access token => ${accessToken}`); // Debug
   
           if (accessToken) {
             // navigate to the success screen
-            navigation.navigate('Success', { accessToken: accessToken });
+            // [POC] commented for now since this was used for the POC
+            //navigation.navigate('Success', { accessToken: accessToken });
           }
         })
         .catch((error) => {

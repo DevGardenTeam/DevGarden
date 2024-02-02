@@ -19,7 +19,8 @@ const discovery = {
 
 export default function GiteaAuth() {
 	
-  const navigation = useNavigation();
+  // [POC]
+  //const navigation = useNavigation();
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -54,7 +55,8 @@ export default function GiteaAuth() {
   
           if (accessToken) {
             // navigate to the success screen
-            navigation.navigate('Success', { accessToken: accessToken });
+            // [POC] commented for now since this was used for the POC
+            //navigation.navigate('Success', { accessToken: accessToken } as never);
           }
         })
         .catch((error) => {

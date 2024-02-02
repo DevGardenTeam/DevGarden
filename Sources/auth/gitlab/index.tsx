@@ -4,11 +4,8 @@ import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { useAuthRequest } from 'expo-auth-session';
 import { View, Button, StatusBar,  } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
-
-import { generateState } from "../config";
 
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
@@ -22,7 +19,8 @@ const discovery = {
 
 export default function GitlabAuth() {
 	
-  const navigation = useNavigation();
+  // [POC]
+  //const navigation = useNavigation();
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -65,7 +63,8 @@ export default function GitlabAuth() {
   
           if (accessToken) {
             // navigate to the success screen
-            navigation.navigate('Success', { accessToken: accessToken });
+            // [POC] commented for now since this was used for the POC
+            //navigation.navigate('Success', { accessToken: accessToken });
           }
         })
         .catch((error) => {
