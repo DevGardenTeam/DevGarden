@@ -9,8 +9,8 @@ type NavigationButton = {
 const NavigationButton: React.FC<NavigationButton> = ({ title, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Text style={styles.text}>{title}</Text>
-                <Image source={require('../assets/right_arrow.png')}  style={styles.icon} />
+            <Text style={styles.text}>{title}</Text>
+            <Image source={require('../assets/right_arrow.png')}  style={styles.icon} />
         </TouchableOpacity>
     );
 };
@@ -35,19 +35,18 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
-      boxShadow: "0px 0px 10px 1px rgba(0,0,0,0.5)",
       width: '80%',
-      marginBottom:ISLANDSCAPE ? "5%" : "10%",
       display: "flex",
       flexDirection: 'row',
       alignItems: "center",
-      justifyContent: "space-between",
-      height: ISLANDSCAPE ? "20%" : "25%",
-      padding: ISLANDSCAPE ? "1%" : "3.5%"
+      justifyContent: 'space-between',
+      height: ISLANDSCAPE ? "20%" : 'auto',
+      padding: ISLANDSCAPE ? "1%" : "3.5%",
     },
     icon: {
+      resizeMode: 'contain',
       width: ISLANDSCAPE ? "10%" : "20%",
-      height: "100%",
+      height: ISLANDSCAPE ? "20%" : HEIGHT*0.125,
       marginRight: 8,
       marginLeft: 4,
       tintColor: '#414141',
@@ -56,6 +55,8 @@ const styles = StyleSheet.create({
       color: '#414141',
       fontSize: ISLANDSCAPE ? WIDTH * 0.03 : WIDTH * 0.08,
       fontWeight: 'bold',
+      flexWrap: 'wrap',
+      maxWidth :'75%'
     },
 });
   

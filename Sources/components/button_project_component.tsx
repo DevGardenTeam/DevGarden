@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         marginRight: '10%',
         backgroundColor: '#FFFFFF',
         borderRadius: 1,
-        boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.5)',
+        // boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.5)',
         display: 'flex',
         justifyContent: 'center',
         marginVertical: '1%',
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         marginLeft: '1%',
         fontSize: 20,
+        overflow: 'hidden',
       }, 
 })
 

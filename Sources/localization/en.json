@@ -17,5 +17,11 @@
         "list":"List",
         "dashboard":"Dashboard"
     },
-    "project_management_title": "Project management"
+    "project_management_title": "Project management",
+    "dashboard":{
+        "activityTitle":"Activity",
+        "languagesTitle":"Languages",
+        "security":"Security",
+        "duplication":"Duplication"
+    }
 }

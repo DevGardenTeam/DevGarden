@@ -10,7 +10,7 @@ type TextInputProps  = {
     password?: boolean
 }
   
-const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width=ISLANDSCAPE ? '40%' : '70%', onChangeText, value, iconSource, password = false  }) => {
+const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width='85%', onChangeText, value, iconSource, password = false  }) => {
     return (
         <View style={[styles.container, { width: width }]}>
             <TextInput 
@@ -30,7 +30,6 @@ const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width=ISLA
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
     container: {

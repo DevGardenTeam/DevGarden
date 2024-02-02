@@ -1,3 +1,4 @@
+import 'intl-pluralrules';
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import fr from "../localization/fr.json"
@@ -19,7 +20,7 @@ export const languageResources = {
 i18n.use(initReactI18next)
     .init({
         compatibilityJSON:"v4",
-        lng: "fr",
+        lng: "en",
         fallbackLng: "en",
         defaultNS: "translation",
         interpolation: {

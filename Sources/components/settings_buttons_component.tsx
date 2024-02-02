@@ -1,17 +1,18 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform  } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
 
 type ParmetersButton = {
     title: string,
-    iconSource: ImageSourcePropType
+    iconSource: ImageSourcePropType,
+    tint : ColorValue,
     onPress?: ((event: GestureResponderEvent) => void)
 }
   
-const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, onPress }) => {
+const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <View style={styles.buttonContent}>
-                <Image source={iconSource} style={styles.icon} />
+                <Image source={iconSource} style={[styles.icon,{tintColor:tint}]} />
                 <Text style={styles.text}>{title}</Text>
             </View>
         </TouchableOpacity>
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
-      boxShadow: "0px 0px 28px 1px rgba(0,0,0,0.5)",
       width: '80%',
       margin:"8%"
     },
