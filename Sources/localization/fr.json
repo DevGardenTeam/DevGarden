@@ -1,0 +1,21 @@
+{
+    "supportedLanguages": {
+            "en": "Anglais",
+            "fr": "Français",
+            "pt": "Portugais"
+        },
+    "settings": {
+        "settings":"Paramètres",
+        "logOut":"Se déconnecter",
+        "language":"Langues",
+        "nightMode":"Mode sombre",
+        "linkAccount":"Associer des comptes",
+        "searchPlaceHolder":"Rechercher une langue"
+    },
+    "projectView": {
+        "garden":"Jardin",
+        "list":"Liste",
+        "dashboard":"Tableau de bord"
+    },
+    "project_management_title": "Gestion de projet"
+}

@@ -2,9 +2,9 @@ import { GITEA_CLIENT_ID } from "../config"
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { useAuthRequest } from 'expo-auth-session';
 import { View, Button, StatusBar,  } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 
@@ -26,6 +26,7 @@ export default function GiteaAuth() {
       clientId: GITEA_CLIENT_ID,
       scopes: ['identity', 'repo'],
       redirectUri: 'http://localhost:19006/auth/callback',
+      usePKCE: false,
     },
     discovery
   );
@@ -35,13 +36,6 @@ export default function GiteaAuth() {
       const { code } = response.params;
       console.log(`response code => ${code}`); // Debug
   
-      // Send the authorization code to the .NET Web API
-      //
-      // other way to add query parameters :
-      // const platform = "..."
-      // const url = new URL("https:...")
-      //
-      // url.searchParams.append('platform', platform);
       fetch('https://localhost:7260/api/v1/OAuth/token?platform=gitea', {
         method: 'POST',
         headers: {
