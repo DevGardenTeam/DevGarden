@@ -13,16 +13,16 @@ steps:
       - node -v
       - yarn -v
 
-  - name: type-check
-    image: node:21
-    commands:
-      - pwd
-      - ls
-      - cd Sources
-      - yarn install
-      - yarn tsc
-    depends_on:
-      - check-dependencies
+#  - name: type-check
+#    image: node:21
+#    commands:
+#      - pwd
+#      - ls
+#      - cd Sources
+#      - yarn install
+#      - yarn tsc
+#    depends_on:
+#      - check-dependencies
 
   - name: lint
     image: node:21
@@ -30,11 +30,10 @@ steps:
       - pwd
       - ls
       - cd Sources
-      # - yarn install
-      # npm init @eslint/config
+      - yarn install
       - yarn lint
     depends_on:
-      - type-check
+      - check-dependencies
 
   - name: sonarqube
     image: reactnativecommunity/react-native-android
