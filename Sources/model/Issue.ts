@@ -15,3 +15,12 @@ export class Issue{
         this.labels = labels;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToIssue(apiObject: any): Issue {
+  return new Issue(
+    apiObject.id.toString(),
+    apiObject.name,
+    apiObject.labels,
+  );
+}
