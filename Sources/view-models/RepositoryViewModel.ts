@@ -4,6 +4,7 @@ import { Repository } from '../model/Repository';
 
 export const useRepositoryViewModel = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repository, setRepository] = useState<Repository>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,7 +18,22 @@ export const useRepositoryViewModel = () => {
       } else {
         setError(result.errors);
       }
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRepositoryById = async (id: string) => {
+    try {
+      const result = await repositoryService.get(id);
+      if (result.succeeded) {
+        setRepository(result.data)
+      } else {
+        setError(result.errors);
+      }
+    } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false);
@@ -28,5 +44,5 @@ export const useRepositoryViewModel = () => {
     fetchRepositories();
   }, []);
 
-  return { repositories, loading, error, fetchRepositories };
+  return { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById };
 };

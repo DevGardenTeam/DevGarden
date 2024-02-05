@@ -19,3 +19,13 @@ export class Commit{
         this.repository = repository;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToCommit(apiObject: any): Commit {
+  return new Commit(
+    apiObject.id.toString(),
+    apiObject.message,
+    apiObject.author,
+    apiObject.repository
+  );
+}
