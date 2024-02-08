@@ -20,7 +20,7 @@ function Box(props) {
   )
 }
 
-export default function App() {
+export default function HomeScreen() {
   return (
     <Canvas>
       <ambientLight intensity={Math.PI / 2} />
