@@ -1,17 +1,33 @@
-import React, { useEffect } from 'react';
-import { View, Image } from 'react-native';
+import React, { useRef, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber/native'
 
-const HomeScreen: React.FC = () => {
-
+function Box(props) {
+  const meshRef = useRef(null)
+  const [hovered, setHover] = useState(false)
+  const [active, setActive] = useState(false)
+  useFrame((state, delta) => (meshRef.current.rotation.x += delta))
   return (
-    <View style={{ flex: 1 }}>
-      <Image
-        source={require('../assets/splash.png')} 
-        style={{ width: '100%', height: '100%' }}
-        resizeMode="cover"
-      />
-    </View>
-  );
-};
+    <mesh
+      {...props}
+      ref={meshRef}
+      scale={active ? 1.5 : 1}
+      onClick={(event) => setActive(!active)}
+      onPointerOver={(event) => setHover(true)}
+      onPointerOut={(event) => setHover(false)}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+    </mesh>
+  )
+}
 
-export default HomeScreen;
+export default function HomeScreen() {
+  return (
+    <Canvas>
+      <ambientLight intensity={Math.PI / 2} />
+      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
+      <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
+      <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} />
+    </Canvas>
+  )
+}
