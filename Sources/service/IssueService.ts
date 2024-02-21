@@ -10,8 +10,8 @@ export class IssueService extends BaseResources<Issue>{
         super();
     }
 
-    async getMany(){
-        const result = await super.getMany();
+    async getMany(params?: any){
+        const result = await super.getMany(params);
         const deserializedResult = this.deserialize(result);
         return { data: deserializedResult, succeeded: result.succeeded, errors: result.errors };
     }

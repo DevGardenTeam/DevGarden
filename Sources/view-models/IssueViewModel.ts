@@ -12,7 +12,9 @@ export const useIssueViewModel = () => {
 
   const fetchIssues = async () => {
     try {
-      const result = await issueService.getMany();
+      const params = { owner: "LouBRODA", repository: "BRODALou_OpenLibraryWS_Wrapper" };
+      const result = await issueService.getMany(params);
+      console.log(result.data)
       if (result.succeeded) {
         setIssues(result.data);
       } else {
