@@ -11,7 +11,8 @@ export const useCommitViewModel = () => {
 
   const fetchCommits = async () => {
     try {
-      const result = await commitService.getMany();
+      const params = { owner: "LouBRODA", repository: "BRODALou_OpenLibraryWS_Wrapper" };
+      const result = await commitService.getMany(params);
       if (result.succeeded) {
         setCommits(result.data);
       } else {
