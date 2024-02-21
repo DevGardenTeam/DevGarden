@@ -3,13 +3,27 @@ import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } fro
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonLabelIssueComponent from '../components/button_label_issue_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { IssueViewController } from '../view-controllers/IssueViewController';
 
 interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
 }
 
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
-  
+    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController();
+
+    useEffect(() => {
+        fetchIssues();
+    }, []);
+
+    if (loading) {
+        return <ActivityIndicator size="large" />;
+    }
+
+    if (error) {
+        return <Text>Error: {error}</Text>;
+    }
+
     return (
         <SafeAreaView style={styles.safeAreaView}>
             <View style={styles.backButton}>
@@ -20,9 +34,16 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
                     <Text style={styles.titleText}>Issues</Text>
                 </View> 
                 <View style={styles.contentView}>
-                    <View style={styles.masterLabel}>
-                        <ButtonLabelIssueComponent name={'Test Issue title'} isOpen={false} userCount={undefined}></ButtonLabelIssueComponent>
-                    </View>
+                    <FlatList             
+                        style={styles.flatList}
+                        data={issues}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => (
+                            <View style={styles.masterLabel}>
+                                <ButtonLabelIssueComponent name={item.name} isOpen={false} userCount="0"></ButtonLabelIssueComponent>
+                            </View>
+                        )}
+                    />
                 </View>  
             </View>
         </SafeAreaView>
@@ -59,6 +80,12 @@ const styles = StyleSheet.create({
     contentView: {
         display: 'flex',
         flexDirection: 'row',
+    },
+    flatList:{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
     },
     masterLabel: {
         display: 'flex',

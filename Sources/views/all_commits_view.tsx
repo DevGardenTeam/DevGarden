@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image, FlatList, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonLabelCommitComponent from '../components/button_label_commit_component';
 import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { CommitViewController } from '../view-controllers/CommitViewController';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -11,6 +12,20 @@ interface AllCommitsViewProps {
 
 const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
+
+  const { commits, loading, error, handleCommitPress, fetchCommits } = CommitViewController();
+
+  useEffect(() => {
+    fetchCommits();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
@@ -23,11 +38,18 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
           <Text style={styles.titleTextBis}>(master)</Text>
         </View>
         <View style={styles.contentView}>
-          <View style={styles.masterLabel}>
-            <TouchableOpacity onPress={() => {setModalVisible(true)}}>
-              <ButtonLabelCommitComponent title="#1565s8" image="test" />
-            </TouchableOpacity>
-          </View>
+          <FlatList             
+            style={styles.flatList}
+            data={commits}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.masterLabel}>
+                <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+                  <ButtonLabelCommitComponent title={item.id} image="test" />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
         <Modal
           style={styles.modalContainer}
@@ -73,6 +95,12 @@ const styles = StyleSheet.create({
   contentView: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  flatList:{
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
   },
   masterLabel: {
     display: 'flex',
