@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image, FlatList, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
 import ButtonLabelCommitComponent from '../components/button_label_commit_component';
 import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -10,13 +11,22 @@ interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
 }
 
+interface RouteParams {
+  owner: string;
+  repository: string;
+}
+
 const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
+
+  const route = useRoute();
+  const { owner, repository } = route.params as RouteParams;
+
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const { commits, loading, error, handleCommitPress, fetchCommits } = CommitViewController();
+  const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ owner, repository });
 
   useEffect(() => {
-    fetchCommits();
+    getAllCommits();
   }, []);
 
   if (loading) {
