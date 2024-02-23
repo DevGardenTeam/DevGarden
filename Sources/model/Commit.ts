@@ -22,8 +22,9 @@ export class Commit{
 
 // Fonction de mapping
 export function mapApiObjectToCommit(apiObject: any): Commit {
+  console.log(apiObject);
   return new Commit(
-    apiObject.id.toString(),
+    apiObject.sha.toString(), //NOT ADAPTED TO ALL PLATFORM (id/sha) ?
     apiObject.message,
     apiObject.author,
     apiObject.repository
