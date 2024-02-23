@@ -18,9 +18,10 @@ export class Member{
 }
 
 export function mapApiObjectToMember(apiObject: any): Member {
+  console.log(apiObject);
   return new Member(
     apiObject.id.toString(),
-    apiObject.login, //NOT ADAPTED TO ALL PLATFORM (id/sha) ?
+    apiObject.name,
     apiObject.repositories
   );
 }
