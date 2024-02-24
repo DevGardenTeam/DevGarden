@@ -40,7 +40,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.navigate("Project")}/> 
+        <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/> 
       </View>
       <View style={styles.mainView}>
         <View style={styles.titleView}>

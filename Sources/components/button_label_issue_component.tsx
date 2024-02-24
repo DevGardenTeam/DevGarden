@@ -4,7 +4,7 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 type ButtonLabelIssueComponent = {
     name: string;
     isOpen: boolean;
-    userCount: Int32Array;
+    userCount: number;
     onSelect?: (platform: string) => void;
 }
 

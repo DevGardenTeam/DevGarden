@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
 import ButtonLabelIssueComponent from '../components/button_label_issue_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { IssueViewController } from '../view-controllers/IssueViewController';
@@ -9,8 +10,16 @@ interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
 }
 
+interface RouteParams {
+    owner: string;
+    repository: string;
+}
+
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
-    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController();
+    const route = useRoute();
+    const { owner, repository } = route.params as RouteParams;
+
+    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ owner, repository });
 
     useEffect(() => {
         fetchIssues();
@@ -27,7 +36,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.safeAreaView}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project")}/> 
+                <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/> 
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
@@ -40,7 +49,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.masterLabel}>
-                                <ButtonLabelIssueComponent name={item.name} isOpen={false} userCount="0"></ButtonLabelIssueComponent>
+                                <ButtonLabelIssueComponent name={item.name} isOpen={false} userCount={item.labels.length}></ButtonLabelIssueComponent>
                             </View>
                         )}
                     />
