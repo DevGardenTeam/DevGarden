@@ -6,6 +6,7 @@ import ButtonLabelCommitComponent from '../components/button_label_commit_compon
 import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { CommitViewController } from '../view-controllers/CommitViewController';
+import { Commit } from '../model/Commit';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -22,6 +23,8 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const { owner, repository } = route.params as RouteParams;
 
   const [isModalVisible, setModalVisible] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState<null | Commit>(null);
 
   const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ owner, repository });
 
@@ -54,7 +57,10 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.masterLabel}>
-                <TouchableOpacity onPress={() => {setModalVisible(true)}}>
+                <TouchableOpacity onPress={() => {
+                    setModalVisible(true);
+                    setSelectedItem(item);
+                  }}>
                   <ButtonLabelCommitComponent title={item.id} image="test" />
                 </TouchableOpacity>
               </View>
@@ -67,7 +73,18 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
           transparent={true}
           visible={isModalVisible}
           onRequestClose={() => {setModalVisible(false)}}>
-            <ModalCommitComponent image={''} username={''} date={''} message={''} branch={''} id={''} onSelect={() => {setModalVisible(false)}}></ModalCommitComponent>
+          <ModalCommitComponent 
+            image={selectedItem?.author.id ?? ''} 
+            username={selectedItem?.author.name ?? ''} 
+            date={selectedItem?.id ?? ''} 
+            message={selectedItem?.message ?? ''} 
+            branch={selectedItem?.id ?? ''} 
+            id={selectedItem?.id ?? ''} 
+            onSelect={() => {
+              setModalVisible(false);
+              setSelectedItem(null);
+            }}
+          ></ModalCommitComponent>        
         </Modal>
       </View>
     </SafeAreaView>

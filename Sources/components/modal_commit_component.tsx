@@ -22,19 +22,19 @@ const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username,
                         <Image source={require('../assets/IconMail.png')} style={styles.userImage} />    
                     </View>
                     <View style={styles.userNameDate}>
-                        <Text style={styles.userName}>Lou</Text>
-                        <Text style={styles.date}>21/15/2022</Text>
+                        <Text style={styles.userName}>{username}</Text>
+                        <Text style={styles.date}>{date}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
                     <Image source={require('../assets/close.png')} style={styles.closeImage} />   
                 </TouchableOpacity>                 
             </View>
-            <Text style={styles.message}>Mon premier commit</Text>
+            <Text style={styles.message}>{message}</Text>
 
             <View style={styles.branchInfo}>
-                <Text style={styles.branch}>master</Text>
-                <Text style={styles.commitId}>#1565s8</Text>
+                <Text style={styles.branch}>{branch}</Text>
+                <Text style={styles.commitId}>{id}</Text>
             </View>
         </View>
     </View>
