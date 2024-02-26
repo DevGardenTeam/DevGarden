@@ -1,17 +1,38 @@
 import { Label } from "./Label";
+import { Member } from "./Member";
+import { Milestone } from "./Milestone";
+import { Repository } from "./Repository";
 
 export class Issue{
     id: string;
-    name: string;
+    title: string; 
+    body: string;
+    state: string; 
+    creationDate: Date; 
+    author: Member;
+    milestone: Milestone; 
+    repository: Repository;
     labels: Label[];
 
     constructor(
         id: string, 
-        name: string, 
+        title: string, 
+        body: string, 
+        state: string, 
+        creationDate: Date, 
+        author: Member, 
+        milestone: Milestone, 
+        repository: Repository, 
         labels: Label[]
       ) {
         this.id = id;
-        this.name = name;
+        this.title = title;
+        this.body = body;
+        this.state = state;
+        this.creationDate = creationDate;
+        this.author = author;
+        this.milestone = milestone;
+        this.repository = repository;
         this.labels = labels;
     }
 }
@@ -20,7 +41,13 @@ export class Issue{
 export function mapApiObjectToIssue(apiObject: any): Issue {
   return new Issue(
     apiObject.id.toString(),
-    apiObject.name,
+    apiObject.title,
+    apiObject.body,
+    apiObject.state,
+    apiObject.creationDate,
+    apiObject.author,
+    apiObject.milestone,
+    apiObject.repository,
     apiObject.labels,
   );
 }

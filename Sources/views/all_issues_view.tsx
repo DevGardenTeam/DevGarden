@@ -49,7 +49,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.masterLabel}>
-                                <ButtonLabelIssueComponent name={item.name} isOpen={false} userCount={item.labels.length}></ButtonLabelIssueComponent>
+                                <ButtonLabelIssueComponent name={item.title} isOpen={item.state === "open" ? true : false} userCount={item.labels.length}></ButtonLabelIssueComponent>
                             </View>
                         )}
                     />
