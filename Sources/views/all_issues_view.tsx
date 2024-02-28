@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import ButtonLabelIssueComponent from '../components/button_label_issue_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { IssueViewController } from '../view-controllers/IssueViewController';
+import { Issue } from '../model/Issue';
+import ModalIssueComponent from '../components/modal_issue_component';
 
 interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
@@ -18,6 +20,10 @@ interface RouteParams {
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     const route = useRoute();
     const { owner, repository } = route.params as RouteParams;
+
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const [selectedItem, setSelectedItem] = useState<null | Issue>(null);
 
     const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ owner, repository });
 
@@ -49,11 +55,35 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.masterLabel}>
-                                <ButtonLabelIssueComponent name={item.title} isOpen={item.state === "open" ? true : false} userCount={item.labels.length}></ButtonLabelIssueComponent>
+                                <TouchableOpacity onPress={() => {
+                                    setModalVisible(true);
+                                    setSelectedItem(item);
+                                }}>
+                                    <ButtonLabelIssueComponent name={item.title} isOpen={item.state === "open" ? true : false} userCount={item.labels.length}></ButtonLabelIssueComponent>
+                                </TouchableOpacity>
                             </View>
                         )}
                     />
-                </View>  
+                </View> 
+                <Modal
+                    style={styles.modalContainer}
+                    animationType="fade"
+                    transparent={true}
+                    visible={isModalVisible}
+                    onRequestClose={() => {setModalVisible(false)}}>
+                    <ModalIssueComponent 
+                        id={selectedItem?.id ?? ''}
+                        title={selectedItem?.title ?? ''}
+                        body={selectedItem?.body ?? ''}
+                        state={selectedItem?.state ?? ''}
+                        creationDate={selectedItem?.id ?? ''}
+                        author={selectedItem?.author.name ?? ''} 
+                        onSelect={() => {
+                        setModalVisible(false);
+                        setSelectedItem(null);
+                        }}
+                    ></ModalIssueComponent>      
+                </Modal>
             </View>
         </SafeAreaView>
     );
@@ -101,7 +131,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-    }
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+    },
 })
   
 export default AllIssuesView;
