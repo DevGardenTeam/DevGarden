@@ -19,7 +19,7 @@ const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username,
             <View style={styles.topModalBar}>
                 <View style={styles.userInfo}>
                     <View style={styles.squareContainer}>
-                        <Image source={require('../assets/IconMail.png')} style={styles.userImage} />    
+                        <Image source={{ uri: image }} style={styles.userImage} />    
                     </View>
                     <View style={styles.userNameDate}>
                         <Text style={styles.userName}>{username}</Text>

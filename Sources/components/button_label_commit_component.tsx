@@ -12,7 +12,7 @@ const ButtonLabelCommitComponent: React.FC<ButtonLabelCommitComponent> = ({ titl
   return (
     <View style={styles.container}>
       <View style={styles.squareContainer}>
-        <Image source={{ uri: 'https://example.com/your-image.jpg' }}
+        <Image source={{ uri: image }}
           style={styles.image}
         />
       </View>

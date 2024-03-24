@@ -7,6 +7,7 @@ import BackNavigationButton from '../components/button_back_navigation_component
 import { IssueViewController } from '../view-controllers/IssueViewController';
 import { Issue } from '../model/Issue';
 import ModalIssueComponent from '../components/modal_issue_component';
+import DateUtils from '../helper/DateUtils';
 
 interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
@@ -76,7 +77,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
                         title={selectedItem?.title ?? ''}
                         body={selectedItem?.body ?? ''}
                         state={selectedItem?.state ?? ''}
-                        creationDate={selectedItem?.id ?? ''}
+                        creationDate={selectedItem?.creationDate ? DateUtils.formatDate(selectedItem.creationDate.toString()) : ''}
                         author={selectedItem?.author.name ?? ''} 
                         onSelect={() => {
                         setModalVisible(false);

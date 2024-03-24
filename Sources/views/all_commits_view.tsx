@@ -7,6 +7,7 @@ import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
+import DateUtils from '../helper/DateUtils';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -74,9 +75,9 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
           visible={isModalVisible}
           onRequestClose={() => {setModalVisible(false)}}>
           <ModalCommitComponent 
-            image={selectedItem?.author.id ?? ''} 
+            image={selectedItem?.author.photoUrl ?? ''} 
             username={selectedItem?.author.name ?? ''} 
-            date={selectedItem?.id ?? ''} 
+            date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''} 
             message={selectedItem?.message ?? ''} 
             branch={selectedItem?.id ?? ''} 
             id={selectedItem?.id ?? ''} 
