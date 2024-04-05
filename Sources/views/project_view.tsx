@@ -72,7 +72,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
           <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {owner: owner, repository: repository})}/>
           <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {owner: owner, repository: repository})}/>
-          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("Project")}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement")}/>
         </View>
       </SafeAreaView>
     );

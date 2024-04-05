@@ -11,6 +11,7 @@ import AllIssuesView from '../views/all_issues_view';
 import DetailsIssueView from '../views/details_issue_view';
 import ProjectScreen from '../views/project_view';
 import ParametersScreen from '../views/parameters_view';
+import ProjectManagementScreen from '../views/project_management_view';
 
 export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
@@ -72,6 +73,12 @@ export default function Navigation() {
                                            <BottomTabNavigator.Screen name="Project"  component={ProjectScreen}
                                            options={{
                                                 title: 'Project',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="ProjectManagement"  component={ProjectManagementScreen}
+                                           options={{
+                                                title: 'ProjectManagement',
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
