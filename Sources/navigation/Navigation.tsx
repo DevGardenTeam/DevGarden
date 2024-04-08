@@ -12,6 +12,8 @@ import DetailsIssueView from '../views/details_issue_view';
 import ProjectScreen from '../views/project_view';
 import ParametersScreen from '../views/parameters_view';
 import ProjectManagementScreen from '../views/project_management_view';
+import PertView from '../views/pert_main_view';
+import WbsView from '../views/wbs_main_view';
 
 export default function Navigation() {
     const BottomTabNavigator = createBottomTabNavigator();
@@ -79,6 +81,24 @@ export default function Navigation() {
                                            <BottomTabNavigator.Screen name="ProjectManagement"  component={ProjectManagementScreen}
                                            options={{
                                                 title: 'ProjectManagement',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="Wbs"  component={WbsView}
+                                           options={{
+                                                title: 'Wbs',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="Gantt"  component={ProjectManagementScreen}
+                                           options={{
+                                                title: 'Gantt',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/>
+                                           <BottomTabNavigator.Screen name="Pert"  component={PertView}
+                                           options={{
+                                                title: 'Pert',
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>

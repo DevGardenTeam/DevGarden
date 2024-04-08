@@ -17,7 +17,7 @@ const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, 
       <View style={styles.rectangularContainer}>
         <Text style={styles.issueName}>{name}</Text>
         <View style={styles.userCountContainer}>
-          <Image source={require('../assets/IconMail.png')} style={styles.userIcon} />
+          <Image source={require('../assets/icons/IconMail.png')} style={styles.userIcon} />
           <Text style={styles.userCount}>{userCount}</Text>
         </View>
       </View>

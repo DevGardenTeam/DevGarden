@@ -23,14 +23,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                   placeholder="Email Address"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
-                  iconSource={require('../assets/IconMail.png')}
+                  iconSource={require('../assets/icons/IconMail.png')}
                 />
                 <TextInputComponent
                   placeholder="Password"
                   value={password}
                   onChangeText={(text) => setPassword(text)}
                   password = {true}
-                  iconSource={require('../assets/IconLock.png')}
+                  iconSource={require('../assets/icons/IconLock.png')}
                 />
               </View>
               <CheckBox

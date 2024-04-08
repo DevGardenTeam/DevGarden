@@ -29,6 +29,7 @@ const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, 
 const styles = StyleSheet.create({
     rectangularContainer: {
         flex: 1,
+        flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: 'white',
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     },
     idTitle: {
         fontWeight: 'bold',
+        fontSize: 30,
     },
     roundButton: {
         alignItems: 'center',

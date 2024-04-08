@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
-import ButtonLabelIssueComponent from '../components/button_label_issue_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
-import { IssueViewController } from '../view-controllers/IssueViewController';
-import { Issue } from '../model/Issue';
-import ModalIssueComponent from '../components/modal_issue_component';
 import DateUtils from '../helper/DateUtils';
+import ButtonPertElementComponent from '../components/button_pert_element_component';
+import { PertTask } from '../model/PertTask';
 
 interface PertViewProps {
     navigation: StackNavigationProp<any>;
@@ -24,33 +22,33 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
 
-    const [selectedItem, setSelectedItem] = useState<null | Issue>(null);
+    const [selectedItem, setSelectedItem] = useState<null | PertTask>(null);
 
-    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ owner, repository });
+    // const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ owner, repository });
 
-    useEffect(() => {
-        fetchIssues();
-    }, []);
+    // useEffect(() => {
+    //     fetchIssues();
+    // }, []);
 
-    if (loading) {
-        return <ActivityIndicator size="large" />;
-    }
+    // if (loading) {
+    //     return <ActivityIndicator size="large" />;
+    // }
 
-    if (error) {
-        return <Text>Error: {error}</Text>;
-    }
+    // if (error) {
+    //     return <Text>Error: {error}</Text>;
+    // }
 
     return (
         <SafeAreaView style={styles.safeAreaView}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/> 
+                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
                     <Text style={styles.titleText}>PERT</Text>
                 </View> 
                 <View style={styles.contentView}>
-                    <FlatList             
+                    {/* <FlatList             
                         style={styles.flatList}
                         data={issues}
                         keyExtractor={(item) => item.id.toString()}
@@ -60,10 +58,16 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
                                     setModalVisible(true);
                                     setSelectedItem(item);
                                 }}>
+                                    <ButtonPertElementComponent id='1'
+                                                                members={[]}
+                                                                duration='1'/>
                                 </TouchableOpacity>
                             </View>
                         )}
-                    />
+                    /> */}
+                                    <ButtonPertElementComponent id='C1'
+                                                                members={[]}
+                                                                duration='20h'/>
                 </View> 
                 <Modal
                     style={styles.modalContainer}

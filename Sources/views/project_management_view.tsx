@@ -3,16 +3,34 @@ import { useTranslation } from "react-i18next"; // A ajouter pour le multi langu
 import '../service/i18n';
 import NavigationButton from '../components/button_component'
 import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
+import BackNavigationButton from '../components/button_back_navigation_component';
 
-const ProjectManagementScreen: React.FC = () =>  {
+interface ProjectManagementScreenProps {
+  navigation: StackNavigationProp<any>;
+}
+
+interface RouteParams {
+  owner: string;
+  repository: string;
+}
+
+const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navigation }) =>  {
+  const route = useRoute();
+  const { owner, repository } = route.params as RouteParams;
+
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
     <SafeAreaView style={styles.container}>
+        <View style={styles.backButton}>
+            <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/>
+        </View>
         <Text style={styles.title}>{t('project_management_title')}</Text>
         <View style={styles.mainContent}>
-          <NavigationButton title='WBS'/>
+          <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {owner: owner, repository: repository})}/>
           <NavigationButton title='GANTT'/>
-          <NavigationButton title='PERT'/>
+          <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {owner: owner, repository: repository})}/>
         </View>
     </SafeAreaView>
   );
@@ -24,6 +42,9 @@ const HEIGHT = Dimensions.get('window').height ;
 const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
+    backButton:{
+      margin: 20,
+    },
     container:{
         flex: 1,
     },

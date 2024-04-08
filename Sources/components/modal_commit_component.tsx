@@ -27,7 +27,7 @@ const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username,
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
-                    <Image source={require('../assets/close.png')} style={styles.closeImage} />   
+                    <Image source={require('../assets/icons/close.png')} style={styles.closeImage} />   
                 </TouchableOpacity>                 
             </View>
             <Text style={styles.message}>{message}</Text>

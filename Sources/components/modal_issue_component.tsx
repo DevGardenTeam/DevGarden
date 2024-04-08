@@ -28,7 +28,7 @@ const ModalIssueComponent: React.FC<ModalIssueComponent> = ({ id, title, body, s
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
-                    <Image source={require('../assets/close.png')} style={styles.closeImage} />   
+                    <Image source={require('../assets/icons/close.png')} style={styles.closeImage} />   
                 </TouchableOpacity>                 
             </View>
             <Text style={styles.message}>{body}</Text>
