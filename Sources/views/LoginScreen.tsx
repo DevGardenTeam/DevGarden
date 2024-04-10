@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 
