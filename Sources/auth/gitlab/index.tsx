@@ -2,13 +2,10 @@ import { GITLAB_CLIENT_ID } from "../config"
 
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { useAuthRequest } from 'expo-auth-session';
 import { View, Button, StatusBar,  } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
-
-import { generateState } from "../config";
 
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
@@ -21,21 +18,23 @@ const discovery = {
 }
 
 export default function GitlabAuth() {
-	
-  const navigation = useNavigation();
+  
+  // [POC]
+  //const navigation = useNavigation();
 
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: GITLAB_CLIENT_ID,
-      scopes: ['read_api', 'read_user', 'read_repository'],
+      scopes: ['read_api'],
       redirectUri: 'http://localhost:19006/auth/callback',
+      usePKCE: false,
     },
     discovery
   );
 
+  // console.log(request);
+
   // generate a state for the request
-  const state = generateState();
-  console.log(`state => ${state}`); // Debug
 
   React.useEffect(() => {
     if (response?.type === 'success') {
@@ -53,19 +52,19 @@ export default function GitlabAuth() {
         },
         body: JSON.stringify({
           code: code,
-          state: state,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-	  // get the token from the response data
+    // get the token from the response data
           const accessToken = data.access_token;
           console.log(`Access token => ${accessToken}`); // Debug
   
           if (accessToken) {
             // navigate to the success screen
-            navigation.navigate('Success', { accessToken: accessToken });
+            // [POC] commented for now since this was used for the POC
+            //navigation.navigate('Success', { accessToken: accessToken });
           }
         })
         .catch((error) => {

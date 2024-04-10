@@ -1,0 +1,27 @@
+{
+    "supportedLanguages": {
+        "en": "English",
+        "fr": "French",
+        "pt": "Portuguese"
+        },
+    "settings": {
+        "settings":"Settings",
+        "logOut":"Log out",
+        "language":"Languages",
+        "nightMode":"Night mode",
+        "linkAccount":"Link accounts",
+        "searchPlaceHolder":"Search for a language"
+    },
+    "projectView": {
+        "garden":"Garden",
+        "list":"List",
+        "dashboard":"Dashboard"
+    },
+    "project_management_title": "Project management",
+    "dashboard":{
+        "activityTitle":"Activity",
+        "languagesTitle":"Languages",
+        "security":"Security",
+        "duplication":"Duplication"
+    }
+}
