@@ -18,10 +18,18 @@ export abstract class BaseResources<T> extends HttpClient implements IBaseResour
       return result as ApiResponse<T>;
     }
   
-    public async getMany(): Promise<ApiResponse<T[]>> {
+    public async getMany(params?: any): Promise<ApiResponse<T[]>> {
       const instance = this.createInstance();
-      console.log(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`);
-      const result = await instance.get(`${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`).then(transform);
+      let url = `${CURRENT_BASE_URL}/${this.collection}/${this.getManyString}`;
+
+      if (params) {
+        const queryParams = new URLSearchParams(params).toString();
+        url += `?${queryParams}`;
+      }
+    
+      console.log(url);
+
+      const result = await instance.get(url).then(transform);
       return result as ApiResponse<T[]>;
     }
   

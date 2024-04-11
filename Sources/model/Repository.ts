@@ -1,4 +1,4 @@
-import { Member } from "./Member";
+import { Member, mapApiObjectToMember } from "./Member";
 import { Branch } from "./Branch";
 import { Commit } from "./Commit";
 import { Issue } from "./Issue";
@@ -51,10 +51,12 @@ export class Repository{
 
 // Fonction de mapping
 export function mapApiObjectToRepository(apiObject: any): Repository {
+  const owner = mapApiObjectToMember(apiObject.owner);
+
   return new Repository(
     apiObject.id.toString(),
     apiObject.name,
-    apiObject.owner,
+    owner,
     apiObject.isPrivate,
     apiObject.description || "",
     apiObject.isFork,

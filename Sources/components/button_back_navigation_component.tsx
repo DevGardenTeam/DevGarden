@@ -8,7 +8,7 @@ type BackNavigationButton = {
 const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Image source={require('../assets/arrow_back.png')} style={styles.icon} />
+                <Image source={require('../assets/icons/arrow_back.png')} style={styles.icon} />
         </TouchableOpacity>
     );
 };

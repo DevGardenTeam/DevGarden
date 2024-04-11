@@ -10,16 +10,16 @@ type ButtonLabelCommitComponent = {
 const ButtonLabelCommitComponent: React.FC<ButtonLabelCommitComponent> = ({ title, image, onSelect }) => {
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.squareContainer}>
-        <Image source={{ uri: 'https://example.com/your-image.jpg' }}
+        <Image source={{ uri: image }}
           style={styles.image}
         />
       </View>
       <View style={styles.rectangularContainer}>
         <Text style={styles.text}>{title}</Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

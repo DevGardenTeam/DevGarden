@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 interface CustomStyle extends ImageStyle {
@@ -15,10 +16,18 @@ interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
 }
 
+interface RouteParams {
+  owner: string;
+  repository: string;
+}
+
+
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   
-  // Changement de fond selon l'horaire
+  const route = useRoute();
+  const { owner, repository } = route.params as RouteParams;
 
+  // Changement de fond selon l'horaire
   const [isDaytime, setIsDaytime] = useState(true);
 
   useEffect(() => {
@@ -61,9 +70,9 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         </View>
         <View style={styles.mainContent}>
           <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
-          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits")}/>
-          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues")}/>
-          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("Project")}/>
+          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {owner: owner, repository: repository})}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {owner: owner, repository: repository})}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
         </View>
       </SafeAreaView>
     );

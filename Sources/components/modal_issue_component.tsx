@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Member } from '../model/Member';
 
-type ModalCommitComponent = {
-    image: string;
-    username: string;
-    date: string;
-    message: string;
-    branch: string;
+type ModalIssueComponent = {
     id: string;
+    title: string;
+    body: string;
+    state: string;
+    creationDate: string;
+    author: string;
     onSelect: () => void;
 }
 
-const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username, date, message, branch, id, onSelect }) => {
+const ModalIssueComponent: React.FC<ModalIssueComponent> = ({ id, title, body, state, creationDate, author, onSelect }) => {
 
   return (
     <View style={styles.modalContainer}>
@@ -19,21 +20,21 @@ const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username,
             <View style={styles.topModalBar}>
                 <View style={styles.userInfo}>
                     <View style={styles.squareContainer}>
-                        <Image source={{ uri: image }} style={styles.userImage} />    
+                        <View style={[styles.statusIndicator, state ? styles.openStatus : styles.closedStatus]} />
                     </View>
                     <View style={styles.userNameDate}>
-                        <Text style={styles.userName}>{username}</Text>
-                        <Text style={styles.date}>{date}</Text>
+                        <Text style={styles.userName}>{title}</Text>
+                        <Text style={styles.date}>{creationDate}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
                     <Image source={require('../assets/icons/close.png')} style={styles.closeImage} />   
                 </TouchableOpacity>                 
             </View>
-            <Text style={styles.message}>{message}</Text>
+            <Text style={styles.message}>{body}</Text>
 
             <View style={styles.branchInfo}>
-                <Text style={styles.branch}>{branch}</Text>
+                <Text style={styles.branch}>{author}</Text>
                 <Text style={styles.commitId}>{id}</Text>
             </View>
         </View>
@@ -75,8 +76,23 @@ const styles = StyleSheet.create({
         height: 100,
         borderWidth: 2,
         borderColor: 'black',
+        borderRadius: 60,
         marginRight: 16,
-        overflow: 'hidden',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas les bordures
+    },
+    statusIndicator: {
+      width: 80,
+      height: 80,
+      borderRadius: 60,
+    },
+    openStatus: {
+        backgroundColor: 'green',
+    },
+    closedStatus: {
+        backgroundColor: 'red',
     },
     userImage: {
         flex: 1,
@@ -126,4 +142,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ModalCommitComponent;
+export default ModalIssueComponent;

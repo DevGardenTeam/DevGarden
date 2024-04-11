@@ -39,7 +39,7 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
             data={repositories}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project")}></ButtonProjectComponent>             
+              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project", {owner: item.owner.name, repository: item.name})}></ButtonProjectComponent>             
             )}
           />
         </View>  
