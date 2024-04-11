@@ -65,9 +65,14 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
                             </View>
                         )}
                     /> */}
+                                <TouchableOpacity onPress={() => {
+                                    setModalVisible(true);
+                                    setSelectedItem(new PertTask("C1","Mise en place de l'ensemble des classes du projet", 30, 1, []));
+                                }}>
                                     <ButtonPertElementComponent id='C1'
                                                                 members={[]}
                                                                 duration='20h'/>
+                                </TouchableOpacity>
                 </View> 
                 <Modal
                     style={styles.modalContainer}
