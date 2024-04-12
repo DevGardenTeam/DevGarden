@@ -4,56 +4,82 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 type ButtonLabelIssueComponent = {
     name: string;
     isOpen: boolean;
-    userCount: Int32Array;
-    onSelect?: (platform: string) => void;
+    userCount: number;
 }
 
-const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, isOpen, userCount, onSelect }) => {
+const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, isOpen, userCount }) => {
 
   return (
-    <TouchableOpacity style={styles.container}>
-      <View style={[styles.statusIndicator, isOpen ? styles.openStatus : styles.closedStatus]} />
-      <Text style={styles.issueName}>{name}</Text>
-      <View style={styles.userCountContainer}>
-        <Image source={require('../assets/IconMail.png')} style={styles.userIcon} />
-        <Text style={styles.userCount}>{userCount}</Text>
+    <View style={styles.container}>
+      <View style={styles.squareContainer}>
+        <View style={[styles.statusIndicator, isOpen ? styles.openStatus : styles.closedStatus]} />
       </View>
-    </TouchableOpacity>
+      <View style={styles.rectangularContainer}>
+        <Text style={styles.issueName}>{name}</Text>
+        <View style={styles.userCountContainer}>
+          <Image source={require('../assets/icons/IconMail.png')} style={styles.userIcon} />
+          <Text style={styles.userCount}>{userCount}</Text>
+        </View>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 10,
+    height: '100%',
+    width: '100%',
+  },
+  squareContainer: {
+    width: 100,
+    height: 100,
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 60,
+    marginRight: 16,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas les bordures
+  },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+  },
+  rectangularContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 15,
-    shadowColor: '#000',
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
     elevation: 5,
+    padding: 16,
+    height: '80%',
+    overflow: 'hidden'
   },
   statusIndicator: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 15,
+    width: 80,
+    height: 80,
+    borderRadius: 60,
   },
   openStatus: {
     backgroundColor: 'green',
   },
   closedStatus: {
     backgroundColor: 'red',
-  },
-  issueDetails: {
-    flex: 1,
   },
   issueName: {
     fontSize: 30,

@@ -10,7 +10,7 @@ const NavigationButton: React.FC<NavigationButton> = ({ title, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.text}>{title}</Text>
-            <Image source={require('../assets/right_arrow.png')}  style={styles.icon} />
+            <Image source={require('../assets/icons/right_arrow.png')}  style={styles.icon} />
         </TouchableOpacity>
     );
 };

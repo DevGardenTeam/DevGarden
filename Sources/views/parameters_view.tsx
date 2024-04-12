@@ -48,7 +48,7 @@ const ParametersScreen: React.FC = () =>  {
             <View style={styles.headerEllipse} />
           </View>
           <View style={styles.titlecontainer}>
-            <Image source={require('../assets/settings.png')} style={styles.settingsIcon}/>
+            <Image source={require('../assets/icons/settings.png')} style={styles.settingsIcon}/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
           </View>
             <View style={styles.container_bis}>

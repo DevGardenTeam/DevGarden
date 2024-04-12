@@ -1,17 +1,26 @@
-import React, { useEffect } from 'react';
-import { View, Image } from 'react-native';
+import React, { useRef, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber/native'
 
-const HomeScreen: React.FC = () => {
+function Box() {
+  const meshRef = useRef();
+
+  useFrame((state, delta) => (meshRef.current.rotation.x += delta));
 
   return (
-    <View style={{ flex: 1 }}>
-      <Image
-        source={require('../assets/splash.png')} 
-        style={{ width: '100%', height: '100%' }}
-        resizeMode="cover"
-      />
-    </View>
+    <mesh ref={meshRef}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshBasicMaterial color="blue" />
+    </mesh>
   );
-};
+}
 
-export default HomeScreen;
+// Define the main component that renders the scene
+export default function HomeScreen() {
+  return (
+    <Canvas>
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
+      <Box />
+    </Canvas>
+  )
+}
