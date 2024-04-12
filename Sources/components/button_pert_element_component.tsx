@@ -20,7 +20,8 @@ const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, 
             </View>
             <Text>{duration}</Text>
             <TouchableOpacity style={styles.roundButton}>
-                <Text style={styles.buttonText}>o</Text>
+                <Image source={require('../assets/icons/edit.png')}
+                       style={styles.imageButton}/>
             </TouchableOpacity>
         </View>
     );
@@ -57,12 +58,15 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 40,
-        backgroundColor: 'blue',
+        backgroundColor: 'white',
+        borderColor: 'black',
+        borderWidth: 1,
     },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-    },
+    imageButton: {
+        width: 40,
+        height: 40,
+        tintColor: 'black',
+    }
 });
 
 export default ButtonPertElementComponent;
