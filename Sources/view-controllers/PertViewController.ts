@@ -1,6 +1,13 @@
 import React from 'react';
+import { usePertViewModel } from '../view-models/PertViewModel';
 
-const PertViewController = () => {
+interface PertViewControllerProps {
+  owner: string;
+  repository: string;
+}
+
+const PertViewController = ({ owner, repository }: PertViewControllerProps) => {
+  const { pertTasks, loading, error, fetchPertTasks } = usePertViewModel(owner, repository);
 
   return {
 

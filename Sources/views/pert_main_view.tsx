@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
     },
     contentView: {
         display: 'flex',
-        flexDirection: 'row',
     },
     flatList:{
         display: 'flex',

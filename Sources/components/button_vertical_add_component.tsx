@@ -18,13 +18,36 @@ const ButtonVerticalAddComponent: React.FC<ButtonVerticalAddComponent> = ({ titl
     
 const styles = StyleSheet.create({
     container: {
-
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 5,
+        padding: 16,
+        height: '100%',
+        width: '100%',
+        overflow: 'hidden',
+        marginHorizontal: 10,
     },
     title: {
-
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 20,
     },
     icon: {
-        
+        width: 40,
+        height: 40,
+        tintColor: 'black',
     }
 });
 

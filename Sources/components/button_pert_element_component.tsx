@@ -18,7 +18,7 @@ const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, 
                     <Text key={index}>{member.name}</Text>
                 ))}
             </View>
-            <Text>{duration}</Text>
+            <Text style={styles.durationText}>{duration}</Text>
             <TouchableOpacity style={styles.roundButton}>
                 <Image source={require('../assets/icons/edit.png')}
                        style={styles.imageButton}/>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     rectangularContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
     idTitle: {
         fontWeight: 'bold',
         fontSize: 30,
+    },
+    durationText: {
+        fontSize: 20,
     },
     roundButton: {
         alignItems: 'center',

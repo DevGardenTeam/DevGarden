@@ -5,6 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import AccordionItem from '../components/accordion_item_component';
 import { Task } from '../model/Task';
+import ButtonVerticalAddComponent from '../components/button_vertical_add_component';
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
@@ -34,6 +35,10 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
                         <Text>Contenu de l'accordéon 1</Text>
                     </AccordionItem>
                 </View>
+            </View>
+            <View style={styles.optionsButtons}>
+                <ButtonVerticalAddComponent title={'Ajouter une catégorie'}/>
+                <ButtonVerticalAddComponent title={'Ajouter une tâche'}/>
             </View>
         </SafeAreaView>
     );
@@ -87,6 +92,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'white',
+    },
+    optionsButtons: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      margin: '10%',
     },
 })
   
