@@ -1,10 +1,10 @@
 import { Task } from "./Task";
 
 export class Wbs{
-    tasks: Map<string, Task>;
+    tasks: Map<string, Task[]>;
 
     constructor(
-        tasks: Map<string, Task>
+        tasks: Map<string, Task[]>
       ) {
         this.tasks = tasks;
     }

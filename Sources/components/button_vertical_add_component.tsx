@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Image } from 'react-native';
 
 type ButtonVerticalAddComponent = {
     title: string;
+    onPress?: ((event: GestureResponderEvent) => void)
 }
 
-const ButtonVerticalAddComponent: React.FC<ButtonVerticalAddComponent> = ({ title }) => {
+const ButtonVerticalAddComponent: React.FC<ButtonVerticalAddComponent> = ({ title, onPress }) => {
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <Text style={styles.title}>{title}</Text>
             <Image source={require('../assets/icons/add.png')} style={styles.icon} />
         </TouchableOpacity>

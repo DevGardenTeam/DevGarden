@@ -7,10 +7,17 @@ interface WbsViewControllerProps {
 }
 
 const WbsViewController = ({ owner, repository }: WbsViewControllerProps) => {
-  const { wbsTasks, loading, error, fetchWbsTasks } = useWbsViewModel(owner, repository);
+  const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = useWbsViewModel(owner, repository);
 
   return {
-
+    wbsTasks,
+    loading,
+    error,
+    fetchWbsTasks,
+    fetchWbsCategories,
+    fetchWbsTasksByCategory,
+    addWbsCategory,
+    addWbsTaskToCategory
   };
 };
 
