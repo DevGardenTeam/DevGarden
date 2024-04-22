@@ -46,20 +46,17 @@ const styles = StyleSheet.create({
       margin: 20,
     },
     container:{
-        flex: 1,
+      backgroundColor: '#F1F0F0',
     },
     title:{
-      fontSize: ISLANDSCAPE ? WIDTH * 0.06 : WIDTH * 0.1,
-      color:"#414141",
-      marginTop: ISLANDSCAPE ? "5%" : "15%",
-      marginLeft: ISLANDSCAPE ? "5%" : "5%",
-      marginBottom: ISLANDSCAPE ? "7%" : '10%',
+      fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
+      margin: 20,
     },
     mainContent:{
       display: 'flex',
       justifyContent:'space-evenly',
       alignItems: 'center',
-      height:'75%'
+      height:'80%'
     }
 });
 

@@ -215,11 +215,10 @@ const styles = StyleSheet.create({
   listTop:{
     flexDirection:'row',
     justifyContent:'space-between',
-    marginTop: ISLANDSCAPE ? HEIGHT*0.045 : '5%',
+    margin: 20,
   },
   title: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
-    margin: ISLANDSCAPE ? HEIGHT*0.045 : WIDTH*0.080,
   },
   mainContent:{
     display: 'flex',

@@ -102,27 +102,29 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    margin: '10%',
     display: 'flex',
   },
   titleView: {
     display: 'flex',
     flexDirection: 'row',
+    margin: 20,
   },
   titleText: {
     display: 'flex',
     alignItems: 'center',
-    fontSize: 40,
+    fontSize: 100,
   },
   titleTextBis: {
     display: 'flex',
     alignItems: 'center',
-    fontSize: 30,
+    fontSize: 50,
     color: 'gray',
   },
   contentView: {
     display: 'flex',
     flexDirection: 'row',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
   flatList:{
     display: 'flex',
