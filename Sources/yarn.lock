@@ -8452,6 +8452,11 @@ queue@6.0.2:
   dependencies:
     inherits "~2.0.3"
 
+r3f-native-orbitcontrols@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/r3f-native-orbitcontrols/-/r3f-native-orbitcontrols-1.0.12.tgz#1f55a7635b6fe5c47be8aa71583be9ae7513e00a"
+  integrity sha512-9ePQB1gNYqg+9vpbrRuW3PM+NXjkVv/wrlbhls2wHnXVroB9kxKM8i8d8kjnw04L5zOEG52ztSnOrFH53sZ+UA==
+
 randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
