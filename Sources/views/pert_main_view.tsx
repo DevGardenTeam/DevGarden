@@ -96,16 +96,16 @@ const styles = StyleSheet.create({
     },
     mainView: {
         flex: 1,
-        margin: '10%',
         display: 'flex'
     },
     titleView: {
         display: 'flex',
+        margin: 20,
     },
     titleText: {
         display: 'flex',
         alignItems: 'center',
-        fontSize: 40,
+        fontSize: 100,
     },
     titleTextBis: {
         display: 'flex',
@@ -115,6 +115,8 @@ const styles = StyleSheet.create({
     },
     contentView: {
         display: 'flex',
+        marginLeft: '10%',
+        marginRight: '10%',
     },
     flatList:{
         display: 'flex',

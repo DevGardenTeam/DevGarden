@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   title: {
-    fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
+    fontSize: 100,
   },
   mainContent:{
     display: 'flex',

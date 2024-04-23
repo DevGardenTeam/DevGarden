@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
     accordContainer: {
       paddingBottom: 4,
       flex: 1,
+      height: '100%',
+      width: '100%',
     },
     accordHeader: {
       padding: 12,
@@ -58,15 +60,19 @@ const styles = StyleSheet.create({
       justifyContent:'space-between'
     },
     accordTitle: {
-      fontSize: 20,
+      fontSize: 30,
+      display: 'flex',
+      alignItems: 'center',
     },
     accordBody: {
-      padding: 12
+      padding: 12,
     },
     accordImage: {
-        width: 20,
-        height: 20,
+        width: 80,
+        height: 80,
         tintColor: 'black',
+        display: 'flex',
+        alignItems: 'center',
     },
 });
   

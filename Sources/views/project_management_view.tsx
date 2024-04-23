@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#F1F0F0',
     },
     title:{
-      fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
+      fontSize: 100,
       margin: 20,
     },
     mainContent:{
