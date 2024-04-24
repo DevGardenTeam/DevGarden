@@ -66,6 +66,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             )}
+            showsVerticalScrollIndicator={false} 
           />
         </View>
         <Modal
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   masterLabel: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
+    width: '98%',
     height: '100%',
   },
   modalContainer: {

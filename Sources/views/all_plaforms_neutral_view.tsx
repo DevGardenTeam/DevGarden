@@ -17,20 +17,20 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
             <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
           </View>
           <View style={styles.mainView}>
-              <View>
-                  <View>
-                      <Text style={styles.titleText}>{selectedPlatform}</Text>
-                  </View>
+              <View style={styles.titleView}>
+                  <Text style={styles.titleText}>{selectedPlatform}</Text>
               </View>
-              <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects")}>
-                <View >
+              <View style={styles.contentView}>
+                <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects")}>
+                  <View >
 
-                </View>                
-              </TouchableOpacity>
-  
-              <View style={styles.slidingButton}>
-                <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
-              </View>  
+                  </View>                
+                </TouchableOpacity>
+    
+                <View style={styles.slidingButton}>
+                  <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
+                </View>                  
+              </View>
           </View>
       </SafeAreaView>
   );
@@ -46,12 +46,23 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    margin: '10%'
+    display: 'flex',
+  },
+  titleView: {
+    display: 'flex',
+    margin: 20,
   },
   titleText: {
     display: 'flex',
-    justifyContent: 'center',
-    fontSize: 40,
+    alignItems: 'center',
+    fontSize: 100,
+  },
+  contentView: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
   mainContent:{
     display: 'flex',

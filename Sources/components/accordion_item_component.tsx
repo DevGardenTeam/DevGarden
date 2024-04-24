@@ -16,8 +16,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) =>
         setExpanded(!expanded);
     }
 
-    const body = <View style={styles.accordBody}>{/*{ children }*/}</View>
-
     return (
         <View style={styles.accordContainer}>
             <TouchableOpacity style={styles.accordHeader} onPress={ toggleItem }>

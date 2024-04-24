@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     mainView: {
         flex: 1,
-        display: 'flex'
+        display: 'flex',
     },
     titleView: {
         display: 'flex',
@@ -160,19 +160,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    modalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-    },
     optionsButtons: {
-      flex: 1,
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      margin: '10%',
+      marginLeft: '10%',
+      marginRight: '10%',
+      marginBottom: '5%',
     },
 })
   

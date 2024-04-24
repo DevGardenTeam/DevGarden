@@ -30,7 +30,7 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
         <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
       </View>
       <View style={styles.mainView}>
-        <View>
+        <View style={styles.titleView}>
           <Text style={styles.titleText}>Choisissez un projet</Text>
         </View>
         <View style={styles.mainContent}>
@@ -59,12 +59,16 @@ const styles = StyleSheet.create({
   },
   mainView: {
     flex: 1,
-    margin: '10%'
+    display: 'flex',
+  },
+  titleView: {
+    display: 'flex',
+    margin: 20,
   },
   titleText: {
     display: 'flex',
-    justifyContent: 'center',
-    fontSize: 40,
+    alignItems: 'center',
+    fontSize: 100,
   },
   mainContent:{
     display: 'flex',
@@ -75,7 +79,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 20,
-    height: '100%',
+    height: '80%',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
   flatList:{
     display: 'flex',
