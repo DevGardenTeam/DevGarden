@@ -11,6 +11,11 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0-0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0-0",
+    "@babel/plugin-transform-arrow-functions": "^7.0.0-0",
+    "@babel/plugin-transform-shorthand-properties": "^7.0.0-0",
+    "@babel/plugin-transform-template-literals": "^7.0.0-0",
     "@babel/preset-env": "^7.1.6",
     "@expo/webpack-config": "^19.0.0",
     "@react-native/babel-preset": "*",
@@ -22,7 +27,7 @@
     "@react-three/drei": "^9.102.6",
     "@react-three/fiber": "^8.15.19",
     "@types/react": "~18.2.14",
-    "@types/three": ">=0.144.0",
+    "@types/three": "^0.163.0",
     "axios": "^1.6.5",
     "expo": "~50.0.14",
     "expo-auth-session": "5.4.0",
