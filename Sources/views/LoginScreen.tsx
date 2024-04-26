@@ -38,7 +38,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               <Text style={styles.forgotPasswordText}>Forget Password</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AllPlatforms")}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Home")}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Register")}>
