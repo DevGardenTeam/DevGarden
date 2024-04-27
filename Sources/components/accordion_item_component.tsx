@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TEXT_COLOR } from '../constants/constants';
 
 type AccordionItemProps = {
     id: string;
@@ -61,6 +62,8 @@ const styles = StyleSheet.create({
       fontSize: 30,
       display: 'flex',
       alignItems: 'center',
+      color: TEXT_COLOR,
+      fontWeight: 'bold',
     },
     accordBody: {
       padding: 12,
@@ -68,9 +71,10 @@ const styles = StyleSheet.create({
     accordImage: {
         width: 80,
         height: 80,
-        tintColor: 'black',
+        tintColor: TEXT_COLOR,
         display: 'flex',
         alignItems: 'center',
+        fontWeight: 'bold',
     },
 });
   

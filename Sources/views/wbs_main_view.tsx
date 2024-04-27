@@ -7,6 +7,7 @@ import AccordionItem from '../components/accordion_item_component';
 import { Task } from '../model/Task';
 import ButtonVerticalAddComponent from '../components/button_vertical_add_component';
 import { WbsViewController } from '../view-controllers/WbsViewController';
+import { PRIMARY_COLOR, TEXT_COLOR } from '../constants/constants';
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
@@ -118,7 +119,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
     safeAreaView: {
         flex: 1,
-        backgroundColor: '#F1F0F0',
+        backgroundColor: PRIMARY_COLOR,
     },
     backButton:{
         margin: 20,
@@ -135,12 +136,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         fontSize: 100,
-    },
-    titleTextBis: {
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: 30,
-        color: 'gray'
+        color: TEXT_COLOR,
+        fontWeight: "bold",
     },
     contentView: {
         display: 'flex',
@@ -149,12 +146,6 @@ const styles = StyleSheet.create({
         marginRight: '10%',
     },
     flatList:{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
-    },
-    masterLabel: {
         display: 'flex',
         flexDirection: 'column',
         width: '100%',

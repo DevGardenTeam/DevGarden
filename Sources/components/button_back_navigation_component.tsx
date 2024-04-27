@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { TEXT_COLOR } from '../constants/constants';
 
 type BackNavigationButton = {
     onPress?: ((event: GestureResponderEvent) => void)
@@ -15,18 +16,13 @@ const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress }) => {
 
 const styles = StyleSheet.create({
     button: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
       },
       icon: {
-        width: 24,
-        height: 24,
-        tintColor: 'black',
+        width: 60,
+        height: 60,
+        tintColor: TEXT_COLOR,
       },
 });
   

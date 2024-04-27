@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Image } from 'react-native';
+import { SECONDARY_COLOR, TEXT_COLOR } from '../constants/constants';
 
 type ButtonVerticalAddComponent = {
     title: string;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: SECONDARY_COLOR,
         borderRadius: 10,
         shadowColor: 'black',
         shadowOffset: {
@@ -44,11 +45,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 20,
+        color: TEXT_COLOR,
+        fontWeight: 'bold',
     },
     icon: {
         width: 40,
         height: 40,
-        tintColor: 'black',
+        tintColor: TEXT_COLOR,
+        fontWeight: 'bold',
     }
 });
 
