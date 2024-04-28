@@ -7,7 +7,7 @@ import AccordionItem from '../components/accordion_item_component';
 import { Task } from '../model/Task';
 import ButtonVerticalAddComponent from '../components/button_vertical_add_component';
 import { WbsViewController } from '../view-controllers/WbsViewController';
-import { PRIMARY_COLOR, TEXT_COLOR } from '../constants/constants';
+import { useTheme } from '@react-navigation/native';
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
@@ -20,8 +20,9 @@ interface RouteParams {
 
 const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { owner, repository } = route.params as RouteParams;
-
+    const { owner, repository } = route.params as RouteParams;0
+    const { colors } = useTheme();
+    
     const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = WbsViewController({ owner, repository })
 
     const [categoriesWithTasks, setCategoriesWithTasks] = useState<Map<string, Task[]>>(new Map());
@@ -80,13 +81,13 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.safeAreaView}>
+        <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
                 <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
-                    <Text style={styles.titleText}>WBS</Text>
+                    <Text style={[styles.titleText, { color: colors.text }]}>WBS</Text>
                 </View> 
                 <View style={styles.contentView}>
                     {loading ? (
@@ -119,7 +120,6 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
     safeAreaView: {
         flex: 1,
-        backgroundColor: PRIMARY_COLOR,
     },
     backButton:{
         margin: 20,
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         fontSize: 100,
-        color: TEXT_COLOR,
         fontWeight: "bold",
     },
     contentView: {

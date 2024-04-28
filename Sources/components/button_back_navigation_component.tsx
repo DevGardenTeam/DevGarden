@@ -1,15 +1,17 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
-import { TEXT_COLOR } from '../constants/constants';
+import { useTheme } from '@react-navigation/native';
 
 type BackNavigationButton = {
     onPress?: ((event: GestureResponderEvent) => void)
 }
   
 const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress }) => {
+    const { colors } = useTheme();
+
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Image source={require('../assets/icons/arrow_back.png')} style={styles.icon} />
+                <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
         </TouchableOpacity>
     );
 };
@@ -22,7 +24,6 @@ const styles = StyleSheet.create({
       icon: {
         width: 60,
         height: 60,
-        tintColor: TEXT_COLOR,
       },
 });
   
