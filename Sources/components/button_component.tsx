@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions, Platform  } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 type NavigationButton = {
     title: string,
@@ -7,10 +8,12 @@ type NavigationButton = {
 }
   
 const NavigationButton: React.FC<NavigationButton> = ({ title, onPress }) => {
+    const { colors } = useTheme();
+
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-            <Text style={styles.text}>{title}</Text>
-            <Image source={require('../assets/icons/right_arrow.png')}  style={styles.icon} />
+            <Text style={[styles.text, { color: colors.text }]}>{title}</Text>
+            <Image source={require('../assets/icons/right_arrow.png')}  style={[styles.icon, { tintColor: colors.text }]} />
         </TouchableOpacity>
     );
 };

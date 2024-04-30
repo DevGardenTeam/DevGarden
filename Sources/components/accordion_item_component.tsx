@@ -22,7 +22,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) =>
         <View style={styles.accordContainer}>
             <TouchableOpacity style={styles.accordHeader} onPress={ toggleItem }>
                 <Text style={[styles.accordTitle, { color: colors.text }]}>{ id }</Text>
-                <Text style={styles.accordTitle}>{ title }</Text>
+                <Text style={[styles.accordTitle, { color: colors.text }]}>{ title }</Text>
                 {expanded ? (
                     <Image
                         source={require('../assets/icons/chevron_up.png')}

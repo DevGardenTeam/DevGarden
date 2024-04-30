@@ -4,12 +4,14 @@ import { RepositoryController } from '../view-controllers/RepositoryViewControll
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonProjectComponent from '../components/button_project_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { useTheme } from '@react-navigation/native';
 
 interface AllProjectsNeutralViewProps {
   navigation: StackNavigationProp<any>;
 }
 
 const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigation }) => {
+  const { colors } = useTheme();
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController();
 
   useEffect(() => {
@@ -25,13 +27,13 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
   }
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       <View style={styles.backButton}>
         <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
       </View>
       <View style={styles.mainView}>
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>Choisissez un projet</Text>
+          <Text style={[styles.titleText, { color: colors.text }]}>Choisissez un projet</Text>
         </View>
         <View style={styles.mainContent}>
           <FlatList
@@ -52,7 +54,6 @@ const styles = StyleSheet.create({
   // LIST VIEW
   safeAreaView: {
     flex: 1,
-    backgroundColor: '#F1F0F0',
   },
   backButton:{
     margin: 20,
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     fontSize: 100,
+    fontWeight: 'bold',
   },
   mainContent:{
     display: 'flex',

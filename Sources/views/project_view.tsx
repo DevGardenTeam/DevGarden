@@ -7,6 +7,7 @@ import BackNavigationButton from '../components/button_back_navigation_component
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from '@react-navigation/native';
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
@@ -22,10 +23,10 @@ interface RouteParams {
 }
 
 
-const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
-  
+const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
   const { owner, repository } = route.params as RouteParams;
+  const { colors } = useTheme();
 
   // Changement de fond selon l'horaire
   const [isDaytime, setIsDaytime] = useState(true);
@@ -50,13 +51,13 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   if (!view) {
     const type = t('projectView.list');
     return (
-      <SafeAreaView style={styles.container2}>
+      <SafeAreaView style={[styles.container2, { backgroundColor: colors.background }]}>
         <View style={styles.backButton}>
           <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
         </View>
 
         <View style={styles.listTop}>
-          <Text style={styles.title}>DevGarden</Text>
+          <Text style={[styles.title, { color: colors.text }]}>DevGarden</Text>
           <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
               thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
@@ -81,7 +82,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   const type = t('projectView.garden');
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <LinearGradient
         colors={[ '#7E6200', 'transparent']}
         // start={{x:0, y: 0}}
@@ -135,7 +136,6 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#F1F0F0',
     flexDirection: 'column-reverse',
   },
   ground:{
@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
 
   // LIST VIEW
   container2: {
-    backgroundColor: '#F1F0F0',
   },
   listTop:{
     flexDirection:'row',
@@ -219,6 +218,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 100,
+    fontWeight: 'bold',
   },
   mainContent:{
     display: 'flex',

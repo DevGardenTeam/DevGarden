@@ -6,6 +6,7 @@ import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
+import { useTheme } from '@react-navigation/native';
 
 interface ProjectManagementScreenProps {
   navigation: StackNavigationProp<any>;
@@ -19,14 +20,15 @@ interface RouteParams {
 const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navigation }) =>  {
   const route = useRoute();
   const { owner, repository } = route.params as RouteParams;
+  const { colors } = useTheme();
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.backButton}>
             <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/>
         </View>
-        <Text style={styles.title}>{t('project_management_title')}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('project_management_title')}</Text>
         <View style={styles.mainContent}>
           <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {owner: owner, repository: repository})}/>
           <NavigationButton title='GANTT'/>
@@ -46,11 +48,11 @@ const styles = StyleSheet.create({
       margin: 20,
     },
     container:{
-      backgroundColor: '#F1F0F0',
     },
     title:{
       fontSize: 100,
       margin: 20,
+      fontWeight: 'bold',
     },
     mainContent:{
       display: 'flex',

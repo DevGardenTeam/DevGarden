@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Modal, Image } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 const DetailsIssueView = () => {
   const [isModalVisible, setModalVisible] = useState(false);
+  const { colors } = useTheme();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       <View style={styles.mainView}>
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>Issue Example Title</Text>
-          <Text style={styles.titleTextBis}>#4653</Text>
+          <Text style={[styles.titleText, { color: colors.text }]}>Issue Example Title</Text>
+          <Text style={[styles.titleTextBis, { color: colors.text }]}>#4653</Text>
         </View>
         <View style={styles.horizontalBar}/>
         <View style={styles.squareContainer}>
@@ -29,7 +31,6 @@ const DetailsIssueView = () => {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
-    backgroundColor: '#F1F0F0',
   },
   mainView: {
     flex: 1,

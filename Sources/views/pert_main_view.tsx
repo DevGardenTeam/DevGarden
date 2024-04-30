@@ -6,6 +6,7 @@ import BackNavigationButton from '../components/button_back_navigation_component
 import DateUtils from '../helper/DateUtils';
 import ButtonPertElementComponent from '../components/button_pert_element_component';
 import { PertTask } from '../model/PertTask';
+import { useTheme } from '@react-navigation/native';
 
 interface PertViewProps {
     navigation: StackNavigationProp<any>;
@@ -19,6 +20,7 @@ interface RouteParams {
 const PertView: React.FC<PertViewProps> = ({ navigation }) => {
     const route = useRoute();
     const { owner, repository } = route.params as RouteParams;
+    const { colors } = useTheme();
 
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -39,13 +41,13 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
     // }
 
     return (
-        <SafeAreaView style={styles.safeAreaView}>
+        <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
                 <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
-                    <Text style={styles.titleText}>PERT</Text>
+                    <Text style={[styles.titleText, { color: colors.text }]}>PERT</Text>
                 </View> 
                 <View style={styles.contentView}>
                     {/* <FlatList             
@@ -89,7 +91,6 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
     safeAreaView: {
         flex: 1,
-        backgroundColor: '#F1F0F0',
     },
     backButton:{
         margin: 20,
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         fontSize: 100,
+        fontWeight: 'bold',
     },
     titleTextBis: {
         display: 'flex',

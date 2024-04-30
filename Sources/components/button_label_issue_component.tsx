@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 type ButtonLabelIssueComponent = {
     name: string;
@@ -8,6 +9,7 @@ type ButtonLabelIssueComponent = {
 }
 
 const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, isOpen, userCount }) => {
+  const { colors } = useTheme();
 
   return (
     <View style={styles.container}>
@@ -15,10 +17,10 @@ const ButtonLabelIssueComponent: React.FC<ButtonLabelIssueComponent> = ({ name, 
         <View style={[styles.statusIndicator, isOpen ? styles.openStatus : styles.closedStatus]} />
       </View>
       <View style={styles.rectangularContainer}>
-        <Text style={styles.issueName}>{name}</Text>
+        <Text style={[styles.issueName, { color: colors.text }]}>{name}</Text>
         <View style={styles.userCountContainer}>
-          <Image source={require('../assets/icons/IconMail.png')} style={styles.userIcon} />
-          <Text style={styles.userCount}>{userCount}</Text>
+          <Image source={require('../assets/icons/IconMail.png')} style={[styles.userIcon, { tintColor: colors.text }]} />
+          <Text style={[styles.userCount, { color: colors.text }]}>{userCount}</Text>
         </View>
       </View>
     </View>

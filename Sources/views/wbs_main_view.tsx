@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         fontSize: 100,
-        fontWeight: "bold",
+        fontWeight: 'bold',
     },
     contentView: {
         display: 'flex',
