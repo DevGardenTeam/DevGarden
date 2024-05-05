@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTheme } from '@react-navigation/native';
+import { Platform } from 'react-native';
 
 type AccordionItemProps = {
     id: string;
@@ -66,7 +67,25 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     accordBody: {
+      marginVertical: 10,
       padding: 12,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 10,
+      ...Platform.select({
+        ios: {
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+        },
+        android: {
+            elevation: 4,
+        },
+      }),
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     accordImage: {
         width: 80,

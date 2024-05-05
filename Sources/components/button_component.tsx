@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     },
     icon: {
       resizeMode: 'contain',
-      width: ISLANDSCAPE ? "10%" : "20%",
-      height: ISLANDSCAPE ? "20%" : HEIGHT*0.125,
+      width: 40,
+      height: 40,
       marginRight: 8,
       marginLeft: 4,
       tintColor: '#414141',

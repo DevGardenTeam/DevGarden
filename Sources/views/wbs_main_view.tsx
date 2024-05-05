@@ -8,6 +8,8 @@ import { Task } from '../model/Task';
 import ButtonVerticalAddComponent from '../components/button_vertical_add_component';
 import { WbsViewController } from '../view-controllers/WbsViewController';
 import { useTheme } from '@react-navigation/native';
+import { Platform } from 'react-native';
+import ButtonWbsComponent from '../components/button_wbs_component';
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
@@ -97,13 +99,13 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
                     ) : (
                         Array.from(categoriesWithTasks).map(([category, tasks]) => (
                             <AccordionItem key={category} id={category} title={category}>
-                                <FlatList
-                                    data={tasks}
-                                    keyExtractor={(item) => item.id}
-                                    renderItem={({ item }) => (
-                                        <Text>{item.title}</Text>
-                                    )}
-                                />
+                                    <FlatList
+                                        data={tasks}
+                                        keyExtractor={(item) => item.id}
+                                        renderItem={({ item }) => (
+                                            <ButtonWbsComponent id={item.id} title={item.title}/>
+                                        )}
+                                    />                                    
                             </AccordionItem>
                         ))
                     )}
@@ -141,14 +143,9 @@ const styles = StyleSheet.create({
     contentView: {
         display: 'flex',
         flexDirection: 'column',
+        flex: 1,
         marginLeft: '10%',
         marginRight: '10%',
-    },
-    flatList:{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
     },
     optionsButtons: {
       display: 'flex',
