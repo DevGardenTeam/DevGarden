@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Member } from '../model/Member';
+import { useTheme } from '@react-navigation/native';
 
 type ButtonPertElementComponent = {
     id: string;
@@ -9,19 +10,20 @@ type ButtonPertElementComponent = {
 }
 
 const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, members, duration }) => {
+    const { colors } = useTheme();
 
     return (
         <View style={styles.rectangularContainer}>
-            <Text style={styles.idTitle}>{id}</Text>
+            <Text style={[styles.idTitle, { color: colors.text }]}>{id}</Text>
             <View>
                 {members.map((member, index) => (
                     <Text key={index}>{member.name}</Text>
                 ))}
             </View>
-            <Text>{duration}</Text>
+            <Text style={[styles.durationText, { color: colors.text }]}>{duration}</Text>
             <TouchableOpacity style={styles.roundButton}>
                 <Image source={require('../assets/icons/edit.png')}
-                       style={styles.imageButton}/>
+                       style={[styles.imageButton, { tintColor: colors.text }]}/>
             </TouchableOpacity>
         </View>
     );
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     rectangularContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
@@ -52,6 +54,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 30,
     },
+    durationText: {
+        fontSize: 20,
+    },
     roundButton: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -65,7 +70,6 @@ const styles = StyleSheet.create({
     imageButton: {
         width: 40,
         height: 40,
-        tintColor: 'black',
     }
 });
 

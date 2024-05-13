@@ -1,32 +1,29 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 type BackNavigationButton = {
     onPress?: ((event: GestureResponderEvent) => void)
 }
   
 const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress }) => {
+    const { colors } = useTheme();
+
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
-                <Image source={require('../assets/icons/arrow_back.png')} style={styles.icon} />
+                <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     button: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        borderWidth: 1,
-        borderColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
       },
       icon: {
-        width: 24,
-        height: 24,
-        tintColor: 'black',
+        width: 60,
+        height: 60,
       },
 });
   

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Member } from '../model/Member';
+import { useTheme } from '@react-navigation/native';
 
 type ModalPertComponent = {
     id: string;
@@ -11,26 +12,27 @@ type ModalPertComponent = {
 }
 
 const ModalPertComponent: React.FC<ModalPertComponent> = ({ id, title, duration, members, onSelect }) => {
+  const { colors } = useTheme();
 
   return (
     <View style={styles.modalContainer}>
         <View style={styles.modalRow}>
-            <Text>{id}</Text>
-            <Text>{title}</Text>
+            <Text style={[{ color: colors.text }]}>{id}</Text>
+            <Text style={[{ color: colors.text }]}>{title}</Text>
         </View>
         <View style={styles.modalRow}>
             <Image source={require('../assets/icons/edit.png')}
                    style={styles.modalIcon}/>
             <View>
                 {members.map((member, index) => (
-                    <Text key={index}>{member.name}</Text>
+                    <Text style={[{ color: colors.text }]} key={index}>{member.name}</Text>
                 ))}
             </View>
         </View>
         <View style={styles.modalRow}>
             <Image source={require('../assets/icons/edit.png')}
-                   style={styles.modalIcon}/>
-            <Text>{duration}</Text>
+                   style={[styles.modalIcon, { tintColor: colors.text }]}/>
+            <Text style={[{ color: colors.text }]}>{duration}</Text>
         </View>
     </View>
   );
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     modalIcon: {
         width: 20,
         height: 20,
-        tintColor: 'black',
     }
 });
 

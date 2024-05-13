@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Member } from '../model/Member';
+import { useTheme } from '@react-navigation/native';
 
 type ModalIssueComponent = {
     id: string;
@@ -13,6 +14,7 @@ type ModalIssueComponent = {
 }
 
 const ModalIssueComponent: React.FC<ModalIssueComponent> = ({ id, title, body, state, creationDate, author, onSelect }) => {
+  const { colors } = useTheme();
 
   return (
     <View style={styles.modalContainer}>
@@ -23,18 +25,18 @@ const ModalIssueComponent: React.FC<ModalIssueComponent> = ({ id, title, body, s
                         <View style={[styles.statusIndicator, state ? styles.openStatus : styles.closedStatus]} />
                     </View>
                     <View style={styles.userNameDate}>
-                        <Text style={styles.userName}>{title}</Text>
+                        <Text style={[styles.userName, { color: colors.text }]}>{title}</Text>
                         <Text style={styles.date}>{creationDate}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
-                    <Image source={require('../assets/icons/close.png')} style={styles.closeImage} />   
+                    <Image source={require('../assets/icons/close.png')} style={[styles.closeImage, { tintColor: colors.text }]} />   
                 </TouchableOpacity>                 
             </View>
             <Text style={styles.message}>{body}</Text>
 
             <View style={styles.branchInfo}>
-                <Text style={styles.branch}>{author}</Text>
+                <Text style={[styles.branch, { color: colors.text }]}>{author}</Text>
                 <Text style={styles.commitId}>{id}</Text>
             </View>
         </View>

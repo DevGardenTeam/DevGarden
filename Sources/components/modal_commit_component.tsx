@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 type ModalCommitComponent = {
     image: string;
@@ -12,6 +13,7 @@ type ModalCommitComponent = {
 }
 
 const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username, date, message, branch, id, onSelect }) => {
+  const { colors } = useTheme();
 
   return (
     <View style={styles.modalContainer}>
@@ -22,18 +24,18 @@ const ModalCommitComponent: React.FC<ModalCommitComponent> = ({ image, username,
                         <Image source={{ uri: image }} style={styles.userImage} />    
                     </View>
                     <View style={styles.userNameDate}>
-                        <Text style={styles.userName}>{username}</Text>
-                        <Text style={styles.date}>{date}</Text>
+                        <Text style={[styles.userName, { color: colors.text }]}>{username}</Text>
+                        <Text style={[styles.date]}>{date}</Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={onSelect}>
-                    <Image source={require('../assets/icons/close.png')} style={styles.closeImage} />   
+                    <Image source={require('../assets/icons/close.png')} style={[styles.closeImage, { tintColor: colors.text }]} />   
                 </TouchableOpacity>                 
             </View>
             <Text style={styles.message}>{message}</Text>
 
             <View style={styles.branchInfo}>
-                <Text style={styles.branch}>{branch}</Text>
+                <Text style={[styles.branch, { color: colors.text }]}>{branch}</Text>
                 <Text style={styles.commitId}>{id}</Text>
             </View>
         </View>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useTheme } from '@react-navigation/native';
 
 type ButtonLabelCommitComponent = {
     title: string;
@@ -8,6 +9,7 @@ type ButtonLabelCommitComponent = {
 }
 
 const ButtonLabelCommitComponent: React.FC<ButtonLabelCommitComponent> = ({ title, image, onSelect }) => {
+  const { colors } = useTheme();
 
   return (
     <View style={styles.container}>
@@ -17,7 +19,7 @@ const ButtonLabelCommitComponent: React.FC<ButtonLabelCommitComponent> = ({ titl
         />
       </View>
       <View style={styles.rectangularContainer}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text, { color: colors.text }]}>{title}</Text>
       </View>
     </View>
   );

@@ -8,6 +8,7 @@ import { IssueViewController } from '../view-controllers/IssueViewController';
 import { Issue } from '../model/Issue';
 import ModalIssueComponent from '../components/modal_issue_component';
 import DateUtils from '../helper/DateUtils';
+import { useTheme } from '@react-navigation/native';
 
 interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
@@ -21,6 +22,7 @@ interface RouteParams {
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     const route = useRoute();
     const { owner, repository } = route.params as RouteParams;
+    const { colors } = useTheme();
 
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -41,13 +43,13 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView style={styles.safeAreaView}>
+        <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
                 <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/> 
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
-                    <Text style={styles.titleText}>Issues</Text>
+                    <Text style={[styles.titleText, { color: colors.text }]}>Issues</Text>
                 </View> 
                 <View style={styles.contentView}>
                     <FlatList             
@@ -93,33 +95,29 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
     safeAreaView: {
         flex: 1,
-        backgroundColor: '#F1F0F0',
     },
     backButton:{
         margin: 20,
     },
     mainView: {
         flex: 1,
-        margin: '10%',
         display: 'flex'
     },
     titleView: {
         display: 'flex',
+        margin: 20,
     },
     titleText: {
         display: 'flex',
         alignItems: 'center',
-        fontSize: 40,
-    },
-    titleTextBis: {
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: 30,
-        color: 'gray'
+        fontSize: 100,
+        fontWeight: 'bold',
     },
     contentView: {
         display: 'flex',
         flexDirection: 'row',
+        marginLeft: '10%',
+        marginRight: '10%',
     },
     flatList:{
         display: 'flex',

@@ -8,6 +8,7 @@ import BackNavigationButton from '../components/button_back_navigation_component
 import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
+import { useTheme } from '@react-navigation/native';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -19,9 +20,9 @@ interface RouteParams {
 }
 
 const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
-
   const route = useRoute();
   const { owner, repository } = route.params as RouteParams;
+  const { colors } = useTheme();
 
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -42,14 +43,14 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       <View style={styles.backButton}>
         <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/> 
       </View>
       <View style={styles.mainView}>
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>Commits</Text>
-          <Text style={styles.titleTextBis}>(master)</Text>
+          <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>
+          <Text style={[styles.titleTextBis, { color: colors.text }]}>(master)</Text>
         </View>
         <View style={styles.contentView}>
           <FlatList             
@@ -66,6 +67,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             )}
+            showsVerticalScrollIndicator={false} 
           />
         </View>
         <Modal
@@ -95,34 +97,36 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
-    backgroundColor: '#F1F0F0',
   },
   backButton:{
     margin: 20,
   },
   mainView: {
     flex: 1,
-    margin: '10%',
     display: 'flex',
   },
   titleView: {
     display: 'flex',
     flexDirection: 'row',
+    margin: 20,
   },
   titleText: {
     display: 'flex',
     alignItems: 'center',
-    fontSize: 40,
+    fontSize: 100,
+    fontWeight: 'bold',
   },
   titleTextBis: {
     display: 'flex',
     alignItems: 'center',
-    fontSize: 30,
+    fontSize: 50,
     color: 'gray',
   },
   contentView: {
     display: 'flex',
     flexDirection: 'row',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
   flatList:{
     display: 'flex',
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
   masterLabel: {
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
+    width: '98%',
     height: '100%',
   },
   modalContainer: {

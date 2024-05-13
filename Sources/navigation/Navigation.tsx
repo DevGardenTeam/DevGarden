@@ -14,11 +14,14 @@ import ParametersScreen from '../views/parameters_view';
 import ProjectManagementScreen from '../views/project_management_view';
 import PertView from '../views/pert_main_view';
 import WbsView from '../views/wbs_main_view';
+import {DarkTheme, LightTheme} from "../theme/theme";
+import {useColorScheme} from "react-native";
 
 export default function Navigation() {
-    const BottomTabNavigator = createBottomTabNavigator();
+     const scheme = useColorScheme();
+     const BottomTabNavigator = createBottomTabNavigator();
     return (
-        <NavigationContainer >
+        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
             <BottomTabNavigator.Navigator initialRouteName="Login" >
                 <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
