@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, StatusBar } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
@@ -21,7 +21,6 @@ interface RouteParams {
   owner: string;
   repository: string;
 }
-
 
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
@@ -52,11 +51,8 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={[styles.container2, { backgroundColor: colors.background }]}>
-        <View style={styles.backButton}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
-        </View>
-
         <View style={styles.listTop}>
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
           <Text style={[styles.title, { color: colors.text }]}>DevGarden</Text>
           <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -70,11 +66,12 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.mainContent}>
-          <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
-          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {owner: owner, repository: repository})}/>
-          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {owner: owner, repository: repository})}/>
-          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
+          <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} marginValue={30} />
+          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {owner: owner, repository: repository})} marginValue={30}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {owner: owner, repository: repository})} marginValue={30}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})} marginValue={30}/>
         </View>
+
       </SafeAreaView>
     );
   }
@@ -115,9 +112,9 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
               <Image source={require('../assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
             </TouchableOpacity>
         </View>
-      <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.goBack()}/> 
-      </View>
+        <View style={styles.backButton}>
+          <BackNavigationButton onPress={() => navigation.goBack()}/> 
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -153,9 +150,9 @@ const styles = StyleSheet.create({
     height: ISLANDSCAPE ? HEIGHT*0.20+HEIGHT*0.037 : WIDTH*0.25+WIDTH*0.07,
     justifyContent: "space-between",
     flexDirection:'row',
+    marginTop:StatusBar.currentHeight || 0
   },
   switch: {
-    margin: ISLANDSCAPE ? "2%" : "5%",
     justifyContent:'space-evenly',
     alignItems:'center',
   },
@@ -199,32 +196,33 @@ const styles = StyleSheet.create({
     height: ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     width : ISLANDSCAPE ? HEIGHT*0.25 : WIDTH*0.30,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.04 : '-30%',
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.04 : '-10%',
   },
   tree: {
     height: ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.75,
     width : ISLANDSCAPE ? HEIGHT*0.50 : WIDTH*0.5,
     resizeMode: 'contain',
-    marginBottom: ISLANDSCAPE ? -HEIGHT*0.045 : '-25%' ,
+    marginBottom: ISLANDSCAPE ? -HEIGHT*0.045 : '-10%' ,
   },
 
   // LIST VIEW
-  container2: {
-  },
   listTop:{
     flexDirection:'row',
-    justifyContent:'space-between',
-    margin: 20,
-  },
+    justifyContent:'space-around',
+    alignItems:'center',
+    marginTop:StatusBar.currentHeight || 0
+   },
   title: {
-    fontSize: 100,
+    fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.120,
     fontWeight: 'bold',
+    marginLeft: ISLANDSCAPE ? HEIGHT*0.035 : '5%',
+    alignSelf : 'center'
   },
   mainContent:{
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'space-evenly',
-    height:'80%',
+    justifyContent:'flex-start',
+    paddingTop: ISLANDSCAPE ? HEIGHT*0.035 : '20%',
   }
 });
 

@@ -1,5 +1,5 @@
 import 'intl-pluralrules';
-import { StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform, ScrollView  } from 'react-native';
+import { StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform, ScrollView, StatusBar  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import "../service/i18n"
 import React from 'react';
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F1F0F0',
+    marginTop:StatusBar.currentHeight
   },
   listTop:{
     flexDirection:'row',

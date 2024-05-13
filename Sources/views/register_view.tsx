@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Dimensions,SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -14,8 +14,13 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+      <View style={styles.listTop}>
+        <View style={styles.backButton}>
+          <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+        </View>
+        <TouchableOpacity style={styles.cercle}>
+            <Image source={require('../assets/dashboard_page_icon/tree.png')} style={styles.treeIcone}></Image>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.mainBody}>
@@ -63,6 +68,10 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   );
 };
 
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
+const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
   title: {
@@ -74,9 +83,7 @@ const styles = StyleSheet.create({
 
   safeArea: {
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
     height: '100%',
-    paddingTop: StatusBar.currentHeight || 0,
   },
 
   mainBody: {
@@ -86,8 +93,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
 
-  backButton:{
-    margin: 20,
+  cercle:{
+    display: 'flex',
+    width: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.15,
+    height: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.15,
+    borderRadius: WIDTH, 
+    backgroundColor: 'transparent',
+    borderWidth: 3,
+    borderColor: 'black',
+    alignContent:'center',
+    alignItems:'center',
+  },
+  treeIcone:{
+    resizeMode: 'contain',
+    height:'100%',
+    width:'100%',
+  },
+  listTop:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginTop: StatusBar.currentHeight || 0,
+    padding: '5%',
+    marginBottom: '-5%'
   },
 
   emailContainer: {
@@ -136,7 +164,7 @@ const styles = StyleSheet.create({
   },
   
   button: {
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderBottomColor: 'green',
     backgroundColor: 'green',
     borderRadius: 20,

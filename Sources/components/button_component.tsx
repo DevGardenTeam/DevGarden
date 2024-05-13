@@ -1,17 +1,18 @@
 import React from 'react';
-import { Image, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions, Platform  } from 'react-native';
+import { Image, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions, Platform, ViewStyle, TouchableOpacityProps  } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 type NavigationButton = {
     title: string,
+    marginValue?: number,
     onPress?: ((event: GestureResponderEvent) => void)
 }
   
-const NavigationButton: React.FC<NavigationButton> = ({ title, onPress }) => {
+const NavigationButton: React.FC<NavigationButton> = ({ title, onPress, marginValue }) => {
     const { colors } = useTheme();
 
     return (
-        <TouchableOpacity style={styles.button} onPress={onPress}>
+        <TouchableOpacity style={[styles.button, {marginBottom: marginValue}]} onPress={onPress}>
             <Text style={[styles.text, { color: colors.text }]}>{title}</Text>
             <Image source={require('../assets/icons/right_arrow.png')}  style={[styles.icon, { tintColor: colors.text }]} />
         </TouchableOpacity>
