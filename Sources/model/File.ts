@@ -19,3 +19,15 @@ export class File{
         this.content = content;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToFile(apiObject: any): File {
+  console.log(apiObject);
+  return new File(
+    apiObject.id,
+    apiObject.name,
+    apiObject.size,
+    apiObject.encoding,
+    apiObject.content,
+  );
+}

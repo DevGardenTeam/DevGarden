@@ -1,7 +1,7 @@
 import { Member, mapApiObjectToMember } from "./Member";
-import { Branch } from "./Branch";
-import { Commit } from "./Commit";
-import { Issue } from "./Issue";
+import { Branch, mapApiObjectToBranch } from "./Branch";
+import { Commit, mapApiObjectToCommit } from "./Commit";
+import { Issue, mapApiObjectToIssue } from "./Issue";
 
 export class Repository{
     id: string;
@@ -52,6 +52,18 @@ export class Repository{
 // Fonction de mapping
 export function mapApiObjectToRepository(apiObject: any): Repository {
   const owner = mapApiObjectToMember(apiObject.owner);
+  const branches = apiObject.branches.map((branchData: any) => {
+    return mapApiObjectToBranch(branchData);
+  });
+  const commits = apiObject.commits.map((commitData: any) => {
+    return mapApiObjectToCommit(commitData);
+  });
+  const members = apiObject.contributors.map((memberData: any) => {
+    return mapApiObjectToMember(memberData);
+  });
+  const issues = apiObject.issues.map((issueData: any) => {
+    return mapApiObjectToIssue(issueData);
+  });
 
   return new Repository(
     apiObject.id.toString(),
@@ -61,10 +73,10 @@ export function mapApiObjectToRepository(apiObject: any): Repository {
     apiObject.description || "",
     apiObject.isFork,
     apiObject.url,
-    [],
-    [],
-    [],
-    [],
+    branches,
+    commits,
+    members,
+    issues,
     apiObject.language,
     apiObject.size
   );
