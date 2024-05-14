@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { RepositoryService } from '../service/RepositoryService';
 import { Repository } from '../model/Repository';
 
-export const useRepositoryViewModel = () => {
+export const useRepositoryViewModel = (platform: string) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [repository, setRepository] = useState<Repository>();
   const [loading, setLoading] = useState(true);
@@ -12,7 +12,7 @@ export const useRepositoryViewModel = () => {
 
   const fetchRepositories = async () => {
     try {
-      const result = await repositoryService.getMany();
+      const result = await repositoryService.getMany({ platform });
       if (result.succeeded) {
         setRepositories(result.data);
       } else {
@@ -42,7 +42,7 @@ export const useRepositoryViewModel = () => {
 
   useEffect(() => {
     fetchRepositories();
-  }, []);
+  }, [platform]);
 
   return { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById };
 };

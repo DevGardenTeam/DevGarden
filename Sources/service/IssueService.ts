@@ -3,7 +3,7 @@ import { BaseResources } from "../model/generic_repository/BaseResources";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
 export class IssueService extends BaseResources<Issue>{
-    collection = 'DevGardenIssue';
+    collection = 'Issue';
     getManyString = "GetAllIssues"
 
     constructor(){

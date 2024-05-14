@@ -3,7 +3,7 @@ import { BaseResources } from "../model/generic_repository/BaseResources";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
 export class CommitService extends BaseResources<Commit>{
-    collection = 'DevGardenCommit';
+    collection = 'Commit';
     getManyString = "GetAllCommits"
 
     constructor(){

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { IssueService } from '../service/IssueService';
 import { Issue } from '../model/Issue';
 
-export const useIssueViewModel = (owner: string, repository: string) => {
+export const useIssueViewModel = (platform: string, owner: string, repository: string) => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export const useIssueViewModel = (owner: string, repository: string) => {
 
   const fetchIssues = async () => {
     try {
-      const result = await issueService.getMany({ owner, repository });
+      const result = await issueService.getMany({ platform, owner, repository });
       if (result.succeeded) {
         setIssues(result.data);
       } else {
@@ -26,7 +26,7 @@ export const useIssueViewModel = (owner: string, repository: string) => {
 
   useEffect(() => {
     fetchIssues();
-  }, []);
+  }, [platform, owner, repository]);
 
   return { issues, loading, error, fetchIssues };
 };

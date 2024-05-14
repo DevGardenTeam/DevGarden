@@ -15,20 +15,21 @@ interface AllCommitsViewProps {
 }
 
 interface RouteParams {
+  platform: string;
   owner: string;
   repository: string;
 }
 
 const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const route = useRoute();
-  const { owner, repository } = route.params as RouteParams;
+  const { platform, owner, repository } = route.params as RouteParams;
   const { colors } = useTheme();
 
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<null | Commit>(null);
 
-  const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ owner, repository });
+  const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ platform, owner, repository });
 
   useEffect(() => {
     getAllCommits();

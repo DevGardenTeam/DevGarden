@@ -3,15 +3,15 @@ import { BaseResources } from "../model/generic_repository/BaseResources";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
 export class RepositoryService extends BaseResources<Repository>{
-    collection = 'DevGardenRepository';
+    collection = 'Repository';
     getManyString = "GetAllRepositories"
 
     constructor(){
         super();
     }
 
-    async getMany(){
-        const result = await super.getMany();
+    async getMany(params?: any){
+        const result = await super.getMany(params);
         const deserializedResult = this.deserialize(result);
         return { data: deserializedResult, succeeded: result.succeeded, errors: result.errors };
     }

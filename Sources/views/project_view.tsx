@@ -18,14 +18,14 @@ interface ProjectScreenProps {
 }
 
 interface RouteParams {
+  platform: string;
   owner: string;
   repository: string;
 }
 
-
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
-  const { owner, repository } = route.params as RouteParams;
+  const { platform, owner, repository } = route.params as RouteParams;
   const { colors } = useTheme();
 
   // Changement de fond selon l'horaire
@@ -53,7 +53,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     return (
       <SafeAreaView style={[styles.container2, { backgroundColor: colors.background }]}>
         <View style={styles.backButton}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllProjects")}/> 
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/> 
         </View>
 
         <View style={styles.listTop}>
@@ -71,9 +71,9 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         </View>
         <View style={styles.mainContent}>
           <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Project")} />
-          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {owner: owner, repository: repository})}/>
-          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {owner: owner, repository: repository})}/>
-          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
+          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
+          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
         </View>
       </SafeAreaView>
     );

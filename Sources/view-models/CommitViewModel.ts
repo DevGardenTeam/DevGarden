@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { CommitService } from '../service/CommitService';
 import { Commit } from '../model/Commit';
 
-export const useCommitViewModel = (owner: string, repository: string) => {
+export const useCommitViewModel = (platform: string, owner: string, repository: string) => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export const useCommitViewModel = (owner: string, repository: string) => {
 
   const fetchCommits = async () => {
     try {
-      const result = await commitService.getMany({ owner, repository });
+      const result = await commitService.getMany({ platform, owner, repository });
       if (result.succeeded) {
         setCommits(result.data);
       } else {
@@ -26,7 +26,7 @@ export const useCommitViewModel = (owner: string, repository: string) => {
 
   useEffect(() => {
     fetchCommits();
-  }, [owner, repository]);
+  }, [platform, owner, repository]);
 
   return { commits, loading, error, fetchCommits };
 };

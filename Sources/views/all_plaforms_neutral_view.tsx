@@ -23,7 +23,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
                   <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
               </View>
               <View style={styles.contentView}>
-                <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects")}>
+                <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}>
                   <View >
 
                   </View>                

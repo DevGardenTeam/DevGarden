@@ -1,8 +1,12 @@
 import React from 'react';
 import { useRepositoryViewModel } from '../view-models/RepositoryViewModel';
 
-const RepositoryController = () => {
-  const { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById } = useRepositoryViewModel();
+interface RepositoryViewControllerProps {
+  platform: string;
+}
+
+const RepositoryController = ({ platform }: RepositoryViewControllerProps) => {
+  const { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById } = useRepositoryViewModel(platform);
 
   const handleRepositoryPress = (repositoryId: any) => {
     console.log(`Navigating to details of repository ${repositoryId}`);
