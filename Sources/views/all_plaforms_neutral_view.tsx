@@ -23,7 +23,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   return (
       <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-          <View style={styles.backButton}>
+          <View style={styles.backButton} >
             <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
           </View>
           <View style={styles.mainView}>
@@ -33,7 +33,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
               <View style={styles.contentView}>
                     <View style={{ flex: 1,  }} {...events} >
                                   {loading && <Loader />}
-                      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}} onTouchEnd={() => navigation.navigate("AllProjects")}>
+                      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}}>
 
                         <OrbitControls enablePan={false}/>
 
@@ -45,7 +45,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
 
                         <Suspense fallback={<Trigger setLoading={setLoading} />}>
-                          <TerrainModel/>
+                          <TerrainModel onClick={() => navigation.navigate("AllProjects")}/>
                         </Suspense>
                       </Canvas>
                       
