@@ -1,4 +1,4 @@
-import { File } from "./File";
+import { File, mapApiObjectToFile } from "./File";
 
 export class Folder extends File{
     files: File[]
@@ -22,4 +22,25 @@ export class Folder extends File{
         this.files = files;
         this.folders = folders;
     }
+}
+
+// Fonction de mapping
+export function mapApiObjectToFolder(apiObject: any): Folder {
+  const files = apiObject.files.map((fileData: any) => {
+    return mapApiObjectToFile(fileData);
+  });
+  const folders = apiObject.folders.map((folderData: any) => {
+    return mapApiObjectToFolder(folderData);
+  });
+
+  console.log(apiObject);
+  return new Folder(
+    apiObject.id,
+    apiObject.name,
+    apiObject.size,
+    apiObject.encoding,
+    apiObject.content,
+    files,
+    folders
+  );
 }

@@ -10,3 +10,12 @@ export class Label{
         this.name = name;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToLabel(apiObject: any): Label {
+  console.log(apiObject);
+  return new Label(
+    apiObject.id,
+    apiObject.name,
+  );
+}

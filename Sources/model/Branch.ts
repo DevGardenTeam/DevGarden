@@ -15,3 +15,13 @@ export class Branch{
         this.commits = commits;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToBranch(apiObject: any): Branch {
+
+  return new Branch(
+    apiObject.id.toString(),
+    apiObject.name,
+    []
+  );
+}

@@ -10,3 +10,12 @@ export class Milestone{
         this.name = name;
     }
 }
+
+// Fonction de mapping
+export function mapApiObjectToMilestone(apiObject: any): Milestone {
+  console.log(apiObject);
+  return new Milestone(
+    apiObject.id.toString(),
+    apiObject.name,
+  );
+}
