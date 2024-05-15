@@ -13,20 +13,21 @@ interface ProjectManagementScreenProps {
 }
 
 interface RouteParams {
+  platform: string;
   owner: string;
   repository: string;
 }
 
 const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navigation }) =>  {
   const route = useRoute();
-  const { owner, repository } = route.params as RouteParams;
+  const { platform, owner, repository } = route.params as RouteParams;
   const { colors } = useTheme();
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.backButton}>
-            <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/>
+            <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/>
         </View>
         <Text style={[styles.title, { color: colors.text }]}>{t('project_management_title')}</Text>
         <View style={styles.mainContent}>

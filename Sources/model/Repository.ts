@@ -53,6 +53,7 @@ export class Repository{
 export function mapApiObjectToRepository(apiObject: any): Repository {
   const owner = mapApiObjectToMember(apiObject.owner);
 
+  console.log(apiObject);
   return new Repository(
     apiObject.id.toString(),
     apiObject.name,

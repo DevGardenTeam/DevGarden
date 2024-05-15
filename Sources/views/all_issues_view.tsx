@@ -15,20 +15,21 @@ interface AllIssuesViewProps {
 }
 
 interface RouteParams {
+    platform: string;
     owner: string;
     repository: string;
 }
 
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { owner, repository } = route.params as RouteParams;
+    const { platform, owner, repository } = route.params as RouteParams;
     const { colors } = useTheme();
 
     const [isModalVisible, setModalVisible] = useState(false);
 
     const [selectedItem, setSelectedItem] = useState<null | Issue>(null);
 
-    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ owner, repository });
+    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ platform, owner, repository });
 
     useEffect(() => {
         fetchIssues();
@@ -45,7 +46,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project", {owner: owner, repository: repository})}/> 
+                <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/> 
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
