@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { RepositoryService } from '../service/RepositoryService';
 import { Repository } from '../model/Repository';
+import { RepositoryStub } from '../stub/RepositoryStub';
+import { IS_STUB } from '../constants/constants';
 
 export const useRepositoryViewModel = (platform: string) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -8,7 +10,8 @@ export const useRepositoryViewModel = (platform: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const repositoryService = new RepositoryService();
+  //En fonction de la constante IS_STUB, on implémente le Stub ou le Service
+  const repositoryService = IS_STUB ? new RepositoryStub() : new RepositoryService();
 
   const fetchRepositories = async () => {
     try {
