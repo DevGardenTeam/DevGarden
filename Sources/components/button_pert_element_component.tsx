@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Member } from '../model/Member';
 import { useTheme } from '@react-navigation/native';
 
@@ -28,6 +28,11 @@ const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, 
         </View>
     );
 };
+
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
+const ISLANDSCAPE = WIDTH > HEIGHT;
     
 const styles = StyleSheet.create({
     rectangularContainer: {
@@ -58,18 +63,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     roundButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        backgroundColor: 'white',
-        borderColor: 'black',
-        borderWidth: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-start',
+        width:'60%'
     },
     imageButton: {
-        width: 40,
-        height: 40,
+        width: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.08,
+        height: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.08,
+        resizeMode:'contain',
     }
 });
 
