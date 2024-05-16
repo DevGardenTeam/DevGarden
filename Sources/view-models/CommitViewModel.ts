@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { CommitService } from '../service/CommitService';
 import { Commit } from '../model/Commit';
+import { IS_STUB } from '../constants/constants';
+import { CommitStub } from '../stub/CommitStub';
 
 export const useCommitViewModel = (platform: string, owner: string, repository: string) => {
   const [commits, setCommits] = useState<Commit[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const commitService = new CommitService();
+  //En fonction de la constante IS_STUB, on implémente le Stub ou le Service
+  const commitService = IS_STUB ? new CommitStub() : new CommitService();
 
   const fetchCommits = async () => {
     try {

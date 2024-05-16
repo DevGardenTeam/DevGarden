@@ -85,47 +85,44 @@ const dummyRepositoriesList: Repository[] = [dummyRepository1, dummyRepository2]
 
 
 
-export class RepositoryStub  extends BaseResources<Repository>{
+export class CommitStub extends BaseResources<Commit> {
+    collection = 'Commit';
+    getManyString = "GetAllCommits";
 
-  // Simule la méthode getMany
-  async getMany(params?: any){
-    // Vous pouvez ajouter de la logique pour filtrer ou modifier les données ici en fonction des params
-    return { data: dummyRepositoriesList, succeeded: true, errors: [] as any };
-  }
-
-  // Simule la méthode get
-  async get(id: string){
-    const repository = dummyRepositoriesList.find(repo => repo.id === id);
-    if (repository) {
-      return { data: repository, succeeded: true, errors: [] as any };
-    } else {
-      return { succeeded: false, errors: ["Repository not found"] as any };
+    async getMany(params?: any) {
+        // Vous pouvez ajouter de la logique pour filtrer ou modifier les données ici en fonction des params
+        return { data: dummyCommits, succeeded: true, errors: [] as any };
     }
-  }
-  
-  // Simule la méthode create
-  async create(id: string, data: Repository){
-    dummyRepositoriesList.push(data);
-    return { data, succeeded: true, errors: [] as any };
-  }
 
-  // Simule la méthode update
-  async update(id: string, data: Repository){
-    const index = dummyRepositoriesList.findIndex(repo => repo.id === id);
-    if (index !== -1) {
-      dummyRepositoriesList[index] = data;
-      return { data, succeeded: true, errors: [] as any };
+    async get(id: string) {
+        const commit = dummyCommits.find(commit => commit.id === id);
+        if (commit) {
+            return { data: commit, succeeded: true, errors: [] as any };
+        } else {
+            return { succeeded: false, errors: ["Commit not found"] as any };
+        }
     }
-    return { succeeded: false, errors: ["Repository not found"] as any };
-  }
 
-  // Simule la méthode delete
-  async delete(id: string){
-    const index = dummyRepositoriesList.findIndex(repo => repo.id === id);
-    if (index !== -1) {
-      dummyRepositoriesList.splice(index, 1);
-      return { succeeded: true, errors: [] as any };
+    async create(id: string, data: Commit) {
+        dummyCommits.push(data);
+        return { data, succeeded: true, errors: [] as any };
     }
-    return { succeeded: false, errors: ["Repository not found"] as any };
-  }
+
+    async update(id: string, data: Commit) {
+        const index = dummyCommits.findIndex(commit => commit.id === id);
+        if (index !== -1) {
+            dummyCommits[index] = data;
+            return { data, succeeded: true, errors: [] as any };
+        }
+        return { succeeded: false, errors: ["Commit not found"] as any };
+    }
+
+    async delete(id: string) {
+        const index = dummyCommits.findIndex(commit => commit.id === id);
+        if (index !== -1) {
+            dummyCommits.splice(index, 1);
+            return { succeeded: true, errors: [] as any };
+        }
+        return { succeeded: false, errors: ["Commit not found"] as any };
+    }
 }

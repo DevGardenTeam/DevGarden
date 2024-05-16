@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { IssueService } from '../service/IssueService';
 import { Issue } from '../model/Issue';
+import { IS_STUB } from '../constants/constants';
+import { IssueStub } from '../stub/IssueStub';
 
 export const useIssueViewModel = (platform: string, owner: string, repository: string) => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const issueService = new IssueService();
+    //En fonction de la constante IS_STUB, on implémente le Stub ou le Service
+    const issueService = IS_STUB ? new IssueStub() : new IssueService();
 
   const fetchIssues = async () => {
     try {
