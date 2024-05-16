@@ -2,6 +2,9 @@ import * as THREE from 'three'
 import React, { useRef } from 'react'
 import { Float, useGLTF } from '@react-three/drei/native'
 import { GLTF } from 'three-stdlib'
+import { StackNavigationProp } from '@react-navigation/stack';
+import { GestureResponderEvent } from 'react-native';
+import { ThreeEvent } from '@react-three/fiber/native';
 
 
 type GLTFResult = GLTF & {
@@ -25,7 +28,11 @@ type GLTFResult = GLTF & {
 }
 type Props = {}
 
-export const TerrainModel = (props: Props) => {
+type TerrainModelProps = {
+  onClick?: ((event: ThreeEvent<MouseEvent>) => void)
+}
+
+export const TerrainModel: React.FC<TerrainModelProps> = ({onClick },props: Props) => {
 
     const { nodes, materials } = useGLTF(require('../../assets/3d/terrain.glb')) as GLTFResult
     return (
@@ -88,6 +95,7 @@ export const TerrainModel = (props: Props) => {
             material={materials['Grass.001']}
             position={[0, 0.837, 0]}
             scale={[6.648, 0.243, 6.648]}
+            onClick={onClick}
           />
       </group>
     )

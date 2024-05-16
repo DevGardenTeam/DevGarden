@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
+import Trigger from '../components/3d_components/trigger';
+import Loader from '../components/3d_components/loader';
+import useControls from "r3f-native-orbitcontrols"
+import { Canvas } from '@react-three/fiber/native'
+import { TerrainModel } from '../components/3d_components/terrain_component'
+
 
 interface AllPlatformsNeutralViewProps {
   navigation: StackNavigationProp<any>;
@@ -12,10 +18,12 @@ interface AllPlatformsNeutralViewProps {
 const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navigation }) => {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const { colors } = useTheme();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [OrbitControls ,events] = useControls()
 
   return (
       <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-          <View style={styles.backButton}>
+          <View style={styles.backButton} >
             <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
           </View>
           <View style={styles.mainView}>
@@ -23,11 +31,25 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
                   <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
               </View>
               <View style={styles.contentView}>
-                <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects")}>
-                  <View >
+                    <View style={{ flex: 1,  }} {...events} >
+                                  {loading && <Loader />}
+                      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}}>
 
-                  </View>                
-                </TouchableOpacity>
+                        <OrbitControls enablePan={false}/>
+
+                        <directionalLight position={[1, 0, 0]} args={['white', 2]} />
+                        <directionalLight position={[-1, 0, 0]} args={['white', 2]}  />
+                        <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
+                        <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
+                        <directionalLight position={[0, -1, 0]} args={['white', 2]}  />
+
+
+                        <Suspense fallback={<Trigger setLoading={setLoading} />}>
+                          <TerrainModel onClick={() => navigation.navigate("AllProjects")}/>
+                        </Suspense>
+                      </Canvas>
+                      
+                    </View>              
     
                 <View style={styles.slidingButton}>
                   <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
