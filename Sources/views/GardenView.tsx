@@ -7,33 +7,31 @@ import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanima
 
 const GardenView: React.FC = () => {
     const scale = useSharedValue(1);
-    const translateX = useSharedValue(0);
-    const translateY = useSharedValue(0);
+    const savedScale = useSharedValue(1);
   
-    const panGestureHandler = Gesture.Pan().onUpdate((event) => {
-        translateX.value += event.translationX;
-        translateY.value += event.translationY;
-      });
+    // const panGestureHandler = Gesture.Pan()
     
-      const pinchGestureHandler = Gesture.Pinch().onUpdate((event) => {
-        scale.value *= event.scale;
-      });
+    const pinchGestureHandler = Gesture.Pinch()
+        .onUpdate((event) => {
+            scale.value = savedScale.value * event.scale;
+        })
+        .onEnd(() => {
+            savedScale.value = scale.value;
+        })
     
-    const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
+    //const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
 
     const animatedStyle = useAnimatedStyle(() => {
       return {
         transform: [
           { scale: scale.value },
-          { translateX: translateX.value },
-          { translateY: translateY.value },
         ],
       };
     });
   
     return (
         <GestureHandlerRootView  style={{ flex: 1 }}>
-            <GestureDetector gesture={combinedGesture}>
+            <GestureDetector gesture={pinchGestureHandler}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
                 <Svg height="100%" width="100%">
                 <Rect x="0" y="0" width="100%" height="100%" fill="green" />
