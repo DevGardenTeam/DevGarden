@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 
 import { Dimensions } from 'react-native';
+
+import { Tree, generateTrees } from '../components/garden_view/tree';
+import { use } from 'i18next';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -16,6 +19,12 @@ const svgHeight = containerHeight; // Height of the SVG content
 const MAX_SCALE = 2.5; // Maximum zoom level
 
 const GardenView: React.FC = () => {
+    const [trees, setTrees] = React.useState<Tree[]>([]);
+
+    useEffect(() => {
+        const newTrees = generateTrees(10, 10, svgWidth - svgWidth / 5, svgHeight - svgHeight / 5);
+        setTrees(newTrees);
+    }, []);
     
     // PINCHING //
     const scale = useSharedValue(1); // current scale or "zoom level"
@@ -44,25 +53,25 @@ const GardenView: React.FC = () => {
             savedTranslateY.value = translateY.value;
         })
         .onUpdate((event) => {
-            console.log("Current Scale:", scale.value); // Log current scale
+            // console.log("Current Scale:", scale.value);
     
             const scaledSvgWidth = svgWidth * scale.value;
             const scaledSvgHeight = svgHeight * scale.value;
-            console.log("SVG Dimensions - Original:", svgWidth, svgHeight, "Scaled:", scaledSvgWidth, scaledSvgHeight); // Log SVG dimensions
+            // console.log("SVG Dimensions - Original:", svgWidth, svgHeight, "Scaled:", scaledSvgWidth, scaledSvgHeight); 
     
             const maxX = Math.max(0, (scaledSvgWidth - containerWidth) / 2 / scale.value);
             const maxY = Math.max(0, (scaledSvgHeight - containerHeight) / 2 / scale.value);
-            console.log("Max Translation - maxX:", maxX, "maxY:", maxY); // Log max translations
+            //console.log("Max Translation - maxX:", maxX, "maxY:", maxY);
     
             const proposedTranslateX = savedTranslateX.value + event.translationX / scale.value;
             const proposedTranslateY = savedTranslateY.value + event.translationY / scale.value;
-            console.log("Proposed Translations - X:", proposedTranslateX, "Y:", proposedTranslateY); // Log proposed translations
+            // console.log("Proposed Translations - X:", proposedTranslateX, "Y:", proposedTranslateY); 
     
             translateX.value = Math.min(Math.max(proposedTranslateX, -maxX), maxX);
             translateY.value = Math.min(Math.max(proposedTranslateY, -maxY), maxY);
-            console.log("Applied Translations - X:", translateX.value, "Y:", translateY.value); // Log applied translations
+            // console.log("Applied Translations - X:", translateX.value, "Y:", translateY.value); 
     
-            console.log("Event Translations - X:", event.translationX, "Y:", event.translationY); // Log event translations
+            // console.log("Event Translations - X:", event.translationX, "Y:", event.translationY); 
         });
     
     const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
@@ -83,10 +92,10 @@ const GardenView: React.FC = () => {
             <GestureDetector gesture={combinedGesture}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
                 <Svg height={svgHeight} width={svgWidth}>
-                <Rect x="0" y="0" width="100%" height="100%" fill="#006769" />
-                <Circle cx="20%" cy="20%" r="15" fill="#40A578" />
-                <Circle cx="70%" cy="20%" r="20" fill="#9DDE8B" />
-                {/* Add more trees or elements here */} 
+                    <Rect x="0" y="0" width="100%" height="100%" fill="#006769" />
+                    {trees.map(tree => tree.visible && (
+                            <Circle key={tree.label} cx={tree.x.toString()} cy={tree.y.toString()} r={tree.radius.toString()} fill="#40A578" />
+                        ))}
                 </Svg>
             </Animated.View>
             </GestureDetector>
