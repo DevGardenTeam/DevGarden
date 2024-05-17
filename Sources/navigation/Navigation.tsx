@@ -105,6 +105,12 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
+                                           {/* <BottomTabNavigator.Screen name="Dashboard"  component={DashBoardScreen}
+                                           options={{
+                                                title: 'Dashboard',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/> */}
             </BottomTabNavigator.Navigator>
         </NavigationContainer>
     )

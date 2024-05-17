@@ -8,7 +8,6 @@ import { Task } from '../model/Task';
 import ButtonVerticalAddComponent from '../components/button_vertical_add_component';
 import { WbsViewController } from '../view-controllers/WbsViewController';
 import { useTheme } from '@react-navigation/native';
-import { Platform } from 'react-native';
 import ButtonWbsComponent from '../components/button_wbs_component';
 
 interface WbsViewProps {
@@ -16,13 +15,14 @@ interface WbsViewProps {
 }
 
 interface RouteParams {
+    platform: string;
     owner: string;
     repository: string;
 }
 
 const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { owner, repository } = route.params as RouteParams;0
+    const { platform, owner, repository } = route.params as RouteParams;0
     const { colors } = useTheme();
     
     const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = WbsViewController({ owner, repository })
@@ -85,7 +85,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {owner: owner, repository: repository})}/>
+                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>

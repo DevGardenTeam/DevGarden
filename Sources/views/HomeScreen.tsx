@@ -17,21 +17,7 @@ export default function HomeScreen() {
 
     <View style={{ flex: 1 }} {...events} >
                   {loading && <Loader />}
-      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}}>
 
-        <OrbitControls enablePan={false}/>
-
-        <directionalLight position={[1, 0, 0]} args={['white', 2]} />
-        <directionalLight position={[-1, 0, 0]} args={['white', 2]}  />
-        <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
-        <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
-        <directionalLight position={[0, -1, 0]} args={['white', 2]}  />
-
-
-        <Suspense fallback={<Trigger setLoading={setLoading} />}>
-          <TerrainModel/>
-        </Suspense>
-      </Canvas>
       
     </View>
   )

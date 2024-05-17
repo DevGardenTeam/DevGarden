@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 type BackNavigationButton = {
@@ -16,14 +16,19 @@ const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress }) => {
     );
 };
 
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
+const ISLANDSCAPE = WIDTH > HEIGHT;
+
 const styles = StyleSheet.create({
     button: {
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
       },
       icon: {
-        width: 60,
-        height: 60,
+        width: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.12,
+        height: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.12,
       },
 });
   
