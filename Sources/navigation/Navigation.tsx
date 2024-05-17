@@ -16,16 +16,17 @@ import PertView from '../views/pert_main_view';
 import WbsView from '../views/wbs_main_view';
 import {DarkTheme, LightTheme} from "../theme/theme";
 import {useColorScheme} from "react-native";
+import GardenView from '../views/GardenView';
 
 export default function Navigation() {
      const scheme = useColorScheme();
      const BottomTabNavigator = createBottomTabNavigator();
     return (
         <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
-            <BottomTabNavigator.Navigator initialRouteName="Login" >
-                <BottomTabNavigator.Screen name="Home" component={HomeScreen}
+            <BottomTabNavigator.Navigator initialRouteName="Garden" >
+                <BottomTabNavigator.Screen name="Garden" component={GardenView}
                                            options={{
-                                                title: 'Home',
+                                                title: 'Garden',
                                                 headerShown: false
                                            }}/>
                                            <BottomTabNavigator.Screen name="Parameters"  component={ParametersScreen}
