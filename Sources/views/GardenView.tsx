@@ -6,20 +6,19 @@ import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanima
 import { Dimensions } from 'react-native';
 
 import { Tree, generateTrees } from '../components/garden_view/tree';
-import { use } from 'i18next';
-
-
-const windowDimensions = Dimensions.get('window');
-const containerWidth = windowDimensions.width;
-const containerHeight = windowDimensions.height - 50;
-
-const svgWidth = containerWidth; // Width of the SVG content
-const svgHeight = containerHeight; // Height of the SVG content
 
 const MAX_SCALE = 2.5; // Maximum zoom level
+const NUMBER_OF_GARDENS = 3; // Number of gardens
 
 const GardenView: React.FC = () => {
     const [trees, setTrees] = React.useState<Tree[]>([]);
+
+    const windowDimensions = Dimensions.get('window');
+    const containerWidth = windowDimensions.width;
+    const containerHeight = windowDimensions.height - 50;
+
+    const svgWidth = containerWidth * NUMBER_OF_GARDENS; // Width of the SVG content
+    const svgHeight = containerHeight; // Height of the SVG content
 
     useEffect(() => {
         const newTrees = generateTrees(50, 10, svgWidth, svgHeight);
@@ -31,7 +30,7 @@ const GardenView: React.FC = () => {
     const savedScale = useSharedValue(1); // stores scale after pinch gesture ends
 
     // PAN //
-    const translateX = useSharedValue(0);
+    const translateX = useSharedValue(-containerWidth);
     const translateY = useSharedValue(0);
     const savedTranslateX = useSharedValue(0);
     const savedTranslateY = useSharedValue(0);
@@ -59,8 +58,10 @@ const GardenView: React.FC = () => {
             const scaledSvgHeight = svgHeight * scale.value;
         
             // Calculate bounds for translation
-            const maxTranslateX = (scaledSvgWidth - containerWidth) / 2 / scale.value;
-            const minTranslateX = -maxTranslateX;
+            const maxTranslateX = ((scaledSvgWidth - containerWidth) / 2 / scale.value) - containerWidth;
+            const minTranslateX = -(maxTranslateX + containerWidth * (NUMBER_OF_GARDENS - 1));
+            //console.log("min: ", minTranslateX, "max: ", maxTranslateX)
+
             const maxTranslateY = (scaledSvgHeight - containerHeight) / 2 / scale.value;
             const minTranslateY = -maxTranslateY;
         
@@ -91,7 +92,16 @@ const GardenView: React.FC = () => {
             <GestureDetector gesture={combinedGesture}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
                 <Svg height={svgHeight} width={svgWidth}>
-                    <Rect width={svgWidth} height={svgHeight} fill="#006769" stroke="red" strokeWidth="2"/>
+
+                    {/* garden 1 */}
+                    <Rect x="0" width={containerWidth} height={svgHeight} fill="blue" stroke="red" strokeWidth="2"/>
+                    
+                    {/* garden 2 */}
+                    <Rect x={containerWidth} width={containerWidth} height={svgHeight} fill="green" stroke="red" strokeWidth="2"/>
+
+                    {/* garden 3 */}
+                    <Rect x={containerWidth*2} width={containerWidth} height={svgHeight} fill="orange" stroke="red" strokeWidth="2"/>
+
                     {trees.map(tree => tree.visible && (
                             <Circle key={tree.label} cx={tree.x.toString()} cy={tree.y.toString()} r={tree.radius.toString()} fill="#40A578" />
                         ))}
