@@ -11,10 +11,10 @@ import { use } from 'i18next';
 
 const windowDimensions = Dimensions.get('window');
 const containerWidth = windowDimensions.width;
-const containerHeight = windowDimensions.height - 60;
+const containerHeight = windowDimensions.height - 50;
 
-const svgWidth = containerWidth * 2; // Width of the SVG content
-const svgHeight = containerHeight * 2; // Height of the SVG content
+const svgWidth = containerWidth; // Width of the SVG content
+const svgHeight = containerHeight; // Height of the SVG content
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 
@@ -51,18 +51,18 @@ const GardenView: React.FC = () => {
         .onStart(() => {
             savedTranslateX.value = translateX.value;
             savedTranslateY.value = translateY.value;
+
+            console.log("pan: ", translateX.value, translateY.value)
         })
         .onUpdate((event) => {
-            console.log("Current Scale:", scale.value);
-
             const scaledSvgWidth = svgWidth * scale.value;
             const scaledSvgHeight = svgHeight * scale.value;
         
             // Calculate bounds for translation
-            const maxTranslateX = 0;
-            const minTranslateX = -(scaledSvgWidth - containerWidth);
-            const maxTranslateY = 0;
-            const minTranslateY = -(scaledSvgHeight - containerHeight);
+            const maxTranslateX = (scaledSvgWidth - containerWidth) / 2 / scale.value;
+            const minTranslateX = -maxTranslateX;
+            const maxTranslateY = (scaledSvgHeight - containerHeight) / 2 / scale.value;
+            const minTranslateY = -maxTranslateY;
         
             // Calculate proposed translations
             const proposedTranslateX = savedTranslateX.value + event.translationX / scale.value;
