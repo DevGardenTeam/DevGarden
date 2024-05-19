@@ -1,3 +1,8 @@
+import React from 'react';
+import TreeSvg from '../../assets/trees/TreeSvg.svg';
+import { View } from 'react-native';
+import { Circle, G } from 'react-native-svg';
+
 export type Tree = {
     label: string;
     x: number;
@@ -40,3 +45,24 @@ export type Tree = {
   
     return trees;
   }
+
+
+  // Tree component 
+
+  interface TreeProps {
+    tree: Tree;
+    size?: number;
+    color?: string;
+  }
+
+  const TreeComponent: React.FC<TreeProps> = ({ tree, size = 1, color = 'currentColor' }) => {
+  
+    return (
+      <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
+        <TreeSvg/>
+      </G>
+    )
+  };
+
+  export default TreeComponent;
+  

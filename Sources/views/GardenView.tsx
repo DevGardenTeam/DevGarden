@@ -4,7 +4,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { Dimensions, View, StyleSheet } from 'react-native';
 
-import { Tree, generateTrees } from '../components/garden_view/tree';
+import TreeComponent, { Tree, generateTrees } from '../components/garden_view/tree';
 import CustomSvg from '../assets/garden_themes/gardenbg.svg'
 
 const MAX_SCALE = 2.5; // Maximum zoom level
@@ -15,7 +15,7 @@ const GardenView: React.FC = () => {
 
     const windowDimensions = Dimensions.get('window');
     const containerWidth = windowDimensions.width;
-    const containerHeight = windowDimensions.height - 50;
+    const containerHeight = windowDimensions.height - 45;
 
     console.log("width: ", containerWidth, "height: ", containerHeight)
 
@@ -23,8 +23,10 @@ const GardenView: React.FC = () => {
     const svgHeight = containerHeight; // Height of the SVG content
 
     useEffect(() => {
-        const newTrees = generateTrees(50, 10, svgWidth, svgHeight);
+        const newTrees = generateTrees(50, 20, svgWidth - 80, svgHeight - 50);
         setTrees(newTrees);
+
+        //console.log("trees: ", newTrees)
     }, []);
     
     // PINCHING //
@@ -90,7 +92,7 @@ const GardenView: React.FC = () => {
     });
   
     return (
-        <GestureHandlerRootView  style={{ flex: 1, backgroundColor: '#40A578' }}>
+        <GestureHandlerRootView  style={{ flex: 1, backgroundColor: 'white' }}>
             <GestureDetector gesture={combinedGesture}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
                 
@@ -107,14 +109,14 @@ const GardenView: React.FC = () => {
                     />
 
                     {/* garden 2 */}
-                    <Image
+                    {/* <Image
                     x={containerWidth}
                     y="0"
                     width={containerWidth}
                     height={svgHeight}
-                    href={require('../assets/garden_themes/garden2bg.png')}
                     preserveAspectRatio="xMidYMid slice"
-                    />
+                    /> */}
+                    <Rect x={containerWidth} width={containerWidth} height={svgHeight} fill="white" stroke="red" strokeWidth="2"/>
 
                     {/* garden 3 */}
                     <Image
@@ -127,8 +129,10 @@ const GardenView: React.FC = () => {
                     />
 
                     {trees.map(tree => tree.visible && (
-                            <Circle key={tree.label} cx={tree.x.toString()} cy={tree.y.toString()} r={tree.radius.toString()} fill="#40A578" />
-                        ))}
+                        <TreeComponent key={tree.label} tree={tree} size={0.2} color="red" />
+                    ))}
+                    {/* <Circle key={tree.label} cx={tree.x.toString()} cy={tree.y.toString()} r={tree.radius.toString()} fill="#40A578" /> */}
+
                 </Svg>
               
             </Animated.View>
