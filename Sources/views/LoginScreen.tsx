@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 
@@ -50,17 +50,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   );
 }
 
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
 
+const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize:  ISLANDSCAPE ? WIDTH*0.02 : HEIGHT*0.025 ,
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 5,
   },
-
-
   safeArea: {
     flex: 1,
     alignItems: 'center',
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     color: 'green',
-    fontSize: 14,
+    fontSize: ISLANDSCAPE ? WIDTH*0.014 : HEIGHT*0.016,
     textDecorationLine: 'underline',
     },
 
@@ -123,19 +124,17 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'green',
     backgroundColor: 'green',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     width: '35%',
-    height: '75%',
+    height: ISLANDSCAPE ? '100%' : '75%',
     
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: ISLANDSCAPE ? WIDTH*0.014 : HEIGHT*0.014,
   },
   
 });

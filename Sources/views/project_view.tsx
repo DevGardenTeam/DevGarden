@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, ScrollView } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
@@ -52,29 +52,31 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={[styles.container2, { backgroundColor: colors.background }]}>
-        <View style={styles.backButton}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/> 
-        </View>
-
-        <View style={styles.listTop}>
-          <Text style={[styles.title, { color: colors.text }]}>DevGarden</Text>
-          <View style={styles.switch}>
-            <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
-              thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
-            </Switch>
-            <Text style={[styles.text,styles.textDay]}>{type}</Text>
+        <ScrollView>
+          <View style={styles.backButton}>
+            <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/> 
           </View>
-        </View>
-        <View style={styles.mainContent}>
-          <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
-          <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
-          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
-          <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
-        </View>
+
+          <View style={styles.listTop}>
+            <Text style={[styles.title, { color: colors.text }]}>DevGarden</Text>
+            <View style={styles.switch}>
+              <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+                thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
+              </Switch>
+              <Text style={[styles.text,styles.textDay]}>{type}</Text>
+            </View>
+          </View>
+          <View style={styles.mainContent}>
+            <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
+            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }

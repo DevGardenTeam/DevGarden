@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator, Dimensions, StatusBar } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -23,13 +23,15 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   return (
       <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-          <View style={styles.backButton} >
-            <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+          <View style={styles.top}>
+                <View style={styles.navigationBack}>
+                  <BackNavigationButton onPress={() => navigation.navigate("Login")}/>                 
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
+                </View>
           </View>
           <View style={styles.mainView}>
-              <View style={styles.titleView}>
-                  <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
-              </View>
               <View style={styles.contentView}>
                 {/* <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}>
                   <View > */}
@@ -62,26 +64,39 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   );
 }
 
+const WIDTH = Dimensions.get('window').width ;
+const HEIGHT = Dimensions.get('window').height ;
+
+const ISLANDSCAPE = WIDTH > HEIGHT;
+
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  backButton:{
-    margin: 20,
+  // Header => back button + Title
+  top:{
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent: 'space-between',
+    marginTop: StatusBar.currentHeight || 0,
+    marginBottom : ISLANDSCAPE ? WIDTH*0.05 : HEIGHT*0.05,
   },
+  navigationBack: {
+      marginLeft : ISLANDSCAPE ? WIDTH*0.02 : HEIGHT*0.05,
+  },
+  titleContainer: {
+      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+      alignItems: 'center', // Pour centrer horizontalement le texte
+  },
+  titleText: {
+      fontSize: ISLANDSCAPE ? WIDTH*0.075 : HEIGHT*0.075,
+      fontWeight: 'bold',
+      textAlign: 'center'
+  },
+  
   mainView: {
     flex: 1,
     display: 'flex',
-  },
-  titleView: {
-    display: 'flex',
-    margin: 20,
-  },
-  titleText: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 100,
-    fontWeight: 'bold',
   },
   contentView: {
     flex: 1,
