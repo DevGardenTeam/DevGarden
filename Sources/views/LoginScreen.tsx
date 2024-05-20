@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
+import {moderateScale, islandscape } from '../service/Metrics';
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<any>;
@@ -50,14 +51,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   );
 }
 
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize:  ISLANDSCAPE ? WIDTH*0.02 : HEIGHT*0.025 ,
+    fontSize: moderateScale(20),
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 5,
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     color: 'green',
-    fontSize: ISLANDSCAPE ? WIDTH*0.014 : HEIGHT*0.016,
+    fontSize: islandscape ? moderateScale(10) : moderateScale(14),
     textDecorationLine: 'underline',
     },
 
@@ -129,12 +126,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '35%',
-    height: ISLANDSCAPE ? '100%' : '75%',
+    height: 'auto',
     
   },
   buttonText: {
     color: 'white',
-    fontSize: ISLANDSCAPE ? WIDTH*0.014 : HEIGHT*0.014,
+    fontSize: islandscape ? moderateScale(10) : moderateScale(14),
   },
   
 });
