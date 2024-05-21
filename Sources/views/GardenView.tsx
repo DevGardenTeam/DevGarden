@@ -4,8 +4,9 @@ import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { Dimensions, View, StyleSheet } from 'react-native';
 
-import TreeComponent, { Tree, generateTrees } from '../components/garden_view/tree';
+import TreeComponent, { Tree, generateTrees } from '../components/garden_view/Tree';
 import CustomSvg from '../assets/garden_themes/gardenbg.svg'
+import GardenSection from '../components/garden_view/GardenSection';
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 const NUMBER_OF_GARDENS = 3; // Number of gardens
@@ -23,7 +24,7 @@ const GardenView: React.FC = () => {
     const svgHeight = containerHeight; // Height of the SVG content
 
     useEffect(() => {
-        const newTrees = generateTrees(50, 20, svgWidth - 80, svgHeight - 50);
+        const newTrees = generateTrees(50, 20, svgHeight - 50, containerWidth, containerWidth * 2 - 60);
         setTrees(newTrees);
 
         //console.log("trees: ", newTrees)
@@ -99,39 +100,37 @@ const GardenView: React.FC = () => {
                 <Svg height={svgHeight} width={svgWidth}>
 
                     {/* garden 1 */}
-                    <Image
-                    x="0"
-                    y="0"
-                    width={containerWidth}
-                    height={svgHeight}
-                    href={require('../assets/garden_themes/garden1bg.png')}
-                    preserveAspectRatio="xMidYMid slice"
+                    <GardenSection
+                     x={0}
+                     y={0}
+                     width={containerWidth}
+                     height={svgHeight}
+                     imageSource={require('../assets/garden_themes/garden1bg.png')}
+                     numberOfTrees={5}
+                     minDistanceBetweenTrees={20}
                     />
 
                     {/* garden 2 */}
-                    {/* <Image
-                    x={containerWidth}
-                    y="0"
-                    width={containerWidth}
-                    height={svgHeight}
-                    preserveAspectRatio="xMidYMid slice"
-                    /> */}
-                    <Rect x={containerWidth} width={containerWidth} height={svgHeight} fill="white" stroke="red" strokeWidth="2"/>
-
-                    {/* garden 3 */}
-                    <Image
-                    x={containerWidth*2}
-                    y="0"
-                    width={containerWidth}
-                    height={svgHeight}
-                    href={require('../assets/garden_themes/garden1bg.png')}
-                    preserveAspectRatio="xMidYMid slice"
+                    <GardenSection
+                     x={containerWidth}
+                     y={0}
+                     width={containerWidth}
+                     height={svgHeight}
+                     imageSource={require('../assets/garden_themes/garden2bg.png')}
+                     numberOfTrees={8}
+                     minDistanceBetweenTrees={20}
                     />
 
-                    {trees.map(tree => tree.visible && (
-                        <TreeComponent key={tree.label} tree={tree} size={0.2} color="red" />
-                    ))}
-                    {/* <Circle key={tree.label} cx={tree.x.toString()} cy={tree.y.toString()} r={tree.radius.toString()} fill="#40A578" /> */}
+                    {/* garden 3 */}
+                    <GardenSection
+                     x={containerWidth * 2}
+                     y={0}
+                     width={containerWidth}
+                     height={svgHeight}
+                     imageSource={require('../assets/garden_themes/garden1bg.png')}
+                     numberOfTrees={10}
+                     minDistanceBetweenTrees={20}
+                    />
 
                 </Svg>
               
