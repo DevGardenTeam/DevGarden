@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
-import Svg, { Circle, Rect, Image } from 'react-native-svg';
+import React from 'react';
+import Svg from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { Dimensions, View, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 
-import TreeComponent, { Tree, generateTrees } from '../components/garden_view/Tree';
-import CustomSvg from '../assets/garden_themes/gardenbg.svg'
 import GardenSection from '../components/garden_view/GardenSection';
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 const NUMBER_OF_GARDENS = 3; // Number of gardens
 
 const GardenView: React.FC = () => {
-    const [trees, setTrees] = React.useState<Tree[]>([]);
+    const tree = React.useState<[]>([]);
 
     const windowDimensions = Dimensions.get('window');
     const containerWidth = windowDimensions.width;
@@ -22,13 +20,6 @@ const GardenView: React.FC = () => {
 
     const svgWidth = containerWidth * NUMBER_OF_GARDENS; // Width of the SVG content
     const svgHeight = containerHeight; // Height of the SVG content
-
-    useEffect(() => {
-        const newTrees = generateTrees(50, 20, svgHeight - 50, containerWidth, containerWidth * 2 - 60);
-        setTrees(newTrees);
-
-        //console.log("trees: ", newTrees)
-    }, []);
     
     // PINCHING //
     const scale = useSharedValue(1); // current scale or "zoom level"
