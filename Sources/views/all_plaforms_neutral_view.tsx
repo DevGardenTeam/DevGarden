@@ -9,6 +9,7 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
+import {moderateScale, horizontalScale } from '../service/Metrics';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -64,11 +65,6 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   );
 }
 
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
-
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
@@ -79,17 +75,16 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'space-between',
     marginTop: StatusBar.currentHeight || 0,
-    marginBottom : ISLANDSCAPE ? WIDTH*0.05 : HEIGHT*0.05,
   },
   navigationBack: {
-      marginLeft : ISLANDSCAPE ? WIDTH*0.02 : HEIGHT*0.05,
+      marginLeft : horizontalScale(15),
   },
   titleContainer: {
       flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
       alignItems: 'center', // Pour centrer horizontalement le texte
   },
   titleText: {
-      fontSize: ISLANDSCAPE ? WIDTH*0.075 : HEIGHT*0.075,
+      fontSize: moderateScale(70),
       fontWeight: 'bold',
       textAlign: 'center'
   },

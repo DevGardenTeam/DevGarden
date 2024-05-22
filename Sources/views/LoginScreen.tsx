@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
-import {moderateScale, islandscape } from '../service/Metrics';
+import {moderateScale} from '../service/Metrics';
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<any>;
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     color: 'green',
-    fontSize: islandscape ? moderateScale(10) : moderateScale(14),
+    fontSize: moderateScale(14),
     textDecorationLine: 'underline',
     },
 
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: islandscape ? moderateScale(10) : moderateScale(14),
+    fontSize: moderateScale(16),
+    margin: 5
   },
   
 });

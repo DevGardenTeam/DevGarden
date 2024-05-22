@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions, Platform  } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { horizontalScale, moderateScale, verticalScale } from '../service/Metrics';
+
 
 type NavigationButton = {
     title: string,
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: "center",
       justifyContent: 'space-between',
-      height: ISLANDSCAPE ? "20%" : 'auto',
+      height: 'auto',
       padding: ISLANDSCAPE ? "1%" : "3.5%",
     },
     icon: {
