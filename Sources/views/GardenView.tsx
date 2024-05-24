@@ -4,7 +4,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-
 import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { Dimensions, View, StyleSheet } from 'react-native';
 
-import TreeComponent, { Tree, generateTrees } from '../components/garden_view/Tree';
+import TreeComponent, { Tree, generateTrees } from '../components/garden_view/tree';
 import CustomSvg from '../assets/garden_themes/gardenbg.svg'
 import GardenSection from '../components/garden_view/GardenSection';
 
@@ -141,12 +141,3 @@ const GardenView: React.FC = () => {
   };
 
 export default GardenView;
-
-{/* <Svg height={svgHeight} width={svgWidth}>
-
-<Rect x="0" width={containerWidth} height={svgHeight} fill="blue" stroke="red" strokeWidth="2"/>
-
-<Rect x={containerWidth} width={containerWidth} height={svgHeight} fill="green" stroke="red" strokeWidth="2"/>
-
-<Rect x={containerWidth*2} width={containerWidth} height={svgHeight} fill="orange" stroke="red" strokeWidth="2"/>
-</Svg> */}

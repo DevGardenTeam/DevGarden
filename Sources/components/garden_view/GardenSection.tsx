@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native-svg';
-import TreeComponent, { Tree, generateTrees } from './Tree';
+import TreeComponent, { Tree, generateTrees } from './tree';
 
 interface GardenSectionProps {
   x: number;
