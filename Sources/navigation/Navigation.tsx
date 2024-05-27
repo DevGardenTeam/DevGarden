@@ -23,10 +23,10 @@ export default function Navigation() {
      const BottomTabNavigator = createBottomTabNavigator();
     return (
         <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
-            <BottomTabNavigator.Navigator initialRouteName="Garden" >
-                <BottomTabNavigator.Screen name="Garden" component={GardenView}
+            <BottomTabNavigator.Navigator initialRouteName="Login" >
+                <BottomTabNavigator.Screen name="Home" component={HomeScreen}
                                            options={{
-                                                title: 'Garden',
+                                                title: 'Login',
                                                 headerShown: false
                                            }}/>
                                            <BottomTabNavigator.Screen name="Parameters"  component={ParametersScreen}

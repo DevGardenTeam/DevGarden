@@ -1,14 +1,11 @@
-import React, { Suspense, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
-import Trigger from '../components/3d_components/trigger';
 import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
-import { Canvas } from '@react-three/fiber/native'
-import { TerrainModel } from '../components/3d_components/terrain_component'
 import GardenView from './GardenView';
 
 

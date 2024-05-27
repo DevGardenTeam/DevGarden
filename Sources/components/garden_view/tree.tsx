@@ -1,7 +1,6 @@
 import React from "react";
 import TreeSvg from "../../assets/trees/TreeSvg.svg";
-import { View } from "react-native";
-import { Circle, G } from "react-native-svg";
+import { G, Rect } from "react-native-svg";
 
 export type Tree = {
   label: string;
@@ -72,9 +71,9 @@ const TreeComponent: React.FC<TreeProps> = ({
   color = "currentColor",
 }) => {
   return (
-    <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
-      <TreeSvg />
-    </G>
+      <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
+        <TreeSvg />
+      </G>
   );
 };
 

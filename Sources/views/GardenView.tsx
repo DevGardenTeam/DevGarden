@@ -5,6 +5,8 @@ import Animated, { useSharedValue, useAnimatedStyle, useAnimatedReaction, withTi
 import { Dimensions } from 'react-native';
 
 import GardenSection from '../components/garden_view/GardenSection';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 const NUMBER_OF_GARDENS = 3; // Number of gardens
@@ -34,6 +36,8 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
     const translateY = useSharedValue(0);
     const savedTranslateX = useSharedValue(0);
     const savedTranslateY = useSharedValue(0);
+
+    const navigation = useNavigation();
     
     useEffect(() => {
         selectedPortionValue.value = selectedPortion;
@@ -84,7 +88,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
         })
         .onEnd(() => {
             savedScale.value = scale.value;
-            console.log("pinch: ", scale.value)
+            //console.log("pinch: ", scale.value)
         })
 
     const panGestureHandler = Gesture.Pan()
@@ -101,7 +105,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
             // Calculate bounds for translation
             const maxTranslateX = ((scaledSvgWidth - containerWidth) / 2 / scale.value) - containerWidth;
             const minTranslateX = -(maxTranslateX + containerWidth * (NUMBER_OF_GARDENS - 1));
-            console.log("min: ", minTranslateX, "max: ", maxTranslateX)
+            //console.log("min: ", minTranslateX, "max: ", maxTranslateX)
 
             const maxTranslateY = (scaledSvgHeight - containerHeight) / 2 / scale.value;
             const minTranslateY = -maxTranslateY;
@@ -114,7 +118,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
             translateX.value = Math.min(maxTranslateX, Math.max(proposedTranslateX, minTranslateX));
             translateY.value = Math.min(maxTranslateY, Math.max(proposedTranslateY, minTranslateY));
 
-            console.log("pan: ", translateX.value, translateY.value)
+            //console.log("pan: ", translateX.value, translateY.value)
         });
     
     const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
@@ -144,8 +148,9 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
                      width={containerWidth}
                      height={svgHeight}
                      imageSource={require('../assets/garden_themes/garden1bg.png')}
-                     numberOfTrees={1}
+                     numberOfTrees={4}
                      minDistanceBetweenTrees={20}
+                     navigation={navigation as StackNavigationProp<any, any>}
                     />
 
                     {/* garden 2 */}
@@ -157,6 +162,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
                      imageSource={require('../assets/garden_themes/garden2bg.png')}
                      numberOfTrees={2}
                      minDistanceBetweenTrees={20}
+                     navigation={navigation as StackNavigationProp<any, any>}
                     />
 
                     {/* garden 3 */}
@@ -168,6 +174,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
                      imageSource={require('../assets/garden_themes/garden3bg.png')}
                      numberOfTrees={3}
                      minDistanceBetweenTrees={20}
+                     navigation={navigation as StackNavigationProp<any, any>}
                     />
 
                 </Svg>

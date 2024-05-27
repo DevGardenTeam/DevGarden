@@ -5,6 +5,7 @@ import AllCommitsView from "../views/all_commits_view";
 import AllProjectsNeutralView from "../views/all_projects_neutral_view";
 import LoginScreen from "../views/LoginScreen";
 import GardenView from "../views/GardenView";
+import GardenSection from '../components/garden_view/GardenSection';
 
 export default function StackNavigation() {
     const Stack = createStackNavigator();
@@ -15,6 +16,7 @@ export default function StackNavigation() {
           <Stack.Screen name="AllProjects" component={AllProjectsNeutralView}/>
           <Stack.Screen name="AllCommits" component={AllCommitsView}/>
           <Stack.Screen name="Garden" component={GardenView}/>
+          <Stack.Screen name="GardenSection" component={GardenSection} />
         </Stack.Navigator>
     )
   }
