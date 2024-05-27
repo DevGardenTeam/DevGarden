@@ -50,15 +50,14 @@ const styles = StyleSheet.create({
     },
     icon: {
       resizeMode: 'contain',
-      width: 40,
-      height: 40,
-      marginRight: 8,
-      marginLeft: 4,
+      width: horizontalScale(30),
+      height: verticalScale(30),
+      marginRight: horizontalScale(5),
       tintColor: '#414141',
     },
     text: {
       color: '#414141',
-      fontSize: ISLANDSCAPE ? WIDTH * 0.03 : WIDTH * 0.08,
+      fontSize: moderateScale(25),
       fontWeight: 'bold',
       flexWrap: 'wrap',
       maxWidth :'75%'

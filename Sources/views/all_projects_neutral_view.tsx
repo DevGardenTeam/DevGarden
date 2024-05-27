@@ -36,15 +36,15 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
 
   return (
     <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-      <ScrollView>
-        <View style={styles.top}>
-                <View style={styles.navigationBack}>
-                  <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/>                 
-                </View>
-                <View style={styles.titleContainer}>
-                    <Text style={[styles.titleText, { color: colors.text }]}>Choisissez un projet</Text>
-                </View>
+        <View style={styles.top}>   
+          <View style={styles.navigationBack}>
+            <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/>                 
+          </View> 
+          <View style={styles.titleContainer}>
+              <Text style={[styles.titleText, { color: colors.text }]}>Choisissez un projet</Text>
+          </View>
         </View>
+
         <View style={styles.mainView}>
           <View style={styles.mainContent}>
             <FlatList
@@ -57,15 +57,9 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
             />
           </View>  
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 }
-
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
   // LIST VIEW
@@ -73,9 +67,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainView: {
-    flex: 1,
     display: 'flex',
-    height: '80%'
+    height: 'auto'
   },
   // Header => back button + Title
   top:{
@@ -86,11 +79,15 @@ const styles = StyleSheet.create({
     marginBottom : verticalScale(25),
   },
   navigationBack: {
-      marginLeft : horizontalScale(15),
+      position: "absolute",
+      top: verticalScale(15),
+      left: horizontalScale(15),
+      zIndex:1
   },
   titleContainer: {
       flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
       alignItems: 'center', // Pour centrer horizontalement le texte
+      paddingHorizontal: horizontalScale(30)
   },
   titleText: {
       fontSize: moderateScale(35),
@@ -107,7 +104,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 20,
-    height: '100%',
+    height: 'auto',
     marginLeft: '10%',
     marginRight: '10%',
   },
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '100%',
+    height: 'auto',
   }
 })
 

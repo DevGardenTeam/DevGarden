@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 type ButtonLabelCommitComponent = {
     title: string;
@@ -31,15 +32,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: 10,
-    height: '100%',
-    width: '100%',
+    height: 'auto',
+    width: 'auto',
   },
   squareContainer: {
-    width: 100,
-    height: 100,
+    width: verticalScale(75),
+    height: verticalScale(75),
     borderWidth: 2,
     borderColor: 'black',
-    marginRight: 16,
+    marginRight: horizontalScale(16),
     overflow: 'hidden', // Pour s'assurer que l'image ne dépasse pas les bordures
   },
   image: {
@@ -62,12 +63,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5,
-    padding: 16,
-    height: '80%',
-    overflow: 'hidden'
+    padding: horizontalScale(16),
+    height: 'auto',
+    overflow: 'hidden',
   },
   text: {
-    fontSize: 40,
+    fontSize: moderateScale(20),
   },
 });
 

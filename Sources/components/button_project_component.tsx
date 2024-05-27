@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         display: 'flex',
         marginLeft: '1%',
-        fontSize: 20,
+        fontSize: moderateScale(20),
         overflow: 'hidden',
       }, 
 })

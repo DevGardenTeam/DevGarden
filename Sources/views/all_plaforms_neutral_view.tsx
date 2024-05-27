@@ -9,7 +9,7 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
-import {moderateScale, horizontalScale } from '../service/Metrics';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -75,9 +75,13 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'space-between',
     marginTop: StatusBar.currentHeight || 0,
+    marginBottom: verticalScale(15)
   },
   navigationBack: {
-      marginLeft : horizontalScale(15),
+    position: "absolute",
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex: 1,
   },
   titleContainer: {
       flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant

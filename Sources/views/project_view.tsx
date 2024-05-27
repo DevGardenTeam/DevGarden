@@ -53,7 +53,6 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-        <ScrollView style={{height: "100%"}}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
               <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/>                
@@ -79,7 +78,6 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
             <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
             <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
           </View>
-        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -160,9 +158,12 @@ const styles = StyleSheet.create({
     flexDirection:'row',
   },
   switch: {
-    margin: ISLANDSCAPE ? "2%" : "5%",
-    justifyContent:'space-evenly',
-    alignItems:'center',
+    position: "absolute",
+    top: verticalScale(15),
+    right: horizontalScale(15),
+    justifyContent:'space-around',
+    alignItems: "center",
+    height: verticalScale(75)
   },
   text: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
@@ -222,24 +223,27 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   navigationBack: {
-      marginLeft : horizontalScale(15),
+    position: "absolute",
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex:1
   },
   titleContainer: {
       flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
       alignItems: 'center', // Pour centrer horizontalement le texte
+      paddingHorizontal: horizontalScale(50),
   },
   titleText: {
-      fontSize: moderateScale(40),
+      fontSize: moderateScale(50),
       fontWeight: 'bold',
       textAlign: 'center'
   },
   
   mainContent:{
-    display: 'flex',
     alignItems: 'center',
-    justifyContent:'space-between',
-    height:'100%',
-    marginTop: verticalScale(35)
+    justifyContent:'space-evenly',
+    height:'65%',
+    marginTop: verticalScale(35),
   }
 });
 
