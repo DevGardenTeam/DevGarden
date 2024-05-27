@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { horizontalScale, verticalScale } from '../service/Metrics';
 
 type ButtonVerticalAddComponent = {
     title: string;
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 4,
         elevation: 5,
-        padding: 16,
-        height: '100%',
+        padding: horizontalScale(16),
+        height: verticalScale(175),
         width: '100%',
         overflow: 'hidden',
-        marginHorizontal: 10,
+        marginHorizontal: horizontalScale(10),
     },
     title: {
         display: 'flex',

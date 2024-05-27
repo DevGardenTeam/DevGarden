@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { Member } from '../model/Member';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 type ButtonPertElementComponent = {
     id: string;
@@ -28,15 +29,9 @@ const ButtonPertElementComponent: React.FC<ButtonPertElementComponent> = ({ id, 
         </View>
     );
 };
-
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
     
 const styles = StyleSheet.create({
     rectangularContainer: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -51,16 +46,16 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         padding: 16,
-        height: '100%',
+        height: 'auto',
         width: '100%',
-        overflow: 'hidden'
+        overflow: 'hidden',
     },
     idTitle: {
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: moderateScale(25),
     },
     durationText: {
-        fontSize: 20,
+        fontSize: moderateScale(15),
     },
     roundButton: {
         alignItems: 'flex-end',
@@ -68,8 +63,8 @@ const styles = StyleSheet.create({
         width:'60%'
     },
     imageButton: {
-        width: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.08,
-        height: ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.08,
+        width: horizontalScale(35),
+        height: verticalScale(35),
         resizeMode:'contain',
     }
 });

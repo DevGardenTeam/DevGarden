@@ -7,6 +7,8 @@ import DateUtils from '../helper/DateUtils';
 import ButtonPertElementComponent from '../components/button_pert_element_component';
 import { PertTask } from '../model/PertTask';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+
 
 interface PertViewProps {
     navigation: StackNavigationProp<any>;
@@ -105,17 +107,21 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         justifyContent: 'space-between',
         marginTop: StatusBar.currentHeight || 0,
-        marginBottom : ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.05,
+        marginBottom : verticalScale(25),
     },
     navigationBack: {
-        marginLeft : ISLANDSCAPE ? WIDTH*0.02 : WIDTH*0.05,
+        position: "absolute",
+        top: verticalScale(15),
+        left: horizontalScale(15),
+        zIndex:1
     },
     titleContainer: {
         flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
         alignItems: 'center', // Pour centrer horizontalement le texte
+        paddingHorizontal: horizontalScale(30)
     },
     titleText: {
-        fontSize: ISLANDSCAPE ? WIDTH*0.075 : WIDTH*0.15,
+        fontSize: moderateScale(35),
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
         color: 'gray'
     },
     contentView: {
-        display: 'flex',
+        flex: 1,
         marginLeft: '10%',
         marginRight: '10%',
     },

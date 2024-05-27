@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, FlatList, TouchableOpacity, ActivityIndicator, Modal, StatusBar } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -9,6 +9,8 @@ import ButtonVerticalAddComponent from '../components/button_vertical_add_compon
 import { WbsViewController } from '../view-controllers/WbsViewController';
 import { useTheme } from '@react-navigation/native';
 import ButtonWbsComponent from '../components/button_wbs_component';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
@@ -22,7 +24,7 @@ interface RouteParams {
 
 const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { platform, owner, repository } = route.params as RouteParams;0
+    const { platform, owner, repository } = route.params as RouteParams;
     const { colors } = useTheme();
     
     const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = WbsViewController({ owner, repository })
@@ -84,13 +86,17 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
 
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-            <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
-            </View>
-            <View style={styles.mainView}>
-                <View style={styles.titleView}>
-                    <Text style={[styles.titleText, { color: colors.text }]}>WBS</Text>
+
+            <View style={styles.top}>   
+                <View style={styles.navigationBack}>
+                    <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>                
                 </View> 
+                <View style={styles.titleContainer}>
+                    <Text style={[styles.titleText, { color: colors.text }]}>WBS</Text>
+                </View>
+            </View>
+
+            <View style={styles.mainView}>
                 <View style={styles.contentView}>
                     {loading ? (
                         <ActivityIndicator size="large" />
@@ -123,32 +129,44 @@ const styles = StyleSheet.create({
     safeAreaView: {
         flex: 1,
     },
-    backButton:{
-        margin: 20,
+
+     // Header => back button + Title
+    top:{
+        flexDirection: 'row',
+        alignItems : 'center',
+        justifyContent: 'space-between',
+        marginTop: StatusBar.currentHeight || 0,
+        marginBottom : verticalScale(25),
     },
+    navigationBack: {
+        position: "absolute",
+        top: verticalScale(15),
+        left: horizontalScale(15),
+        zIndex:1
+    },
+    titleContainer: {
+        flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+        alignItems: 'center', // Pour centrer horizontalement le texte
+        paddingHorizontal: horizontalScale(30)
+    },
+    titleText: {
+        fontSize: moderateScale(35),
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+
     mainView: {
         flex: 1,
         display: 'flex',
     },
-    titleView: {
-        display: 'flex',
-        margin: 20,
-    },
-    titleText: {
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: 100,
-        fontWeight: 'bold',
-    },
     contentView: {
         display: 'flex',
-        flexDirection: 'column',
         flex: 1,
         marginLeft: '10%',
         marginRight: '10%',
     },
+
     optionsButtons: {
-      display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
