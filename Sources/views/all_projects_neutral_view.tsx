@@ -6,6 +6,7 @@ import { useRoute } from '@react-navigation/native';
 import ButtonProjectComponent from '../components/button_project_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 interface AllProjectsNeutralViewProps {
   navigation: StackNavigationProp<any>;
@@ -82,17 +83,17 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'space-between',
     marginTop: StatusBar.currentHeight || 0,
-    marginBottom : ISLANDSCAPE ? WIDTH*0.05 : HEIGHT*0.05,
+    marginBottom : verticalScale(25),
   },
   navigationBack: {
-      marginLeft : ISLANDSCAPE ? WIDTH*0.02 : HEIGHT*0.05,
+      marginLeft : horizontalScale(15),
   },
   titleContainer: {
       flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
       alignItems: 'center', // Pour centrer horizontalement le texte
   },
   titleText: {
-      fontSize: ISLANDSCAPE ? WIDTH*0.05 : HEIGHT*0.075,
+      fontSize: moderateScale(35),
       fontWeight: 'bold',
       textAlign: 'center'
   },

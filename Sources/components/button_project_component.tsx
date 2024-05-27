@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 type ButtonProjectComponent = {
     title: string,
@@ -21,12 +22,16 @@ const ButtonProjectComponent: React.FC<ButtonProjectComponent> = ({ title, membo
 const styles = StyleSheet.create({
     button:{
         width: '80%',
-        height: 100,
+        height: verticalScale(100),
         marginLeft: '10%',
         marginRight: '10%',
         backgroundColor: '#FFFFFF',
         borderRadius: 1,
-        boxShadow: '1px 1px 1px 1px rgba(0,0,0,0.5)',
+        shadowColor: 'rgba(0,0,0,0.5)',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.5,
+        shadowRadius: 1, 
+        elevation: 2,  
         display: 'flex',
         justifyContent: 'center',
         marginVertical: '1%',

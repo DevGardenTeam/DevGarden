@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
       alignItems: 'center', // Pour centrer horizontalement le texte
   },
   titleText: {
-      fontSize: moderateScale(70),
+      fontSize: moderateScale(50),
       fontWeight: 'bold',
       textAlign: 'center'
   },

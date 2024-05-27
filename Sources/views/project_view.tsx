@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, ScrollView, StatusBar } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
+import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
@@ -51,14 +52,15 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   if (!view) {
     const type = t('projectView.list');
     return (
-      <SafeAreaView style={[styles.container2, { backgroundColor: colors.background }]}>
-        <ScrollView>
-          <View style={styles.backButton}>
-            <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/> 
-          </View>
-
-          <View style={styles.listTop}>
-            <Text style={[styles.title, { color: colors.text }]}>DevGarden</Text>
+      <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
+        <ScrollView style={{height: "100%"}}>
+          <View style={styles.topList}>
+            <View style={styles.navigationBack}>
+              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/>                
+            </View>
+            <View style={styles.titleContainer}>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+            </View>
             <View style={styles.switch}>
               <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
                 thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
@@ -70,6 +72,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
               <Text style={[styles.text,styles.textDay]}>{type}</Text>
             </View>
           </View>
+
           <View style={styles.mainContent}>
             <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
             <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
@@ -211,22 +214,32 @@ const styles = StyleSheet.create({
   },
 
   // LIST VIEW
-  container2: {
+  // Header => back button + Title
+  topList:{
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent: 'space-between',
+    marginTop: StatusBar.currentHeight || 0,
   },
-  listTop:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    margin: 20,
+  navigationBack: {
+      marginLeft : horizontalScale(15),
   },
-  title: {
-    fontSize: 100,
-    fontWeight: 'bold',
+  titleContainer: {
+      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+      alignItems: 'center', // Pour centrer horizontalement le texte
   },
+  titleText: {
+      fontSize: moderateScale(40),
+      fontWeight: 'bold',
+      textAlign: 'center'
+  },
+  
   mainContent:{
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'space-evenly',
-    height:'80%',
+    justifyContent:'space-between',
+    height:'100%',
+    marginTop: verticalScale(35)
   }
 });
 
