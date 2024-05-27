@@ -5,6 +5,8 @@ import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
 import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
+
 
 
 const ParametersScreen: React.FC = () =>  {
@@ -43,10 +45,10 @@ const ParametersScreen: React.FC = () =>  {
 
     return (
         <SafeAreaView style={styles.container}>
-          <View style={styles.header}/> 
+          {/* <View style={styles.header}/> 
           <View style={styles.headerEllipseContainer }>
             <View style={styles.headerEllipse} />
-          </View>
+          </View> */}
           <View style={styles.titlecontainer}>
             <Image source={require('../assets/icons/settings.png')} style={styles.settingsIcon}/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
@@ -102,14 +104,13 @@ const ParametersScreen: React.FC = () =>  {
                     setOpen={setOpen}
                     setValue={setValue}
                     setItems={setItems}
-                    onChangeValue={(value: string)=> {changeLanguage(value)}}
+                    onChangeValue={(value: string)=> { changeLanguage(value);}}
                     placeholder={t('supportedLanguages.'+i18n.language)}
                     searchable={true}
                     searchPlaceholder={t('settings.searchPlaceHolder')}
                     style={styles.DropDownPicker}
                     listItemLabelStyle={styles.itemsStyle}
-                    placeholderStyle={styles.itemsStyle}
-                    searchTextInputStyle={styles.searchTextInputStyle}/>
+                    placeholderStyle={styles.itemsStyle}/>
                 </View>
               </View>
             </View>
@@ -126,51 +127,49 @@ const ISLANDSCAPE = WIDTH > HEIGHT;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent:'space-between',
     backgroundColor: '#F1F0F0',
   },
-  // Header
-  header:{
-    backgroundColor: '#00A210',
-    height: HEIGHT*0.2,
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-  },
-  headerEllipseContainer: {
-    overflow: 'hidden',
-    width: '100%', // Garde la fenêtre à 100%
-    height: HEIGHT * 0.25,
-  },
-  headerEllipse: {
-    backgroundColor: '#F1F0F0',
-    height: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
-    width: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
-    borderRadius: ISLANDSCAPE ? WIDTH*4 / 2 : WIDTH*2 / 2 , 
-    position: 'absolute',
-    top: 50,
-    left: ISLANDSCAPE ? -WIDTH * 1.5 : -WIDTH*0.5 ,
-  },
+  // // Header
+  // header:{
+  //   backgroundColor: 'red',
+  //   height: verticalScale(15),
+  //   width: '100%',
+  // },
+  // headerEllipseContainer: {
+  //   overflow: 'hidden',
+  //   width: '100%', // Garde la fenêtre à 100%
+  //   height: HEIGHT * 0.25,
+  // },
+  // headerEllipse: {
+  //   backgroundColor: '#F1F0F0',
+  //   height: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
+  //   width: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
+  //   borderRadius: ISLANDSCAPE ? WIDTH*4 / 2 : WIDTH*2 / 2 , 
+  //   position: 'absolute',
+  //   top: 50,
+  //   left: ISLANDSCAPE ? -WIDTH * 1.5 : -WIDTH*0.5 ,
+  // },
   // Title
   titlecontainer:{
     display : "flex",
     flexDirection : "row",
     justifyContent:"center",
     alignItems:"center",
-    marginTop: ISLANDSCAPE ? "-5%" : "-20%",
-    marginBottom: ISLANDSCAPE ? "2%" : "5%",
+    marginTop: verticalScale(50)
   },
   title:{
-    fontSize: ISLANDSCAPE ? WIDTH * 0.06 : WIDTH * 0.08,
-    margin : ISLANDSCAPE ? "2%" : "4%",
+    fontSize: moderateScale(40),
+    marginHorizontal: horizontalScale(25),
+    marginVertical: verticalScale(25),
     color:"#414141",
     fontWeight:"bold"
   },
   settingsIcon: {
     resizeMode: 'contain',
-    width: ISLANDSCAPE ? WIDTH * 0.05 : WIDTH * 0.15,
-    height: ISLANDSCAPE ? HEIGHT * 0.1 : HEIGHT * 0.075,
+    width: horizontalScale(60),
+    height: verticalScale(60),
   },
   //Main Part
   container_bis: {
@@ -192,13 +191,14 @@ const styles = StyleSheet.create({
     }),
   },
   part:{
-    padding: ISLANDSCAPE ? 5 : 10,
+    paddingHorizontal: horizontalScale(10),
+    paddingVertical: verticalScale(10),
+    marginVertical: verticalScale(7),
     display: 'flex',
     flexDirection: 'row',
     alignItems: "center",
     alignContent: "center",
     justifyContent: "space-between",
-    margin: ISLANDSCAPE ? "0.2%" : "1%",
   },
   leftPart:{
     display:'flex',
@@ -206,15 +206,15 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   text:{
-    fontSize: ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.055,
+    fontSize: moderateScale(15),
     fontWeight:"bold",
-    marginLeft: ISLANDSCAPE ? "1%" : "2%",
+    marginLeft: horizontalScale(2),
     flexWrap:'nowrap'
   },
   partIcon: {
     resizeMode: 'contain',
-    width: ISLANDSCAPE ? WIDTH * 0.05 : WIDTH * 0.125,
-    height: ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.07
+    width: horizontalScale(50),
+    height: verticalScale(50)
   },
   //DropDownPicker
   dropDownContainer: {
@@ -234,33 +234,29 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
-    width: WIDTH * 0.31,
-    height : '15%',
+    width: horizontalScale(135),
+    height : verticalScale(15),
   },
   itemsStyle:{
-    fontSize: ISLANDSCAPE ? WIDTH * 0.015 : WIDTH * 0.035,
+    fontSize: moderateScale(15),
     fontWeight:"500",
-  },
-  searchTextInputStyle:{
-    width: ISLANDSCAPE ? "20%" : "25%",
-    flexWrap:"wrap",
   },
   //ListView
   listview:{
     display : "flex",
     flexDirection : "row",
     alignItems: "center",
-    marginLeft: ISLANDSCAPE ? "2%" : "10%",
-    marginBottom: ISLANDSCAPE ? "2%" : "3%"
+    marginBottom: verticalScale(5)
   },
   titleAccount:{
-    fontSize: ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.055,
+    fontSize: moderateScale(15),
     color:"#414141",
   },
   platformIcon: {
     resizeMode: 'contain',
-    width: ISLANDSCAPE ? WIDTH * 0.075 : WIDTH * 0.15, 
-    height: ISLANDSCAPE ? HEIGHT * 0.07 : HEIGHT * 0.06 
+    width: horizontalScale(45), 
+    height: verticalScale(45),
+    marginLeft: horizontalScale(30),
   }
 });
 

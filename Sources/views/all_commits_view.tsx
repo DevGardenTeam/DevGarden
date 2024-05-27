@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import ButtonLabelCommitComponent from '../components/button_label_commit_component';
@@ -9,6 +9,7 @@ import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -45,14 +46,18 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-      <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/> 
-      </View>
-      <View style={styles.mainView}>
-        <View style={styles.titleView}>
-          <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>
-          <Text style={[styles.titleTextBis, { color: colors.text }]}>(master)</Text>
+
+        <View style={styles.top}>   
+          <View style={styles.navigationBack}>
+            <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/> 
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>
+            <Text style={[styles.titleTextBis, { color: colors.text }]}>(master)</Text>
+          </View>
         </View>
+
+      <View style={styles.mainView}>
         <View style={styles.contentView}>
           <FlatList             
             style={styles.flatList}
@@ -99,47 +104,47 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  backButton:{
-    margin: 20,
-  },
-  mainView: {
-    flex: 1,
-    display: 'flex',
-  },
-  titleView: {
-    display: 'flex',
+  // Header => back button + Title
+  top:{
     flexDirection: 'row',
-    margin: 20,
+    alignItems : 'center',
+    justifyContent: 'space-between',
+    marginTop: StatusBar.currentHeight || 0,
+    marginBottom: verticalScale(15)
+  },
+  navigationBack: {
+    position: "absolute",
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex: 1,
+  },
+  titleContainer: {
+      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+      alignItems: 'center', // Pour centrer horizontalement le texte
   },
   titleText: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 100,
-    fontWeight: 'bold',
+      fontSize: moderateScale(35),
+      fontWeight: 'bold',
+      textAlign: 'center'
   },
   titleTextBis: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 50,
+    alignItems: 'flex-end',
+    fontSize: moderateScale(25),
     color: 'gray',
   },
+  
+  mainView: {
+    flex: 1,
+  },
   contentView: {
-    display: 'flex',
     flexDirection: 'row',
-    marginLeft: '10%',
-    marginRight: '10%',
   },
   flatList:{
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
+    flex: 1,
+    marginHorizontal: horizontalScale(15),
   },
   masterLabel: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '98%',
-    height: '100%',
+    flex: 1,
   },
   modalContainer: {
     flex: 1,

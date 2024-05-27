@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
+import {moderateScale} from '../service/Metrics';
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<any>;
@@ -51,16 +52,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 }
 
 
-
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
     textTransform: 'uppercase',
     fontWeight: '700',
     letterSpacing: 5,
   },
-
-
   safeArea: {
     flex: 1,
     alignItems: 'center',
@@ -111,7 +109,7 @@ const styles = StyleSheet.create({
 
   forgotPasswordText: {
     color: 'green',
-    fontSize: 14,
+    fontSize: moderateScale(14),
     textDecorationLine: 'underline',
     },
 
@@ -123,19 +121,18 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'green',
     backgroundColor: 'green',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     width: '35%',
-    height: '75%',
+    height: 'auto',
     
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: moderateScale(16),
+    margin: 5
   },
   
 });
