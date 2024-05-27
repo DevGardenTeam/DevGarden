@@ -88,7 +88,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
         })
         .onEnd(() => {
             savedScale.value = scale.value;
-            //console.log("pinch: ", scale.value)
+            console.log("pinch: ", scale.value)
         })
 
     const panGestureHandler = Gesture.Pan()
@@ -105,7 +105,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
             // Calculate bounds for translation
             const maxTranslateX = ((scaledSvgWidth - containerWidth) / 2 / scale.value) - containerWidth;
             const minTranslateX = -(maxTranslateX + containerWidth * (NUMBER_OF_GARDENS - 1));
-            //console.log("min: ", minTranslateX, "max: ", maxTranslateX)
+            console.log("min: ", minTranslateX, "max: ", maxTranslateX)
 
             const maxTranslateY = (scaledSvgHeight - containerHeight) / 2 / scale.value;
             const minTranslateY = -maxTranslateY;
@@ -118,7 +118,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
             translateX.value = Math.min(maxTranslateX, Math.max(proposedTranslateX, minTranslateX));
             translateY.value = Math.min(maxTranslateY, Math.max(proposedTranslateY, minTranslateY));
 
-            //console.log("pan: ", translateX.value, translateY.value)
+            console.log("pan: ", translateX.value, translateY.value)
         });
     
     const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
