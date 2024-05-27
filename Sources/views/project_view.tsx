@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, ScrollView, StatusBar } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
-import React, { useState, useEffect } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,10 +9,17 @@ import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import Trigger from '../components/3d_components/trigger';
+import Loader from '../components/3d_components/loader';
+import useControls from "r3f-native-orbitcontrols"
+import { Canvas } from '@react-three/fiber/native'
+import { TerrainModel } from '../components/3d_components/terrain_component'
+import { Float } from '@react-three/drei/native';
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
 }
+
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
@@ -28,6 +35,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   const route = useRoute();
   const { platform, owner, repository } = route.params as RouteParams;
   const { colors } = useTheme();
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [OrbitControls ,events] = useControls()
+
 
   // Changement de fond selon l'horaire
   const [isDaytime, setIsDaytime] = useState(true);
@@ -86,41 +97,29 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <LinearGradient
-        colors={[ '#7E6200', 'transparent']}
-        // start={{x:0, y: 0}}
-        // end={{x: 0, y: 1}}
-        style={styles.ground}
-      /> 
       <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
         locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
-        // start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
-        // end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
         style={[styles.days]}>
-        <View style={styles.top}>
-          <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
-          <View style={styles.switch}>
-            <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
-              thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
-            </Switch>
-            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
-          </View>
-        </View>
-        <View style={styles.bottom}>
-            <TouchableOpacity>
-              <Image source={require('../assets/panneau.png')} style={styles.sign as StyleProp<ImageStyle>}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={require('../assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
-            </TouchableOpacity>
-        </View>
       <View style={styles.backButton}>
         <BackNavigationButton onPress={() => navigation.goBack()}/> 
       </View>
+      <View style={{ flex: 1,  }} {...events} >
+                    {loading && <Loader />}
+
+        <Canvas frameloop="demand" camera={ {position: [4, 3, 5]}}>
+
+          <OrbitControls enablePan={false}/>
+          <directionalLight position={[1, 0, 0]} args={['white', 2]} />
+          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
+          <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
+
+          <Suspense fallback={<Trigger setLoading={setLoading} />}>
+            <TerrainModel onClick={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}/>
+          </Suspense>
+        </Canvas>
+        
+      </View>    
+
       </LinearGradient>
     </SafeAreaView>
   );
@@ -134,20 +133,16 @@ const ISLANDSCAPE = WIDTH > HEIGHT;
 const styles = StyleSheet.create({
   
   backButton:{
-    margin: 20,
+    margin: 40,
   },
 
   container: {
     flex: 1,
     flexDirection: 'column-reverse',
   },
-  ground:{
-    width: '100%',
-    height:'20%',
-  },
   days: {
     width: '100%',
-    height:'80%',
+    height:'100%',
     display: 'flex',
     flexDirection:'column',
   },
