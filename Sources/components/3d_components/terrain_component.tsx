@@ -102,14 +102,6 @@ export const TerrainModel: React.FC<TerrainModelProps> = ({onClick },props: Prop
               />
             </group>
           </group>
-          <mesh //Sun
-            castShadow
-            receiveShadow
-            geometry={nodes.Sun.geometry}
-            material={materials.yellow}
-            position={[0.504, 12.047, -6.627]}
-            scale={3.429}
-          />
           <group position={[0, -0.16, 0]} scale={[6, 1, 6]}>
             <mesh castShadow receiveShadow geometry={nodes.Cube_1.geometry} material={materials.Dirt} />
             <mesh
