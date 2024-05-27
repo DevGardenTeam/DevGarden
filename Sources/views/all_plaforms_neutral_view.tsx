@@ -9,6 +9,7 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
+import GardenView from './GardenView';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -23,40 +24,23 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   return (
       <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-          <View style={styles.backButton} >
-            <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
-          </View>
           <View style={styles.mainView}>
+              <View style={{ flex: 1,  }} {...events} >
+                {loading && <Loader />}
+                <GardenView selectedPortion={selectedPlatform}/>
+              </View>              
+
+              <View style={styles.backButton} >
+                <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+              </View>
+
               <View style={styles.titleView}>
-                  <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
+                <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
               </View>
-              <View style={styles.contentView}>
-                {/* <TouchableOpacity style={styles.mainContent} onPress={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}>
-                  <View > */}
-                    <View style={{ flex: 1,  }} {...events} >
-                                  {loading && <Loader />}
-                      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}}>
 
-                        <OrbitControls enablePan={false}/>
-
-                        <directionalLight position={[1, 0, 0]} args={['white', 2]} />
-                        <directionalLight position={[-1, 0, 0]} args={['white', 2]}  />
-                        <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
-                        <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
-                        <directionalLight position={[0, -1, 0]} args={['white', 2]}  />
-
-
-                        <Suspense fallback={<Trigger setLoading={setLoading} />}>
-                          <TerrainModel onClick={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}/>
-                        </Suspense>
-                      </Canvas>
-                      
-                    </View>              
-    
-                <View style={styles.slidingButton}>
-                  <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
-                </View>                  
-              </View>
+              <View style={styles.slidingButton}>
+                <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
+              </View>                  
           </View>
       </SafeAreaView>
   );
@@ -67,51 +51,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backButton:{
-    margin: 20,
+    position: 'absolute',
+    top: 20,
+    left: 20,
   },
   mainView: {
     flex: 1,
-    display: 'flex',
   },
   titleView: {
-    display: 'flex',
-    margin: 20,
-  },
-  titleText: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 100,
-    fontWeight: 'bold',
-  },
-  contentView: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: '10%',
-    marginRight: '10%',
-  },
-  mainContent:{
-    display: 'flex',
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    right: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  slidingButton:{
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    backgroundColor: '#E7E7E7',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 10,
-    padding: 20,
-    height: '50%',
-    marginBottom: '10%',
-  },
-  slidingButton:{
-      backgroundColor: '#E7E7E7',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderColor: 'black',
-      borderWidth: 1,
-      borderRadius: 10,
-      padding: 20,
-      height: '20%',
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    height: '10%',
   }
 })
 

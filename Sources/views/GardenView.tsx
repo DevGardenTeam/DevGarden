@@ -1,45 +1,81 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useImperativeHandle } from 'react';
 import Svg, { Circle, Rect, Image } from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
-import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { Dimensions, View, StyleSheet } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming } from 'react-native-reanimated';
+import { Dimensions } from 'react-native';
 
-import TreeComponent, { Tree, generateTrees } from '../components/garden_view/tree';
-import CustomSvg from '../assets/garden_themes/gardenbg.svg'
 import GardenSection from '../components/garden_view/GardenSection';
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 const NUMBER_OF_GARDENS = 3; // Number of gardens
 
-const GardenView: React.FC = () => {
-    const [trees, setTrees] = React.useState<Tree[]>([]);
+interface GardenViewProps {
+    selectedPortion: string | null;
+}
+
+const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
+    const selectedPortionValue = useSharedValue(selectedPortion);
 
     const windowDimensions = Dimensions.get('window');
     const containerWidth = windowDimensions.width;
-    const containerHeight = windowDimensions.height - 45;
+    const containerHeight = windowDimensions.height;
 
     console.log("width: ", containerWidth, "height: ", containerHeight)
 
     const svgWidth = containerWidth * NUMBER_OF_GARDENS; // Width of the SVG content
     const svgHeight = containerHeight; // Height of the SVG content
-
-    useEffect(() => {
-        const newTrees = generateTrees(50, 20, svgHeight - 50, containerWidth, containerWidth * 2 - 60);
-        setTrees(newTrees);
-
-        //console.log("trees: ", newTrees)
-    }, []);
     
     // PINCHING //
     const scale = useSharedValue(1); // current scale or "zoom level"
     const savedScale = useSharedValue(1); // stores scale after pinch gesture ends
 
     // PAN //
-    const translateX = useSharedValue(-containerWidth);
+    const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
     const savedTranslateX = useSharedValue(0);
     const savedTranslateY = useSharedValue(0);
     
+    useEffect(() => {
+        selectedPortionValue.value = selectedPortion;
+        console.log("selectedPortion: ", selectedPortion)
+        scale.value = withTiming(1);
+        translateY.value = withTiming(0);
+        savedTranslateY.value = 0;
+        savedScale.value = 1;
+
+    
+        switch (selectedPortion) {
+            case 'Gitlab':
+                console.log(selectedPortion)
+                translateX.value = withTiming(0);
+                
+                savedTranslateX.value = 0;
+
+                console.log("Current X: ", translateX.value);
+
+                break;
+            case 'Github':
+                console.log(selectedPortion)
+                translateX.value = withTiming(-containerWidth);
+
+                savedTranslateX.value = -containerWidth;
+
+                console.log("Current X: ", translateX.value);
+
+                break;
+            case 'Gitea':
+                console.log(selectedPortion)
+                translateX.value = withTiming(-(containerWidth * 2));
+                savedTranslateX.value = -(containerWidth * 2);
+
+                console.log("Current X: ", translateX.value);
+                break;
+            default:
+                break;
+        }
+    }, [selectedPortion]);
+
+
     const pinchGestureHandler = Gesture.Pinch()
         .onUpdate((event) => {
             const newScale = savedScale.value * event.scale;
@@ -77,6 +113,8 @@ const GardenView: React.FC = () => {
             // Apply constraints
             translateX.value = Math.min(maxTranslateX, Math.max(proposedTranslateX, minTranslateX));
             translateY.value = Math.min(maxTranslateY, Math.max(proposedTranslateY, minTranslateY));
+
+            console.log("pan: ", translateX.value, translateY.value)
         });
     
     const combinedGesture = Gesture.Simultaneous(panGestureHandler, pinchGestureHandler);
@@ -106,7 +144,7 @@ const GardenView: React.FC = () => {
                      width={containerWidth}
                      height={svgHeight}
                      imageSource={require('../assets/garden_themes/garden1bg.png')}
-                     numberOfTrees={5}
+                     numberOfTrees={1}
                      minDistanceBetweenTrees={20}
                     />
 
@@ -117,7 +155,7 @@ const GardenView: React.FC = () => {
                      width={containerWidth}
                      height={svgHeight}
                      imageSource={require('../assets/garden_themes/garden2bg.png')}
-                     numberOfTrees={8}
+                     numberOfTrees={2}
                      minDistanceBetweenTrees={20}
                     />
 
@@ -127,8 +165,8 @@ const GardenView: React.FC = () => {
                      y={0}
                      width={containerWidth}
                      height={svgHeight}
-                     imageSource={require('../assets/garden_themes/garden1bg.png')}
-                     numberOfTrees={10}
+                     imageSource={require('../assets/garden_themes/garden3bg.png')}
+                     numberOfTrees={3}
                      minDistanceBetweenTrees={20}
                     />
 
