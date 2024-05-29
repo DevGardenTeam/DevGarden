@@ -103,6 +103,16 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <View style={styles.backButton}>
         <BackNavigationButton onPress={() => navigation.goBack()}/> 
       </View>
+      <View style={styles.switch}>
+              <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+                thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
+              </Switch>
+              <Text style={[styles.text,styles.textDay]}>{type}</Text>
+            </View>
       <View style={{ flex: 1,  }} {...events} >
                     {loading && <Loader />}
 
