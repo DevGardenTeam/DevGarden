@@ -12,7 +12,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ pathHistory, onBreadcrumbPres
 
   const getDisplayName = (path: string) => {
     const parts = path.split('/');
-    return parts[parts.length - 1] || 'main';
+    return parts[parts.length - 1] || '~';
   };
 
   return (

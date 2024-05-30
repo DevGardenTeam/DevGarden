@@ -72,7 +72,8 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         <View style={styles.mainContent}>
           <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
           <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
-          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}/>
+          <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
+          <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}/>
           <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
         </View>
       </SafeAreaView>
