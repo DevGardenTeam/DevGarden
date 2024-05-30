@@ -1,7 +1,7 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, TouchableOpacity, Image, StyleProp, ImageStyle, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, ImageStyle, ScrollView, StatusBar } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
-import React, { useState, useEffect } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,10 +9,16 @@ import { useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import Trigger from '../components/3d_components/trigger';
+import Loader from '../components/3d_components/loader';
+import useControls from "r3f-native-orbitcontrols"
+import { Canvas } from '@react-three/fiber/native'
+import { TerrainModel } from '../components/3d_components/terrain_component'
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
 }
+
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
@@ -28,6 +34,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   const route = useRoute();
   const { platform, owner, repository } = route.params as RouteParams;
   const { colors } = useTheme();
+  const [selectedPlatform] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [OrbitControls ,events] = useControls()
+
 
   // Changement de fond selon l'horaire
   const [isDaytime, setIsDaytime] = useState(true);
@@ -85,21 +95,18 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   const type = t('projectView.garden');
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <LinearGradient
-        colors={[ '#7E6200', 'transparent']}
-        // start={{x:0, y: 0}}
-        // end={{x: 0, y: 1}}
-        style={styles.ground}
-      /> 
-      <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
+    <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
+    <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
         locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
-        // start={isDaytime ? {x:0, y: 0} : {x:0, y: 0}}
-        // end={isDaytime ? {x:0, y: 1} : {x:0, y: 0}}
         style={[styles.days]}>
-        <View style={styles.top}>
-          <TouchableOpacity style={[styles.luminary,isDaytime ? styles.sun : styles.moon]} />
-          <View style={styles.switch}>
+      <View style={styles.topList}>
+        <View style={styles.navigationBack}>
+          <BackNavigationButton onPress={() => navigation.goBack()}/> 
+        </View>
+        <View style={styles.titleContainer}>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+            </View>
+        <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
               thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
@@ -107,20 +114,28 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
               value={isEnabled}
               style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
             </Switch>
-            <Text style={[styles.text,isDaytime ? styles.textDay : styles.textNight]}>{type}</Text>
-          </View>
+            <Text style={[styles.text,styles.textDay]}>{type}</Text>
         </View>
-        <View style={styles.bottom}>
-            <TouchableOpacity>
-              <Image source={require('../assets/panneau.png')} style={styles.sign as StyleProp<ImageStyle>}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={require('../assets/trees/tree1.png')} style={styles.tree as StyleProp<ImageStyle>}></Image>
-            </TouchableOpacity>
-        </View>
-      <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.goBack()}/> 
       </View>
+      <View style={{ flex: 1,  }} {...events} >
+                    {loading && <Loader />}
+                   
+
+        <Canvas frameloop="demand" camera={ {position: [4, 3, 5]}}>
+
+          <OrbitControls enablePan={false}/>
+          <directionalLight position={[1, 0, 0]} args={['white', 2]} />
+          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
+          <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
+
+          <Suspense fallback={<Trigger setLoading={setLoading} />}>
+            <TerrainModel onClick={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}/>
+          </Suspense>
+        </Canvas>
+        
+      </View>    
+      
+
       </LinearGradient>
     </SafeAreaView>
   );
@@ -134,20 +149,16 @@ const ISLANDSCAPE = WIDTH > HEIGHT;
 const styles = StyleSheet.create({
   
   backButton:{
-    margin: 20,
+    margin: 40,
   },
 
   container: {
     flex: 1,
     flexDirection: 'column-reverse',
   },
-  ground:{
-    width: '100%',
-    height:'20%',
-  },
   days: {
     width: '100%',
-    height:'80%',
+    height:'100%',
     display: 'flex',
     flexDirection:'column',
   },
@@ -181,19 +192,6 @@ const styles = StyleSheet.create({
     marginTop: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.06,
     marginLeft: ISLANDSCAPE ? "2%" : "5%",
   },
-  sun:{
-    backgroundColor: 'orange',
-    elevation: 100,
-    shadowColor: 'rgba(255, 127, 0, 1)',
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 5,
-    shadowOpacity: 1,
-    // boxShadow: '0 0 5px rgba(255,127,0,1), 0 0 30px rgba(255,127,0,1), 0 0 100px rgba(255,255,0,1), inset 0 0 40px rgba(255,255,0,1)',
-  },
-  moon:{
-    backgroundColor: '#fae4a8',
-    backgroundImage: 'radial-gradient(circle at 40% 80%, #ddc997 10%, transparent 0), radial-gradient(circle at 55% 70%, #ddc997 5%, transparent 0), radial-gradient(circle at 58% 85%, #ddc997 6%, transparent 0), radial-gradient(circle at 80% 40%, #ddc997 12%, transparent 0), radial-gradient(circle at 87% 58%, #ddc997 4%, transparent 0)',
-  }as CustomStyle,
   bottom:{
     width: '100%',
     height: ISLANDSCAPE ? HEIGHT - (HEIGHT*0.20+HEIGHT*0.037+HEIGHT*0.2) : HEIGHT - (WIDTH*0.25+WIDTH*0.065+HEIGHT*0.2),
@@ -223,7 +221,6 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   navigationBack: {
-    position: "absolute",
     top: verticalScale(15),
     left: horizontalScale(15),
     zIndex:1
