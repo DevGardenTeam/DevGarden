@@ -9,7 +9,7 @@ import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
-import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -27,7 +27,6 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const { colors } = useTheme();
 
   const [isModalVisible, setModalVisible] = useState(false);
-
   const [selectedItem, setSelectedItem] = useState<null | Commit>(null);
 
   const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ platform, owner, repository });
@@ -46,34 +45,49 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-
-        <View style={styles.top}>   
-          <View style={styles.navigationBack}>
-            <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/> 
-          </View>
-          <View style={styles.titleContainer}>
-            <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>
-            <Text style={[styles.titleTextBis, { color: colors.text }]}>(master)</Text>
-          </View>
+      <View style={styles.top}>
+        <View style={styles.navigationBack}>
+          <BackNavigationButton onPress={() => navigation.navigate("Project", { platform, owner, repository })} />
         </View>
+        <View style={styles.titleContainer}>
+          <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>
+          <Text style={[styles.titleTextBis, { color: colors.text }]}> (master)</Text>
+        </View>
+      </View>
 
       <View style={styles.mainView}>
         <View style={styles.contentView}>
-          <FlatList             
+          <FlatList
             style={styles.flatList}
             data={commits}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.masterLabel}>
                 <TouchableOpacity onPress={() => {
-                    setModalVisible(true);
-                    setSelectedItem(item);
-                  }}>
-                  <ButtonLabelCommitComponent title={item.id} image="test" />
+                  setModalVisible(true);
+                  setSelectedItem(item);
+                }}>
+                  <View style={styles.itemContainer}>
+                    <View style={styles.textInfoContainer}>
+                      <Text style={[styles.commitMessage, { color: colors.text }]} numberOfLines={1} ellipsizeMode="tail">
+                        {item.message}
+                      </Text>
+                      <Text style={[styles.commitAuthor, { color: colors.text }]}>
+                        {item.author.name}
+                      </Text>
+                      <Text style={[styles.commitAuthor, { color: colors.text }]}>
+                        {DateUtils.formatDate(item.date.toString())}
+                      </Text>
+                    </View>
+                    <Image
+                      source={require('../assets/icons/right_arrow.png')}
+                      style={styles.icon}
+                    />
+                  </View>
                 </TouchableOpacity>
               </View>
             )}
-            showsVerticalScrollIndicator={false} 
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Modal
@@ -81,19 +95,19 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={() => {setModalVisible(false)}}>
-          <ModalCommitComponent 
-            image={selectedItem?.author.photoUrl ?? ''} 
-            username={selectedItem?.author.name ?? ''} 
-            date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''} 
-            message={selectedItem?.message ?? ''} 
-            branch={selectedItem?.id ?? ''} 
-            id={selectedItem?.id ?? ''} 
+          onRequestClose={() => { setModalVisible(false); }}>
+          <ModalCommitComponent
+            image={selectedItem?.author.photoUrl ?? ''}
+            username={selectedItem?.author.name ?? ''}
+            date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''}
+            message={selectedItem?.message ?? ''}
+            branch={selectedItem?.id ?? ''}
+            id={selectedItem?.id ?? ''}
             onSelect={() => {
               setModalVisible(false);
               setSelectedItem(null);
             }}
-          ></ModalCommitComponent>        
+          ></ModalCommitComponent>
         </Modal>
       </View>
     </SafeAreaView>
@@ -104,10 +118,9 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  // Header => back button + Title
-  top:{
+  top: {
     flexDirection: 'row',
-    alignItems : 'center',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: StatusBar.currentHeight || 0,
     marginBottom: verticalScale(15)
@@ -119,27 +132,30 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   titleContainer: {
-      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
-      alignItems: 'center', // Pour centrer horizontalement le texte
+    flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+    alignItems: 'center', // Pour centrer horizontalement le texte
   },
   titleText: {
-      fontSize: moderateScale(35),
-      fontWeight: 'bold',
-      textAlign: 'center'
+    fontSize: moderateScale(35),
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   titleTextBis: {
     alignItems: 'flex-end',
     fontSize: moderateScale(25),
     color: 'gray',
   },
-  
+  icon: {
+    width: 24, 
+    height: 24,
+  },
   mainView: {
     flex: 1,
   },
   contentView: {
     flexDirection: 'row',
   },
-  flatList:{
+  flatList: {
     flex: 1,
     marginHorizontal: horizontalScale(15),
   },
@@ -151,6 +167,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  textInfoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+  },
+  commitMessage: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  commitAuthor: {
+    fontSize: 14,
   },
 });
 

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   breadcrumbsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
+    padding: 16,
   },
   breadcrumbItem: {
     flexDirection: 'row',
