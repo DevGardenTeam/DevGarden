@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator, Dimensions, ScrollView, StatusBar } from 'react-native';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import ButtonProjectComponent from '../components/button_project_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
+import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 interface AllProjectsNeutralViewProps {
   navigation: StackNavigationProp<any>;
@@ -35,24 +36,27 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
 
   return (
     <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-      <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
-      </View>
-      <View style={styles.mainView}>
-        <View style={styles.titleView}>
-          <Text style={[styles.titleText, { color: colors.text }]}>Choisissez un projet</Text>
+        <View style={styles.top}>   
+          <View style={styles.navigationBack}>
+            <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/>                 
+          </View> 
+          <View style={styles.titleContainer}>
+              <Text style={[styles.titleText, { color: colors.text }]}>Choisissez un projet</Text>
+          </View>
         </View>
-        <View style={styles.mainContent}>
-          <FlatList
-            style={styles.flatList}
-            data={repositories}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project", {platform: platform, owner: item.owner.name, repository: item.name})}></ButtonProjectComponent>             
-            )}
-          />
-        </View>  
-      </View>
+
+        <View style={styles.mainView}>
+          <View style={styles.mainContent}>
+            <FlatList
+              style={styles.flatList}
+              data={repositories}
+              keyExtractor={(item) => item.id.toString()}
+              renderItem={({ item }) => (
+                <ButtonProjectComponent title={item.name} memborsCount={item.name} onPress={() => navigation.navigate("Project", {platform: platform, owner: item.owner.name, repository: item.name})}></ButtonProjectComponent>             
+              )}
+            />
+          </View>  
+        </View>
     </SafeAreaView>
   );
 }
@@ -62,23 +66,35 @@ const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
   },
-  backButton:{
-    margin: 20,
-  },
   mainView: {
-    flex: 1,
     display: 'flex',
+    height: 'auto'
   },
-  titleView: {
-    display: 'flex',
-    margin: 20,
+  // Header => back button + Title
+  top:{
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent: 'space-between',
+    marginTop: StatusBar.currentHeight || 0,
+    marginBottom : verticalScale(25),
+  },
+  navigationBack: {
+      position: "absolute",
+      top: verticalScale(15),
+      left: horizontalScale(15),
+      zIndex:1
+  },
+  titleContainer: {
+      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
+      alignItems: 'center', // Pour centrer horizontalement le texte
+      paddingHorizontal: horizontalScale(30)
   },
   titleText: {
-    display: 'flex',
-    alignItems: 'center',
-    fontSize: 100,
-    fontWeight: 'bold',
+      fontSize: moderateScale(35),
+      fontWeight: 'bold',
+      textAlign: 'center'
   },
+
   mainContent:{
     display: 'flex',
     alignItems: 'center',
@@ -88,7 +104,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 20,
-    height: '80%',
+    height: 'auto',
     marginLeft: '10%',
     marginRight: '10%',
   },
@@ -96,7 +112,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '100%',
+    height: 'auto',
   }
 })
 
