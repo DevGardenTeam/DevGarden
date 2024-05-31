@@ -44,18 +44,20 @@ const GardenSection: React.FC<GardenSectionProps> = ({
         preserveAspectRatio="xMidYMid slice"
       />
       {trees.map(tree => tree.visible && (
-        <TreeComponent key={tree.label} tree={tree} size={0.2} color="red" />
-        // <G key={tree.label} onPress={() => console.log('Tree clicked!')}>
-        //   <TreeComponent tree={tree} size={0.2} color="red"/>
-        //   <Rect
-        //     x={tree.x}
-        //     y={tree.y}
-        //     width={50} 
-        //     height={50}
-        //     fill="red"
-        //     onPress={() => console.log('Tree clicked!')}
-        //   />
-        // </G>      
+        <G key={tree.label} onPress={() => console.log('Tree clicked!')}>
+          <TreeComponent tree={tree} size={0.2} color="red"/>
+          <Rect
+            x={tree.x}
+            y={tree.y}
+            width={50} 
+            height={50}
+            fill="transparent"
+            onPress={() => {
+              console.log('Tree clicked!') 
+              navigation.navigate("Project", {platform: "github", owner: "nico", repository: "sae"})}
+            }
+          />
+        </G>      
       ))}
     </>
   );
