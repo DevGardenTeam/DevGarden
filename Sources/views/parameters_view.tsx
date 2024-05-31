@@ -8,6 +8,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
 import { useTheme } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
+import MetricsUtils from '../helper/MetricsUtils';
 
 const ParametersScreen: React.FC = () =>  {
 
@@ -25,19 +26,27 @@ const ParametersScreen: React.FC = () =>  {
     {label: t('supportedLanguages.pt'), value: 'pt'}
   ]);
 
-  const [priority, setPriority] = useState<string>("");
-  const [openPriority, setOpenPriority] = useState(false);
-
   const changeLanguage = (selectedLanguage: string) => { 
     i18n.changeLanguage(selectedLanguage);
     setValue(selectedLanguage);
   };
 
-  const priorityItems = [
-    { label: "High", value: "high" },
-    { label: "Medium", value: "medium" },
-    { label: "Low", value: "low" }
-  ];
+  // Metrics
+  
+  const [priority, setPriority] = useState<string>("");
+  const [openPriority, setOpenPriority] = useState(false);
+
+  const handlePriorityChange = (priority: string) => {
+    MetricsUtils.setSelectedCommitPriority(priority);
+    setPriority(priority);
+  };
+
+  const handleMonthChange = (month: number) => {
+    MetricsUtils.setSelectedCommitMonth(month);
+    setCurrentMonth(month);
+  };
+
+  const [currentMonth, setCurrentMonth] = useState<number>(1);
 
   const { colors } = useTheme();
 
@@ -53,8 +62,6 @@ const ParametersScreen: React.FC = () =>  {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-    const [currentGrade, setCurrentGrade] = useState<number>(1);
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -131,15 +138,15 @@ const ParametersScreen: React.FC = () =>  {
                 <Text style={[styles.calculatorTitle, { color: colors.text }]}>Coefficients de qualité</Text>
                 <View style={styles.inputRow}>
                     <Text style={[styles.rowName, { color: colors.text }]}>Date limite du dernier commit :</Text>
-                    <View style={styles.sliderContainer}>
-                      <Text style={styles.sliderValue}>{currentGrade} mois</Text>
+                    <View>
+                      <Text style={[styles.sliderValue, , { color: colors.text}]}>{currentMonth} mois</Text>
                       <Slider
                           style={styles.slider}
                           minimumValue={1}
                           maximumValue={12}
                           step={1}
-                          value={currentGrade}
-                          onValueChange={setCurrentGrade}
+                          value={currentMonth}
+                          onValueChange={handleMonthChange}
                       />
                     </View>
                     <Text style={[styles.rowName, { color: colors.text }]}>Priorité :</Text>
@@ -147,20 +154,17 @@ const ParametersScreen: React.FC = () =>  {
                       <DropDownPicker
                         open={openPriority}
                         value={priority}
-                        items={priorityItems}
+                        items={MetricsUtils.qualityCommitMetrics.priorities}
                         setOpen={setOpenPriority}
                         setValue={setPriority}
-                        onChangeValue={(value: string)=> { setPriority(value); }}
+                        onChangeValue={(value: string) => handlePriorityChange(value)}
                         placeholder={"Select a priority..."}
                         style={styles.DropDownPicker}
-                        listItemLabelStyle={styles.itemsStyle}
-                        placeholderStyle={styles.itemsStyle}
+                        listItemLabelStyle={[styles.itemsStyle, { color: colors.text}]}
+                        placeholderStyle={[styles.itemsStyle, { color: colors.text}]}
                       />
                     </View>
                 </View>
-                <TouchableOpacity style={styles.addButton}>
-                    <Text style={styles.addButtonText}>Enregistrer</Text>
-                </TouchableOpacity>
             </View>
             <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"}></SettingsButton>
         </SafeAreaView>
@@ -357,17 +361,6 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       padding: 10,
       fontSize: moderateScale(15),
-  },
-  addButton: {
-      backgroundColor: '#00A210',
-      borderRadius: 5,
-      padding: 10,
-      alignItems: 'center',
-  },
-  addButtonText: {
-      color: '#fff',
-      fontSize: moderateScale(15),
-      fontWeight: 'bold',
   },
   resultContainer: {
       marginTop: 20,
