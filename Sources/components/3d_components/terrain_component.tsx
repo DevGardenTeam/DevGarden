@@ -3,6 +3,7 @@ import React from 'react'
 import { useGLTF } from '@react-three/drei/native'
 import { GLTF } from 'three-stdlib'
 import { ThreeEvent } from '@react-three/fiber/native';
+import { Repository } from '../../model/Repository';
 
 
 type GLTFResult = GLTF & {
@@ -53,9 +54,10 @@ type Props = {}
 
 type TerrainModelProps = {
   onClick?: ((event: ThreeEvent<MouseEvent>) => void)
+  repository: Repository
 }
 
-export const TerrainModel: React.FC<TerrainModelProps> = ({onClick },props: Props) => {
+export const TerrainModel: React.FC<TerrainModelProps> = ({onClick, repository },props: Props, ) => {
 
     const { nodes, materials } = useGLTF(require('../../assets/3d/terrain.glb')) as GLTFResult
     return (
@@ -69,6 +71,7 @@ export const TerrainModel: React.FC<TerrainModelProps> = ({onClick },props: Prop
                 material={materials.grey}
                 position={[0.693, -10.752, -1.645]}
                 scale={0.597}
+                
               />
             </group>
             <group rotation={[0.397, 0.191, -0.691]}>
