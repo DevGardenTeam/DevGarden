@@ -7,6 +7,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
+import { horizontalScale, moderateScale, verticalScale } from '../service/Metrics';
+import { ScreenSpace } from '@react-three/drei/core';
 
 interface ProjectManagementScreenProps {
   navigation: StackNavigationProp<any>;
@@ -21,11 +23,14 @@ interface RouteParams {
 const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navigation }) =>  {
   const route = useRoute();
   const { platform, owner, repository } = route.params as RouteParams;
+  // const platform = "test";
+  // const owner = "tim";
+  // const repository = "devgarden";
   const { colors } = useTheme();
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={{backgroundColor: colors.background}}>
         <View style={styles.top}>
             <View style={styles.navigationBack}>
                 <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/>
@@ -35,52 +40,51 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
             </View>
         </View>
         <View style={styles.mainContent}>
-          <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {platform: platform, owner: owner, repository: repository})}/>
-          <NavigationButton title='GANTT'/>
-          <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {platform: platform, owner: owner, repository: repository})}/>
+          <View style={styles.container}>
+            <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {platform: platform, owner: owner, repository: repository})}/>
+          </View>
+          <View style={styles.container}>
+            <NavigationButton title='GANTT'/>
+          </View>
+          <View style={styles.container}>
+            <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {platform: platform, owner: owner, repository: repository})}/>
+          </View>
         </View>
     </SafeAreaView>
   );
 }
 
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
-    backButton:{
-      margin: 20,
-    },
-    container:{
-    },
     // Top
     top:{
       flexDirection: 'row',
       alignItems : 'center',
-      justifyContent: 'space-between',
       marginTop: StatusBar.currentHeight || 0,
-      marginBottom : ISLANDSCAPE ? WIDTH*0.05 : WIDTH*0.05,
+      marginBottom : verticalScale(50),
     },
     navigationBack: {
-        marginLeft : ISLANDSCAPE ? WIDTH*0.02 : WIDTH*0.05,
+        marginLeft : horizontalScale(20),
     },
     titleContainer: {
         flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
         alignItems: 'center', // Pour centrer horizontalement le texte
     },
     titleText: {
-        fontSize: ISLANDSCAPE ? WIDTH*0.075 : WIDTH*0.12,
+        fontSize: moderateScale(35),
         fontWeight: 'bold',
         textAlign: 'center'
     },
 
-
     mainContent:{
       display: 'flex',
-      justifyContent:'space-evenly',
       alignItems: 'center',
-      height:'50%'
+    },
+    container: {
+      marginVertical: verticalScale(25),
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
     }
 });
 
