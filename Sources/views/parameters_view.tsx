@@ -1,34 +1,45 @@
 import 'intl-pluralrules';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform  } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform, TextInput  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
 import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
-
-
+import { useTheme } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
 
 const ParametersScreen: React.FC = () =>  {
 
-    // Multi langue
+  // Multi langue
 
-    const {t} = useTranslation();     
+  const {t} = useTranslation();     
 
-    // DropDownPicker
+  // DropDownPicker
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState<string>(i18n.language); 
-    const [items, setItems] = useState([
-      {label: t('supportedLanguages.en'), value: 'en'},
-      {label: t('supportedLanguages.fr'), value: 'fr'},
-      {label: t('supportedLanguages.pt'), value: 'pt'}
-    ]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>(i18n.language); 
+  const [items, setItems] = useState([
+    {label: t('supportedLanguages.en'), value: 'en'},
+    {label: t('supportedLanguages.fr'), value: 'fr'},
+    {label: t('supportedLanguages.pt'), value: 'pt'}
+  ]);
+
+  const [priority, setPriority] = useState<string>("");
+  const [openPriority, setOpenPriority] = useState(false);
 
   const changeLanguage = (selectedLanguage: string) => { 
     i18n.changeLanguage(selectedLanguage);
     setValue(selectedLanguage);
   };
+
+  const priorityItems = [
+    { label: "High", value: "high" },
+    { label: "Medium", value: "medium" },
+    { label: "Low", value: "low" }
+  ];
+
+  const { colors } = useTheme();
 
   useEffect(() => {
     setItems([
@@ -43,8 +54,10 @@ const ParametersScreen: React.FC = () =>  {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const [currentGrade, setCurrentGrade] = useState<number>(1);
+
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
           {/* <View style={styles.header}/> 
           <View style={styles.headerEllipseContainer }>
             <View style={styles.headerEllipse} />
@@ -113,6 +126,41 @@ const ParametersScreen: React.FC = () =>  {
                     placeholderStyle={styles.itemsStyle}/>
                 </View>
               </View>
+            </View>
+            <View style={styles.calculatorContainer}>
+                <Text style={[styles.calculatorTitle, { color: colors.text }]}>Coefficients de qualité</Text>
+                <View style={styles.inputRow}>
+                    <Text style={[styles.rowName, { color: colors.text }]}>Date limite du dernier commit :</Text>
+                    <View style={styles.sliderContainer}>
+                      <Text style={styles.sliderValue}>{currentGrade} mois</Text>
+                      <Slider
+                          style={styles.slider}
+                          minimumValue={1}
+                          maximumValue={12}
+                          step={1}
+                          value={currentGrade}
+                          onValueChange={setCurrentGrade}
+                      />
+                    </View>
+                    <Text style={[styles.rowName, { color: colors.text }]}>Priorité :</Text>
+                    <View style={styles.dropDownContainer}>
+                      <DropDownPicker
+                        open={openPriority}
+                        value={priority}
+                        items={priorityItems}
+                        setOpen={setOpenPriority}
+                        setValue={setPriority}
+                        onChangeValue={(value: string)=> { setPriority(value); }}
+                        placeholder={"Select a priority..."}
+                        style={styles.DropDownPicker}
+                        listItemLabelStyle={styles.itemsStyle}
+                        placeholderStyle={styles.itemsStyle}
+                      />
+                    </View>
+                </View>
+                <TouchableOpacity style={styles.addButton}>
+                    <Text style={styles.addButtonText}>Enregistrer</Text>
+                </TouchableOpacity>
             </View>
             <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"}></SettingsButton>
         </SafeAreaView>
@@ -257,7 +305,84 @@ const styles = StyleSheet.create({
     width: horizontalScale(45), 
     height: verticalScale(45),
     marginLeft: horizontalScale(30),
-  }
+  },
+  //Calculator
+  calculatorContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 20,
+    marginTop: 20,
+    width: "80%",
+    ...Platform.select({
+        ios: {
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+        },
+        android: {
+            elevation: 4,
+        },
+    }),
+  },
+  calculatorTitle: {
+      fontSize: moderateScale(20),
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: '#414141',
+  },
+  inputRow: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 10,
+      gap: 10,
+  },
+  rowName: {
+      fontSize: moderateScale(15),
+  },
+  sliderValue: {
+    marginTop: -20,
+    fontSize: 18,
+  },
+  slider: {
+      width: 200, // Ajustez la largeur du Slider selon vos besoins
+      height: 40, // Ajustez la hauteur du Slider selon vos besoins
+  },
+  input: {
+      width: '48%',
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      fontSize: moderateScale(15),
+  },
+  addButton: {
+      backgroundColor: '#00A210',
+      borderRadius: 5,
+      padding: 10,
+      alignItems: 'center',
+  },
+  addButtonText: {
+      color: '#fff',
+      fontSize: moderateScale(15),
+      fontWeight: 'bold',
+  },
+  resultContainer: {
+      marginTop: 20,
+  },
+  resultText: {
+      fontSize: moderateScale(18),
+      fontWeight: 'bold',
+      color: '#414141',
+      marginBottom: 10,
+  },
+  gradeItem: {
+      fontSize: moderateScale(15),
+      color: '#414141',
+      marginBottom: 5,
+  },
 });
 
 export default  ParametersScreen;
