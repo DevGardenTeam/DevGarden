@@ -129,7 +129,12 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
 
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
-            <TerrainModel onClick={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}/>
+            <TerrainModel 
+              onClickTree={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+              onClickChest={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+              onClickSign={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+              onClickBush={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+            />
           </Suspense>
         </Canvas>
         
