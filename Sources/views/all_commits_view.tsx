@@ -76,7 +76,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                         {item.author.name}
                       </Text>
                       <Text style={[styles.commitAuthor, { color: colors.text }]}>
-                        {DateUtils.formatDate(item.date.toString())}
+                        {item.date ? DateUtils.formatDate(item.date.toString()) : ''}
                       </Text>
                     </View>
                     <Image
