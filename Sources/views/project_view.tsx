@@ -65,7 +65,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/>                
+              <BackNavigationButton onPress={() => navigation.navigate("Allplatforms")}/>           
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
@@ -101,7 +101,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         style={[styles.days]}>
       <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.goBack()}/> 
+          <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
         </View>
         <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
