@@ -2,7 +2,7 @@
   "expo": {
     "name": "devGarden",
     "slug": "devGarden",
-    "scheme": "devGarden",
+    "scheme": "devgarden",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

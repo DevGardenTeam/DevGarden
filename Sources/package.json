@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "tsc": "tsc"
+    "typescript": "tsc"
   },
   "dependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0-0",
@@ -17,6 +17,8 @@
     "@babel/plugin-transform-shorthand-properties": "^7.0.0-0",
     "@babel/plugin-transform-template-literals": "^7.0.0-0",
     "@babel/preset-env": "^7.1.6",
+    "@expo/metro-config": "~0.17.1",
+    "@expo/prebuild-config": "^6.7.0",
     "@expo/webpack-config": "^19.0.0",
     "@react-native/babel-preset": "*",
     "@react-native/metro-config": "^0.73.5",
@@ -54,14 +56,13 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
-    "three": "^0.162.0",
+    "three": "^0.165.0",
     "typescript": "~5.3.3",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/plugin-transform-private-methods": "^7.24.1",
-    "@types/react-native": "^0.73.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
