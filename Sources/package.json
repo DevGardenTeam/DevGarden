@@ -6,7 +6,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "web": "BABEL_ENV=web expo start --web",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "tsc": "tsc"
   },
@@ -29,7 +29,7 @@
     "@types/react": "~18.2.14",
     "@types/three": "^0.163.0",
     "axios": "^1.6.5",
-    "expo": "~50.0.14",
+    "expo": "~50.0.19",
     "expo-auth-session": "5.4.0",
     "expo-crypto": "^12.8.1",
     "expo-gl": "13.6.0",
