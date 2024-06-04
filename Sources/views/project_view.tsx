@@ -134,6 +134,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
               onClickChest={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
               onClickSign={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
               onClickBush={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+              onClickRock={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
             />
           </Suspense>
         </Canvas>
