@@ -131,11 +131,11 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
             <TerrainModel 
-              onClickTree={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-              onClickChest={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-              onClickSign={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-              onClickBush={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-              onClickRock={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+                onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
+                onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
+                onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
+                onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
+                onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
             />
           </Suspense>
         </Canvas>
