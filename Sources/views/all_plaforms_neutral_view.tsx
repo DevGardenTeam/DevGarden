@@ -51,11 +51,11 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
                         <Suspense fallback={<Trigger setLoading={setLoading} />}>
                           <TerrainModel 
-                            onClickTree={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+                            onClickTree={() => navigation.navigate("AllCommits", {platform: selectedPlatform?.toLowerCase()})}
                             onClickChest={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
                             onClickSign={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-                            onClickBush={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
-                            onClickRock={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
+                            onClickBush={() => navigation.navigate("AllIssues", {platform: selectedPlatform?.toLowerCase()})}
+                            onClickRock={() => navigation.navigate("ProjectManagement", {platform: selectedPlatform?.toLowerCase()})}
                           />
                         </Suspense>
                       </Canvas>
