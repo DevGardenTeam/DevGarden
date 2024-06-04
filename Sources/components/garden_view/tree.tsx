@@ -1,6 +1,9 @@
 import React from "react";
 import TreeSvg from "../../assets/trees/TreeSvg.svg";
+import TreeImageSvg from "./treeImageComp";
 import { G, Rect } from "react-native-svg";
+import { green } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
+import { Platform } from "react-native";
 
 export type Tree = {
   label: string;
@@ -70,11 +73,15 @@ const TreeComponent: React.FC<TreeProps> = ({
   size = 1,
   color = "currentColor",
 }) => {
-  return (
+  if (Platform.OS === 'web') {
+    return <TreeImageSvg x={tree.x} y={tree.y} size={size} />;
+  } else {
+    return (
       <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
         <TreeSvg />
       </G>
-  );
+    );
+  }
 };
 
 export default TreeComponent;
