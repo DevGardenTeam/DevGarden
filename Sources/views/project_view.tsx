@@ -14,6 +14,8 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
+import { TerrainModel2 } from '../components/3d_components/terrain2_component'
+
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
@@ -127,11 +129,13 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
             maxPolarAngle={1.8} minPolarAngle={0.5} maxAzimuthAngle={3} minAzimuthAngle={-0.1} />
             
           <directionalLight position={[1, 0, 0]} args={['white', 2]} />
-          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
+          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
+          <directionalLight position={[1, 1, 1]} args={['white', 1]}  />
+
 
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
-            <TerrainModel 
+            <TerrainModel2 
                 onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
                 onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
                 onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
