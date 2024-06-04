@@ -38,9 +38,10 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
                   <View > */}
                     <View style={{ flex: 1,  }} {...events} >
                                   {loading && <Loader />}
-                      <Canvas frameloop="demand" camera={ {position: [5, 3, 5]}}>
+                      <Canvas frameloop="demand" camera={{ position: [5, 3, 5] }}>
 
-                        <OrbitControls enablePan={false}/>
+                      <OrbitControls enablePan={false} maxZoom={10} minZoom={3.5}
+                        maxPolarAngle={1.8} minPolarAngle={0.5} maxAzimuthAngle={3} minAzimuthAngle={-0.1} />
 
                         <directionalLight position={[1, 0, 0]} args={['white', 2]} />
                         <directionalLight position={[-1, 0, 0]} args={['white', 2]}  />
