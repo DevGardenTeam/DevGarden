@@ -124,7 +124,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
         <Canvas frameloop="demand" camera={ {position: [4, 3, 5]}}>
 
-          <OrbitControls enablePan={false}/>
+          <OrbitControls enablePan={false} maxZoom={10} minZoom={3.5}/>
           <directionalLight position={[1, 0, 0]} args={['white', 2]} />
           <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
