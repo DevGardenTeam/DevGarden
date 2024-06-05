@@ -25,7 +25,6 @@ export class Commit{
 
 // Fonction de mapping
 export function mapApiObjectToCommit(apiObject: any): Commit {
-  console.log(apiObject);
   return new Commit(
     apiObject.id.toString(),
     apiObject.message,

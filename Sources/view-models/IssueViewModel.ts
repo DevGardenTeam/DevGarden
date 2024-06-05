@@ -3,6 +3,7 @@ import { IssueService } from '../service/IssueService';
 import { Issue } from '../model/Issue';
 import { IS_STUB } from '../constants/constants';
 import { IssueStub } from '../stub/IssueStub';
+import RepositoryManager from '../managers/RepositoryManager';
 
 export const useIssueViewModel = (platform: string, owner: string, repository: string) => {
   const [issues, setIssues] = useState<Issue[]>([]);
@@ -13,12 +14,20 @@ export const useIssueViewModel = (platform: string, owner: string, repository: s
     const issueService = IS_STUB ? new IssueStub() : new IssueService();
 
   const fetchIssues = async () => {
+    var repositoryManager = RepositoryManager.getInstance();    
     try {
-      const result = await issueService.getMany({ platform, owner, repository });
-      if (result.succeeded) {
-        setIssues(result.data);
-      } else {
-        setError(result.errors);
+      const repo = await repositoryManager.getRepositoryByName(repository);
+
+      if(repo?.issues.length === 0){
+        const result = await issueService.getMany({ platform, owner, repository });
+        if (result.succeeded) {
+          setIssues(result.data);
+        } else {
+          setError(result.errors);
+        }        
+      }
+      else{
+        setIssues(repo?.issues || []);
       }
     } catch (error: any) {
       setError(error.message);
