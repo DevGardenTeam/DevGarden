@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Svg, { G, Image, Rect } from 'react-native-svg';
+import { Platform, TouchableOpacity, View } from 'react-native';
+import Svg, { ForeignObject, G, Image, Rect } from 'react-native-svg';
 import TreeComponent, { Tree, generateTrees } from './tree';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Pressable } from 'react-native';
+import { Text } from '@react-three/drei/core';
 
 interface GardenSectionProps {
   x: number;
@@ -33,6 +34,11 @@ const GardenSection: React.FC<GardenSectionProps> = ({
     setTrees(newTrees);
   }, [numberOfTrees, minDistanceBetweenTrees, height, width, x]);
 
+  const handleTreePress = () => {
+    console.log('Tree clicked!');
+    navigation.navigate("Project", {platform: "github", owner: "nico", repository: "sae"});
+  };
+
   return (
     <>
       <Image
@@ -44,9 +50,21 @@ const GardenSection: React.FC<GardenSectionProps> = ({
         preserveAspectRatio="xMidYMid slice"
       />
       {trees.map(tree => tree.visible && (
-        <G key={tree.label} onPress={() => console.log('Tree clicked!')}>
+        <G key={tree.label}>
           <TreeComponent tree={tree} size={0.2} color="red"/>
-          <Rect
+          {Platform.OS === 'web' ? (
+           <ForeignObject x={tree.x} y={tree.y} width={50} height={50}>
+           <TouchableOpacity onPress={handleTreePress} style={{ width: '100%', height: '100%' }}>
+             <div style={{
+               width: '100%', 
+               height: '100%', 
+               backgroundColor: 'transparent', // Make it transparent or red for testing
+               cursor: 'pointer'
+             }} />
+           </TouchableOpacity>
+         </ForeignObject>
+          ) : (
+            <Rect
             x={tree.x}
             y={tree.y}
             width={50} 
@@ -57,7 +75,8 @@ const GardenSection: React.FC<GardenSectionProps> = ({
               navigation.navigate("Project", {platform: "github", owner: "nico", repository: "sae"})}
             }
           />
-        </G>      
+          )}
+        </G>
       ))}
     </>
   );
