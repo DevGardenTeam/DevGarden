@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, ImageStyle, ScrollView, StatusBar } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -14,39 +14,24 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
-
-interface CustomStyle extends ImageStyle {
-  backgroundImage?: string;
-}
-
+import { Repository } from '../model/Repository';
+import { TerrainModel2 } from '../components/3d_components/terrain2_component'
+import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-  platform: string;
-  owner: string;
-  repository: string;
+  repository: Repository;
 }
 
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
-  const { platform, owner, repository } = route.params as RouteParams;
+  const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
-  const [selectedPlatform] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [OrbitControls ,events] = useControls()
-
-
-  // Changement de fond selon l'horaire
-  const [isDaytime, setIsDaytime] = useState(true);
-
-  useEffect(() => {
-    const currentHour = new Date().getHours();
-    const isDay = currentHour >= 8 && currentHour < 18;
-    setIsDaytime(isDay);
-  }, []); 
 
   // Switch
 
@@ -57,7 +42,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     setView(!view); // Ajoutez cette ligne pour mettre à jour la variable view
   };
 
-  const {t} = useTranslation();     // A ajouter pour le multi langue
+  const {t} = useTranslation();  // A ajouter pour le multi langue
 
   if (!view) {
     const type = t('projectView.list');
@@ -65,10 +50,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("Allplatforms")}/>           
+              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
             </View>
             <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
             <View style={styles.switch}>
               <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -84,9 +69,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
           <View style={styles.mainContent}>
             <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
-            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {repository: repository})}/>
+            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {repository: repository})}/>
+            <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {repository: repository})}/>
+            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
           </View>
       </SafeAreaView>
     );
@@ -96,15 +82,13 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-    <LinearGradient colors={isDaytime ? [ '#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'] : [ '#2654AC', '#4674DC','#325EBF','#173B88','#091434']}
-        locations={isDaytime ? [0,0.2,0.5,0.8,1] :[0,0.2,0.4,0.6,1]}
-        style={[styles.days]}>
+    <LinearGradient colors={['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']} style={[styles.days]}>
       <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllPlatforms")}/> 
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
         </View>
         <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
         <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -120,22 +104,24 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <View style={{ flex: 1,  }} {...events} >
                     {loading && <Loader />}
                    
-
-        <Canvas frameloop="demand" camera={ {position: [4, 3, 5]}}>
-
-          <OrbitControls enablePan={false}/>
+        <Canvas frameloop="demand" camera={{ position: [5, 3, 5] }}>
+          <OrbitControls enablePan={false} maxZoom={7} minZoom={3.5}
+            maxPolarAngle={1.8} minPolarAngle={0.5} maxAzimuthAngle={3} minAzimuthAngle={-0.1} />
+          <ambientLight intensity={1} />
           <directionalLight position={[1, 0, 0]} args={['white', 2]} />
-          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
-
+          <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
-            <TerrainModel onClick={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}/>
+            <TerrainModel3 
+              onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+              onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+              onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+              onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+              onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
+            />
           </Suspense>
         </Canvas>
-        
       </View>    
-      
-
       </LinearGradient>
     </SafeAreaView>
   );

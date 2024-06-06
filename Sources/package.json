@@ -20,6 +20,8 @@
     "@expo/metro-config": "~0.17.1",
     "@expo/prebuild-config": "^6.7.0",
     "@expo/webpack-config": "^19.0.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-community/slider": "^4.5.2",
     "@react-native/babel-preset": "*",
     "@react-native/metro-config": "^0.73.5",
     "@react-navigation/bottom-tabs": "^6.5.9",
@@ -58,6 +60,7 @@
     "react-native-web": "~0.19.6",
     "three": "^0.165.0",
     "typescript": "~5.3.3",
+    "react-native-webview": "^13.10.2",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {

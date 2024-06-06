@@ -16,7 +16,7 @@ import PertView from '../views/pert_main_view';
 import WbsView from '../views/wbs_main_view';
 import {DarkTheme, LightTheme} from "../theme/theme";
 import {useColorScheme} from "react-native";
-import GardenView from '../views/GardenView';
+import AllFilesView from '../views/all_files_view';
 
 export default function Navigation() {
      const scheme = useColorScheme();
@@ -112,6 +112,12 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/> */}
+                                           <BottomTabNavigator.Screen name="AllFiles"  component={AllFilesView}
+                                           options={{
+                                                title: 'Files',
+                                                tabBarStyle : {display : "none"},
+                                                headerShown: false
+                                           }}/>
             </BottomTabNavigator.Navigator>
         </NavigationContainer>
     )

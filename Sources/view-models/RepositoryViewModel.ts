@@ -3,6 +3,7 @@ import { RepositoryService } from '../service/RepositoryService';
 import { Repository } from '../model/Repository';
 import { RepositoryStub } from '../stub/RepositoryStub';
 import { IS_STUB } from '../constants/constants';
+import RepositoryManager from '../managers/RepositoryManager';
 
 export const useRepositoryViewModel = (platform: string) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -14,17 +15,21 @@ export const useRepositoryViewModel = (platform: string) => {
   const repositoryService = IS_STUB ? new RepositoryStub() : new RepositoryService();
 
   const fetchRepositories = async () => {
-    try {
-      const result = await repositoryService.getMany({ platform });
-      if (result.succeeded) {
-        setRepositories(result.data);
-      } else {
-        setError(result.errors);
-      }
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+    var repositoryManager = RepositoryManager.getInstance();
+    setRepositories(await repositoryManager.getRepositories());
+    if (repositories.length === 0){
+      try {
+        const result = await repositoryService.getMany({ platform });
+        if (result.succeeded) {
+          setRepositories(result.data);
+        } else {
+          setError(result.errors);
+        }
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }      
     }
   };
 

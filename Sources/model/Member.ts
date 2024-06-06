@@ -22,7 +22,6 @@ export class Member{
 
 // Fonction de mapping
 export function mapApiObjectToMember(apiObject: any): Member {
-  console.log(apiObject);
   return new Member(
     apiObject.id.toString(),
     apiObject.name,

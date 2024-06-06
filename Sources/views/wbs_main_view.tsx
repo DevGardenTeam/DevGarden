@@ -9,23 +9,22 @@ import ButtonVerticalAddComponent from '../components/button_vertical_add_compon
 import { WbsViewController } from '../view-controllers/WbsViewController';
 import { useTheme } from '@react-navigation/native';
 import ButtonWbsComponent from '../components/button_wbs_component';
+import { Repository } from '../model/Repository';
 
 interface WbsViewProps {
     navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-    platform: string;
-    owner: string;
-    repository: string;
+    repository: Repository;
 }
 
 const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { platform, owner, repository } = route.params as RouteParams;0
+    const { repository } = route.params as RouteParams;0
     const { colors } = useTheme();
     
-    const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = WbsViewController({ owner, repository })
+    const { wbsTasks, loading, error, fetchWbsTasks, fetchWbsCategories, fetchWbsTasksByCategory, addWbsCategory, addWbsTaskToCategory } = WbsViewController({ owner: repository.owner.name, repository: repository.name })
 
     const [categoriesWithTasks, setCategoriesWithTasks] = useState<Map<string, Task[]>>(new Map());
 
@@ -85,7 +84,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
