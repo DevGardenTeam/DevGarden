@@ -10,31 +10,30 @@
   import Breadcrumbs from '../components/breadcrumbs';
 
   import { Buffer } from 'buffer';
+import { Repository } from '../model/Repository';
 
   interface AllFilesViewProps {
     navigation: StackNavigationProp<any>;
   }
 
   interface RouteParams {
-    platform: string;
-    owner: string;
-    repository: string;
+    repository: Repository;
   }
 
   const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { platform, owner, repository } = route.params as RouteParams;
+    const { repository } = route.params as RouteParams;
     const { colors } = useTheme();
 
     const [pathHistory, setPathHistory] = useState<string[]>(['']);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform, owner, repository });
+    const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
 
     useFocusEffect(
       React.useCallback(() => {
         getAllFiles();
-      }, [platform, owner, repository])
+      }, [repository])
     );
 
     if (loading) {
@@ -68,7 +67,7 @@
         setPathHistory(prevHistory => prevHistory.slice(0, -1));
         await handleFilePress(lastPath);
       } else {
-        navigation.navigate("Project", { platform, owner, repository });
+        navigation.navigate("Project", { repository });
       }
     };
 

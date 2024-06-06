@@ -93,6 +93,6 @@ export function mapApiObjectToRepository(apiObject: any): Repository {
     files,
     apiObject.language,
     apiObject.size,
-    "test",
+    "",
   );
 }

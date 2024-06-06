@@ -10,26 +10,25 @@ import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { Repository } from '../model/Repository';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-  platform: string;
-  owner: string;
-  repository: string;
+  repository: Repository;
 }
 
 const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const route = useRoute();
-  const { platform, owner, repository } = route.params as RouteParams;
+  const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<null | Commit>(null);
 
-  const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ platform, owner, repository });
+  const { commits, loading, error, handleCommitPress, getAllCommits } = CommitViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
 
   useEffect(() => {
     getAllCommits();
@@ -47,7 +46,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
     <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       <View style={styles.top}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.navigate("Project", { platform, owner, repository })} />
+          <BackNavigationButton onPress={() => navigation.navigate("Project", { repository })} />
         </View>
         <View style={styles.titleContainer}>
           <Text style={[styles.titleText, { color: colors.text }]}>Commits</Text>

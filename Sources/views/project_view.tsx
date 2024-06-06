@@ -14,25 +14,23 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
 import { TerrainModel } from '../components/3d_components/terrain_component'
+import { Repository } from '../model/Repository';
 
 interface CustomStyle extends ImageStyle {
   backgroundImage?: string;
 }
-
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-  platform: string;
-  owner: string;
-  repository: string;
+  repository: Repository;
 }
 
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
-  const { platform, owner, repository } = route.params as RouteParams;
+  const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
   const [selectedPlatform] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,10 +63,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/>                
+              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
             </View>
             <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
             <View style={styles.switch}>
               <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -84,10 +82,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
           <View style={styles.mainContent}>
             <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
-            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {repository: repository})}/>
+            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {repository: repository})}/>
+            <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {repository: repository})}/>
+            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
           </View>
       </SafeAreaView>
     );
@@ -102,10 +100,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         style={[styles.days]}>
       <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.goBack()}/> 
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
         </View>
         <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
         <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
