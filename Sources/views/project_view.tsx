@@ -67,7 +67,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})} onPressParameters={() => navigation.navigate("Parameters")}/>                
+              <BackNavigationButton />                
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
@@ -102,7 +102,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     <LinearGradient colors={['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']} style={[styles.days]}>
       <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})} onPressParameters={() => navigation.navigate("Parameters")}/>
+          <BackNavigationButton />
         </View>
         <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>

@@ -1,22 +1,19 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, GestureResponderEvent, Dimensions, View } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { horizontalScale, verticalScale } from '../service/Metrics';
-
-type BackNavigationButton = {
-    onPress?: ((event: GestureResponderEvent) => void)
-    onPressParameters?: ((event: GestureResponderEvent) => void)
-}
+import { StackNavigationProp } from '@react-navigation/stack';
   
-const BackNavigationButton: React.FC<BackNavigationButton> = ({ onPress, onPressParameters }) => {
+const BackNavigationButton: React.FC = () => {
     const { colors } = useTheme();
+    const navigation = useNavigation<StackNavigationProp<any>>();
 
     return (
         <View style={styles.view}>
-            <TouchableOpacity style={styles.button} onPress={onPress}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation?.goBack()}>
                 <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={onPressParameters}>
+            <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
                 <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
             </TouchableOpacity>            
         </View>
@@ -28,6 +25,7 @@ const styles = StyleSheet.create({
     view: {
         flex: 1,
         flexDirection: "row",
+        gap: 10,
     },
     button: {
         alignItems: 'flex-start',

@@ -43,7 +43,7 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.top}>
                 <View style={styles.navigationBack}>
-                    <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
+                    <BackNavigationButton />
                 </View>
                 <View style={styles.titleContainer}>
                     <Text style={[styles.titleText, { color: colors.text }]}>PERT</Text>

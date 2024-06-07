@@ -26,7 +26,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
       <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
           <View style={styles.top}>
                 <View style={styles.navigationBack}>
-                  <BackNavigationButton onPress={() => navigation.navigate("Login")}/>                 
+                  <BackNavigationButton />                 
                 </View>
                 <View style={styles.titleContainer}>
                   <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>

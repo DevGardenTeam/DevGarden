@@ -17,7 +17,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.backButton}>
-        <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
+        <BackNavigationButton /> 
       </View>
 
       <View style={styles.mainBody}>

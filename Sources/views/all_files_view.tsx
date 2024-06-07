@@ -10,7 +10,7 @@
   import Breadcrumbs from '../components/breadcrumbs';
 
   import { Buffer } from 'buffer';
-import { Repository } from '../model/Repository';
+  import { Repository } from '../model/Repository';
 
   interface AllFilesViewProps {
     navigation: StackNavigationProp<any>;
@@ -67,7 +67,7 @@ import { Repository } from '../model/Repository';
         setPathHistory(prevHistory => prevHistory.slice(0, -1));
         await handleFilePress(lastPath);
       } else {
-        navigation.navigate("Project", { repository });
+        navigation.goBack();
       }
     };
 
@@ -145,14 +145,18 @@ import { Repository } from '../model/Repository';
         {selectedFile ? (
           <>
             <View style={styles.backButton}>
-              <BackNavigationButton onPress={handleBackPress} />
+              <TouchableOpacity style={styles.button} onPress={() => handleBackPress()}>
+                <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+              </TouchableOpacity> 
             </View>
             {renderFileContent(selectedFile)}
           </>
         ) : (
           <>
             <View style={styles.backButton}>
-              <BackNavigationButton onPress={handleBackPress} />
+              <TouchableOpacity style={styles.button} onPress={() => handleBackPress()}>
+                <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+              </TouchableOpacity>
             </View>
             <Breadcrumbs pathHistory={pathHistory} onBreadcrumbPress={handleBreadcrumbPress} />
             <FlatList
@@ -200,6 +204,10 @@ import { Repository } from '../model/Repository';
     fileContentContainer: {
       flex: 1,
       padding: 16,
+    },
+    button: {
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
     },
   });
 

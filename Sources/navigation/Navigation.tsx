@@ -8,7 +8,6 @@ import AllProjectsNeutralView from '../views/all_projects_neutral_view';
 import AllPlatformsNeutralView from '../views/all_plaforms_neutral_view';
 import AllCommitsView from '../views/all_commits_view';
 import AllIssuesView from '../views/all_issues_view';
-import DetailsIssueView from '../views/details_issue_view';
 import ProjectScreen from '../views/project_view';
 import ParametersScreen from '../views/parameters_view';
 import ProjectManagementScreen from '../views/project_management_view';
@@ -63,11 +62,6 @@ export default function Navigation() {
                                            <Stack.Screen name="Register"  component={RegisterView}
                                            options={{
                                                 title: 'Register',
-                                                headerShown: false
-                                           }}/>
-                                           <Stack.Screen name="DetailsIssue"  component={DetailsIssueView}
-                                           options={{
-                                                title: 'DetailsIssue',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Project"  component={ProjectScreen}
