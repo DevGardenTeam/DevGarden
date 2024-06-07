@@ -2,6 +2,7 @@ import { Member, mapApiObjectToMember } from "./Member";
 import { Branch, mapApiObjectToBranch } from "./Branch";
 import { Commit, mapApiObjectToCommit } from "./Commit";
 import { Issue, mapApiObjectToIssue } from "./Issue";
+import { File, mapApiObjectToFile } from "./File";
 
 export class Repository{
     id: string;
@@ -15,8 +16,12 @@ export class Repository{
     commits: Commit[];
     contributors: Member[];
     issues: Issue[];
+    files: File[];
     language: string;
     size: number;
+
+    platform: string;
+    status: string;
 
     constructor(
         id: string,
@@ -30,8 +35,12 @@ export class Repository{
         commits: Commit[],
         contributors: Member[],
         issues: Issue[],
+        files: File[],
         language: string,
-        size: number
+        size: number,
+
+        platform: string,
+        status: string,
       ) {
         this.id = id;
         this.name = name;
@@ -44,8 +53,12 @@ export class Repository{
         this.commits = commits;
         this.contributors = contributors;
         this.issues = issues;
+        this.files = files;
         this.language = language;
         this.size = size;
+
+        this.platform = platform;
+        this.status = status;
       }
 }
 
@@ -64,8 +77,10 @@ export function mapApiObjectToRepository(apiObject: any): Repository {
   const issues = apiObject.issues.map((issueData: any) => {
     return mapApiObjectToIssue(issueData);
   });
+  const files = apiObject.files.map((fileData: any) => {
+    return mapApiObjectToFile(fileData);
+  });
 
-  console.log(apiObject);
   return new Repository(
     apiObject.id.toString(),
     apiObject.name,
@@ -78,7 +93,10 @@ export function mapApiObjectToRepository(apiObject: any): Repository {
     commits,
     members,
     issues,
+    files,
     apiObject.language,
-    apiObject.size
+    apiObject.size,
+    "",
+    "",
   );
 }

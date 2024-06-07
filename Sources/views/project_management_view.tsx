@@ -9,20 +9,19 @@ import BackNavigationButton from '../components/button_back_navigation_component
 import { useTheme } from '@react-navigation/native';
 import { horizontalScale, moderateScale, verticalScale } from '../service/Metrics';
 import { ScreenSpace } from '@react-three/drei/core';
+import { Repository } from '../model/Repository';
 
 interface ProjectManagementScreenProps {
   navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-  platform: string;
-  owner: string;
-  repository: string;
+  repository: Repository;
 }
 
 const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navigation }) =>  {
   const route = useRoute();
-  const { platform, owner, repository } = route.params as RouteParams;
+  const { repository } = route.params as RouteParams;
   // const platform = "test";
   // const owner = "tim";
   // const repository = "devgarden";
@@ -33,7 +32,7 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
     <SafeAreaView style={{backgroundColor: colors.background}}>
         <View style={styles.top}>
             <View style={styles.navigationBack}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/>
+                <BackNavigationButton onPress={() => navigation.navigate("Project", {repository: repository})}/>
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{t('project_management_title')}</Text>
@@ -41,13 +40,13 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
         </View>
         <View style={styles.mainContent}>
           <View style={styles.container}>
-            <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='WBS' onPress={() => navigation.navigate("Wbs", {repository: repository})}/>
           </View>
           <View style={styles.container}>
             <NavigationButton title='GANTT'/>
           </View>
           <View style={styles.container}>
-            <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {repository: repository})}/>
           </View>
         </View>
     </SafeAreaView>

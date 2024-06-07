@@ -7,19 +7,18 @@ import DateUtils from '../helper/DateUtils';
 import ButtonPertElementComponent from '../components/button_pert_element_component';
 import { PertTask } from '../model/PertTask';
 import { useTheme } from '@react-navigation/native';
+import { Repository } from '../model/Repository';
 
 interface PertViewProps {
     navigation: StackNavigationProp<any>;
 }
 interface RouteParams {
-    platform: string;
-    owner: string;
-    repository: string;
+    repository: Repository;
 }
 
 const PertView: React.FC<PertViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { platform, owner, repository } = route.params as RouteParams;
+    const { repository } = route.params as RouteParams;
     const { colors } = useTheme();
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -44,7 +43,7 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.top}>
                 <View style={styles.navigationBack}>
-                    <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+                    <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
                 </View>
                 <View style={styles.titleContainer}>
                     <Text style={[styles.titleText, { color: colors.text }]}>PERT</Text>

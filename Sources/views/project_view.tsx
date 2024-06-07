@@ -19,21 +19,17 @@ import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 
 
-
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
-  repository: Repository;
 }
 
 interface RouteParams {
-  platform: string;
-  owner: string;
-  repository: string;
+  repository: Repository;
 }
 
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
-  const { platform, owner, repository } = route.params as RouteParams;
+  const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [OrbitControls ,events] = useControls()
@@ -54,10 +50,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: platform})}/>                
+              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
             </View>
             <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
             <View style={styles.switch}>
               <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -73,10 +69,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
           <View style={styles.mainContent}>
             <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
-            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}/>
-            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}/>
+            <NavigationButton title='Commits' onPress={() => navigation.navigate("AllCommits", {repository: repository})}/>
+            <NavigationButton title='Issues' onPress={() => navigation.navigate("AllIssues", {repository: repository})}/>
+            <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {repository: repository})}/>
+            <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
           </View>
       </SafeAreaView>
     );
@@ -89,10 +85,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     <LinearGradient colors={['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']} style={[styles.days]}>
       <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.goBack()}/> 
+          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
         </View>
         <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository}</Text>
+              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
             </View>
         <View style={styles.switch}>
             <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
@@ -117,30 +113,30 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
           {(() => {
-              switch (repository) {
-                case 'mid':
+              switch (repository.name) {
+                case 'FromageOpedie':
                   return <TerrainModel2 
-                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
-                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
-                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
-                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
-                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
                   />;
-                case 'bad':
+                case 'MicroTest':
                   return <TerrainModel3 
-                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
-                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
-                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
-                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
-                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
                   />;
                 default:
                   return <TerrainModel1
-                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
-                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
-                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
-                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
-                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
                   />;
               }
             })()}

@@ -9,26 +9,25 @@ import { Issue } from '../model/Issue';
 import ModalIssueComponent from '../components/modal_issue_component';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
+import { Repository } from '../model/Repository';
 
 interface AllIssuesViewProps {
     navigation: StackNavigationProp<any>;
 }
 
 interface RouteParams {
-    platform: string;
-    owner: string;
-    repository: string;
+    repository: Repository;
 }
 
 const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     const route = useRoute();
-    const { platform, owner, repository } = route.params as RouteParams;
+    const { repository } = route.params as RouteParams;
     const { colors } = useTheme();
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState<null | Issue>(null);
 
-    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ platform, owner, repository });
+    const { issues, loading, error, handleIssuePress, fetchIssues } = IssueViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
 
     useEffect(() => {
         fetchIssues();
@@ -45,7 +44,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project", {platform: platform, owner: owner, repository: repository})}/> 
+                <BackNavigationButton onPress={() => navigation.navigate("Project", {repository: repository})}/> 
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>
