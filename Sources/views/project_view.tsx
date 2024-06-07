@@ -113,8 +113,8 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
           {(() => {
-              switch (repository.name) {
-                case 'FromageOpedie':
+              switch (repository.status) {
+                case 'mid':
                   return <TerrainModel2 
                     onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
                     onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
@@ -122,7 +122,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
                     onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
                     onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
                   />;
-                case 'MicroTest':
+                case 'bad':
                   return <TerrainModel3 
                     onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
                     onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
