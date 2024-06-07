@@ -8,7 +8,7 @@ import Trigger from '../components/3d_components/trigger';
 import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
-import { TerrainModel } from '../components/3d_components/terrain_component'
+import { TerrainModel1 } from '../components/3d_components/terrain_component'
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 
 
@@ -51,7 +51,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
 
                         <Suspense fallback={<Trigger setLoading={setLoading} />}>
-                          <TerrainModel 
+                          <TerrainModel1 
                             onClickTree={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
                             onClickChest={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}
                             onClickSign={() => navigation.navigate("AllProjects", {platform: selectedPlatform?.toLowerCase()})}

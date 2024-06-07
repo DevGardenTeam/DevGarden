@@ -75,7 +75,7 @@ type TerrainModelProps = {
   repository?: Repository
 }
 
-export const TerrainModel: React.FC<TerrainModelProps> = ({onClickTree, onClickChest,onClickSign, onClickBush, onClickRock  },props: Props, ) => {
+export const TerrainModel1: React.FC<TerrainModelProps> = ({onClickTree, onClickChest,onClickSign, onClickBush, onClickRock  },props: Props, ) => {
     const { nodes, materials } = useGLTF(require('../../assets/3d/terrain.glb')) as GLTFResult
 
     return (

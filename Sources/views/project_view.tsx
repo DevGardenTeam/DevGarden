@@ -13,16 +13,16 @@ import Trigger from '../components/3d_components/trigger';
 import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
-import { TerrainModel } from '../components/3d_components/terrain_component'
+import { TerrainModel1 } from '../components/3d_components/terrain_component'
 import { TerrainModel2 } from '../components/3d_components/terrain2_component'
 import { TerrainModel3 } from '../components/3d_components/terrain3_component'
-
-
+import { Repository } from '../model/Repository';
 
 
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
+  repository: Repository;
 }
 
 interface RouteParams {
@@ -39,7 +39,6 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   const [OrbitControls ,events] = useControls()
 
   // Switch
-
   const [view, setView] = useState(true);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
@@ -117,13 +116,34 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
           <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
-            <TerrainModel3 
-              onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
-              onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
-              onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
-              onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
-              onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
-            />
+          {(() => {
+              switch (repository) {
+                case 'mid':
+                  return <TerrainModel2 
+                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                  />;
+                case 'bad':
+                  return <TerrainModel3 
+                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                  />;
+                default:
+                  return <TerrainModel1
+                    onClickTree={() => navigation.navigate("AllCommits", {platform: platform, owner: owner, repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {platform: platform, owner: owner, repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {platform: platform, owner: owner, repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {platform: platform, owner: owner, repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {platform: platform, owner: owner, repository: repository})}
+                  />;
+              }
+            })()}
           </Suspense>
         </Canvas>
       </View>    
