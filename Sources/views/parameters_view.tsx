@@ -9,8 +9,14 @@ import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics'
 import { useTheme } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import MetricsUtils from '../helper/MetricsUtils';
+import BackNavigationButton from '../components/button_back_navigation_component';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const ParametersScreen: React.FC = () =>  {
+interface ParametersProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
 
   // Multi langue
 
@@ -69,6 +75,9 @@ const ParametersScreen: React.FC = () =>  {
           <View style={styles.headerEllipseContainer }>
             <View style={styles.headerEllipse} />
           </View> */}
+          <View style={styles.navigationBack}>
+            <BackNavigationButton onPress={() => navigation.goBack()}/>
+          </View>
           <View style={styles.titlecontainer}>
             <Image source={require('../assets/icons/settings.png')} style={styles.settingsIcon}/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
@@ -140,14 +149,7 @@ const ParametersScreen: React.FC = () =>  {
                     <Text style={[styles.rowName, { color: colors.text }]}>Date limite du dernier commit :</Text>
                     <View>
                       <Text style={[styles.sliderValue, , { color: colors.text}]}>{currentMonth} mois</Text>
-                      <Slider
-                          style={styles.slider}
-                          minimumValue={1}
-                          maximumValue={12}
-                          step={1}
-                          value={currentMonth}
-                          onValueChange={handleMonthChange}
-                      />
+                      
                     </View>
                     <Text style={[styles.rowName, { color: colors.text }]}>Priorité :</Text>
                     <View style={styles.dropDownContainer}>
@@ -375,6 +377,11 @@ const styles = StyleSheet.create({
       fontSize: moderateScale(15),
       color: '#414141',
       marginBottom: 5,
+  },
+  navigationBack: {
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex:1
   },
 });
 

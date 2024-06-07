@@ -17,7 +17,6 @@ export const useRepositoryViewModel = (platform: string) => {
   const fetchRepositories = async () => {
     var repositoryManager = RepositoryManager.getInstance();
     setRepositories(await repositoryManager.getRepositories());
-    if (repositories.length === 0){
       try {
         const result = await repositoryService.getMany({ platform });
         if (result.succeeded) {
@@ -29,8 +28,7 @@ export const useRepositoryViewModel = (platform: string) => {
         setError(error.message);
       } finally {
         setLoading(false);
-      }      
-    }
+      }
   };
 
   const fetchRepositoryById = async (id: string) => {

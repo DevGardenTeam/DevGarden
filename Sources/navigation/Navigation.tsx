@@ -17,93 +17,82 @@ import WbsView from '../views/wbs_main_view';
 import {DarkTheme, LightTheme} from "../theme/theme";
 import {useColorScheme} from "react-native";
 import AllFilesView from '../views/all_files_view';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default function Navigation() {
      const scheme = useColorScheme();
-     const BottomTabNavigator = createBottomTabNavigator();
-    return (
+     const Stack = createStackNavigator();
+     return (
         <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
-            <BottomTabNavigator.Navigator initialRouteName="Login" >
-                <BottomTabNavigator.Screen name="Home" component={HomeScreen}
+            <Stack.Navigator initialRouteName="Login" >
+                <Stack.Screen name="Home" component={HomeScreen}
                                            options={{
                                                 title: 'Home',
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Parameters"  component={ParametersScreen}
+                                           <Stack.Screen name="Parameters"  component={ParametersScreen}
                                            options={{
                                                 title: 'Parameters',
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Login"  component={LoginScreen}
+                                           <Stack.Screen name="Login"  component={LoginScreen}
                                            options={{
                                                 title: 'Login',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllProjects"  component={AllProjectsNeutralView}
+                                           <Stack.Screen name="AllProjects"  component={AllProjectsNeutralView}
                                            options={{
                                                 title: 'AllProjects',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllPlatforms"  component={AllPlatformsNeutralView}
+                                           <Stack.Screen name="AllPlatforms"  component={AllPlatformsNeutralView}
                                            options={{
                                                 title: 'AllPlatforms',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllCommits"  component={AllCommitsView}
+                                           <Stack.Screen name="AllCommits"  component={AllCommitsView}
                                            options={{
                                                 title: 'AllCommits',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="AllIssues"  component={AllIssuesView}
+                                           <Stack.Screen name="AllIssues"  component={AllIssuesView}
                                            options={{
                                                 title: 'AllIssues',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Register"  component={RegisterView}
+                                           <Stack.Screen name="Register"  component={RegisterView}
                                            options={{
                                                 title: 'Register',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="DetailsIssue"  component={DetailsIssueView}
+                                           <Stack.Screen name="DetailsIssue"  component={DetailsIssueView}
                                            options={{
                                                 title: 'DetailsIssue',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Project"  component={ProjectScreen}
+                                           <Stack.Screen name="Project"  component={ProjectScreen}
                                            options={{
                                                 title: 'Project',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="ProjectManagement"  component={ProjectManagementScreen}
+                                           <Stack.Screen name="ProjectManagement"  component={ProjectManagementScreen}
                                            options={{
                                                 title: 'ProjectManagement',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Wbs"  component={WbsView}
+                                           <Stack.Screen name="Wbs"  component={WbsView}
                                            options={{
                                                 title: 'Wbs',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Gantt"  component={ProjectManagementScreen}
+                                           <Stack.Screen name="Gantt"  component={ProjectManagementScreen}
                                            options={{
                                                 title: 'Gantt',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-                                           <BottomTabNavigator.Screen name="Pert"  component={PertView}
+                                           <Stack.Screen name="Pert"  component={PertView}
                                            options={{
                                                 title: 'Pert',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
                                            {/* <BottomTabNavigator.Screen name="Dashboard"  component={DashBoardScreen}
@@ -112,13 +101,12 @@ export default function Navigation() {
                                                 tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/> */}
-                                           <BottomTabNavigator.Screen name="AllFiles"  component={AllFilesView}
+                                           <Stack.Screen name="AllFiles"  component={AllFilesView}
                                            options={{
                                                 title: 'Files',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
                                            }}/>
-            </BottomTabNavigator.Navigator>
+            </Stack.Navigator>
         </NavigationContainer>
     )
 }
