@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, StatusBar, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
@@ -22,8 +22,13 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform });
 
+  const fetchCalled = useRef(false);
+
   useEffect(() => {
-    fetchRepositories();
+    if (!fetchCalled.current) {
+      fetchRepositories();
+      fetchCalled.current = true;
+    }
   }, []);
 
   if (loading) {

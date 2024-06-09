@@ -45,8 +45,8 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
     
     useEffect(() => {
         selectedPortionValue.value = selectedPortion;
-        console.log("selectedPortion: ", selectedPortion)
-        console.warn("Repositories: ", repositories)
+        console.warn("selectedPortion: ", selectedPortion.toLocaleUpperCase())
+        //console.warn("Repositories: ", repositories)
 
         scale.value = withTiming(1);
         translateY.value = withTiming(0);
@@ -56,7 +56,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
     
         switch (selectedPortion) {
             case PLATFORMS.GITLAB:
-                console.log(selectedPortion)
+                console.warn("PORTION UPPERCASE: ", selectedPortion.toUpperCase())
                 translateX.value = withTiming(0);
                 
                 savedTranslateX.value = 0;
@@ -65,8 +65,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
 
                 break;
             case PLATFORMS.GITHUB:
-                console.log(selectedPortion)
-                translateX.value = withTiming(-containerWidth);
+              translateX.value = withTiming(-containerWidth);
 
                 savedTranslateX.value = -containerWidth;
 
@@ -74,8 +73,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
 
                 break;
             case PLATFORMS.GITEA:
-                console.log(selectedPortion)
-                translateX.value = withTiming(-(containerWidth * 2));
+              translateX.value = withTiming(-(containerWidth * 2));
                 savedTranslateX.value = -(containerWidth * 2);
 
                 console.log("Current X: ", translateX.value);
@@ -163,19 +161,30 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
           <GestureDetector gesture={combinedGesture}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
               <Svg height={svgHeight} width={svgWidth}>
-                {gardens.map((garden, index) => (
-                  <GardenSection
-                    key={index}
-                    x={garden.x}
-                    y={0}
-                    width={containerWidth}
-                    height={svgHeight}
-                    imageSource={garden.imageSource}
-                    minDistanceBetweenTrees={20}
-                    navigation={navigation as StackNavigationProp<any, any>}
-                    repositories={repositories.filter(repo => repo.platform.toLocaleUpperCase() === garden.platform)}
-                  />
-                ))}
+              {/* Filter the repositories per platformm */}
+              {gardens.map((garden, index) => {
+                  const filteredRepos = repositories.filter(repo => {
+                    const repoPlatform = repo.platform.toLocaleUpperCase();
+                    const gardenPlatform = garden.platform.toLocaleUpperCase();
+                    return repoPlatform === gardenPlatform;
+                  });
+
+                  // console.log(`Filtered repositories for ${garden.platform}:`, filteredRepos);
+
+                  return (
+                    <GardenSection
+                      key={index}
+                      x={garden.x}
+                      y={0}
+                      width={containerWidth}
+                      height={svgHeight}
+                      imageSource={garden.imageSource}
+                      minDistanceBetweenTrees={20}
+                      navigation={navigation as StackNavigationProp<any, any>}
+                      repositories={filteredRepos}
+                    />
+                  );
+                })}
               </Svg>
             </Animated.View>
           </GestureDetector>

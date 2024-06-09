@@ -20,9 +20,9 @@ export const useRepositoryViewModel = (platform: string) => {
     var repositoryManager = RepositoryManager.getInstance();
     // Fetch all repositories from every platform
       try {
-        console.warn("Fetching repositories ...")
+        //console.warn("Fetching repositories ...")
         repositories = await repositoryManager.getRepositories();
-        console.warn("Repositories fetched: ", repositories)
+        //console.warn("Repositories fetched: ", repositories)
         setRepositories(repositories);
       } catch (error: any) {
         setError(error.message);
