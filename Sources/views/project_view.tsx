@@ -99,10 +99,21 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   const type = t('projectView.garden');
 
+  const getGradientColors = (status: String) => {
+    switch (status) {
+      case 'ok':
+        return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'];
+      case 'bad':
+        return ['#8B0000', '#B22222','#DC143C','#FF6347','#FF7F50']; // Example colors for 'bad' status
+      default:
+        return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']; // Default colors
+    }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-    <LinearGradient colors={['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']} style={[styles.days]}>
-      <View style={styles.topList}>
+        <LinearGradient colors={getGradientColors(status)} style={[styles.days]}>
+          <View style={styles.topList}>
         <View style={styles.navigationBack}>
           <BackNavigationButton />
         </View>
