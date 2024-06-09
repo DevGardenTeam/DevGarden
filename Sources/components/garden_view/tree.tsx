@@ -4,6 +4,7 @@ import TreeImageSvg from "./treeImageComp";
 import { G, Rect } from "react-native-svg";
 import { green } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 import { Platform } from "react-native";
+import { Repository } from "../../model/Repository";
 
 export type Tree = {
   label: string;
@@ -11,10 +12,11 @@ export type Tree = {
   y: number;
   radius: number;
   visible: boolean;
+  repository: Repository;
 };
 
 export function generateTrees(
-  numberOfTrees: number,
+  repositories: Repository[],
   minDistance: number,
   areaHeight: number,
   minX: number,
@@ -23,7 +25,7 @@ export function generateTrees(
   const trees: Tree[] = [];
   const attemptsPerTree = 100; // Maximum attempts to place a tree before giving up (to prevent infinite loops)
 
-  for (let i = 0; i < numberOfTrees; i++) {
+  for (let i = 0; i < repositories.length; i++) {
     let placed = false;
     for (let attempt = 0; attempt < attemptsPerTree && !placed; attempt++) {
       const xRange = maxX - minX;
@@ -34,6 +36,7 @@ export function generateTrees(
         y: Math.random() * areaHeight,
         radius: 10, // Assuming a fixed radius for simplicity, adjust as needed
         visible: true, // Initially setting all trees as visible
+        repository: repositories[i], // Assign the repository to the tree
       };
 
       // Check if the new tree overlaps or is too close to existing trees
@@ -61,7 +64,6 @@ export function generateTrees(
 }
 
 // Tree component
-
 interface TreeProps {
   tree: Tree;
   size?: number;

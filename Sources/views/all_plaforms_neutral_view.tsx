@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, View, Text, StatusBar, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -8,6 +8,7 @@ import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import GardenView from './GardenView';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { RepositoryController } from '../view-controllers/RepositoryViewController';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -15,32 +16,45 @@ interface AllPlatformsNeutralViewProps {
 }
 
 const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navigation }) => {
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>(""); // Provide a default value for selectedPlatform
   const { colors } = useTheme();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [OrbitControls ,events] = useControls()
+  const [events] = useControls()
+
+  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform });
+
+  useEffect(() => {
+    fetchRepositories();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
+  }
 
   return (
-      <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-          <View style={styles.mainView}>
-              <View style={styles.gardenViewContainer} {...events} >
-                {loading && <Loader />}
-                <GardenView selectedPortion={selectedPlatform}/>
-              </View>   
+    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+      <View style={styles.mainView}>
+          <View style={styles.gardenViewContainer} {...events} >
+            {loading && <Loader />}
+            <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
+          </View>   
 
-              <View style={styles.titleContainer}>
-                <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
-              </View>           
+          <View style={styles.titleContainer}>
+            <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
+          </View>           
 
-              <View style={styles.navigationBack} >
-                <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
-              </View>
-
-              <View style={styles.slidingButton}>
-                <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
-              </View>                  
+          <View style={styles.navigationBack} >
+            <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
           </View>
-      </SafeAreaView>
+
+          <View style={styles.slidingButton}>
+            <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
+          </View>                  
+      </View>
+    </SafeAreaView>
   );
 }
 

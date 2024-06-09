@@ -13,9 +13,7 @@ import Trigger from '../components/3d_components/trigger';
 import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
-import { TerrainModel } from '../components/3d_components/terrain_component'
 import { Repository } from '../model/Repository';
-import { TerrainModel2 } from '../components/3d_components/terrain2_component'
 import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 
 interface ProjectScreenProps {
@@ -29,6 +27,8 @@ interface RouteParams {
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
   const { repository } = route.params as RouteParams;
+  console.log("Got the repository: ", repository)
+  console.log("**********************************")
   const { colors } = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [OrbitControls ,events] = useControls()

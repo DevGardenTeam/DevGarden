@@ -1,21 +1,25 @@
-import React, { useEffect, useImperativeHandle } from 'react';
-import Svg, { Circle, Rect, Image } from 'react-native-svg';
+import React, { useEffect } from 'react';
+import Svg from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
-import Animated, { useSharedValue, useAnimatedStyle, useAnimatedReaction, withTiming } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { Dimensions } from 'react-native';
 
 import GardenSection from '../components/garden_view/GardenSection';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Repository } from '../model/Repository';
+
+import { PLATFORMS } from '../constants/constants';
 
 const MAX_SCALE = 2.5; // Maximum zoom level
 const NUMBER_OF_GARDENS = 3; // Number of gardens
 
 interface GardenViewProps {
-    selectedPortion: string | null;
+    selectedPortion: string | "github";
+    repositories: Repository[];
 }
 
-const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
+const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories })  => {
     const selectedPortionValue = useSharedValue(selectedPortion);
 
     const windowDimensions = Dimensions.get('window');
@@ -42,6 +46,8 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
     useEffect(() => {
         selectedPortionValue.value = selectedPortion;
         console.log("selectedPortion: ", selectedPortion)
+        console.warn("Repositories: ", repositories)
+
         scale.value = withTiming(1);
         translateY.value = withTiming(0);
         savedTranslateY.value = 0;
@@ -49,7 +55,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
 
     
         switch (selectedPortion) {
-            case 'Gitlab':
+            case PLATFORMS.GITLAB:
                 console.log(selectedPortion)
                 translateX.value = withTiming(0);
                 
@@ -58,7 +64,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
                 console.log("Current X: ", translateX.value);
 
                 break;
-            case 'Github':
+            case PLATFORMS.GITHUB:
                 console.log(selectedPortion)
                 translateX.value = withTiming(-containerWidth);
 
@@ -67,7 +73,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
                 console.log("Current X: ", translateX.value);
 
                 break;
-            case 'Gitea':
+            case PLATFORMS.GITEA:
                 console.log(selectedPortion)
                 translateX.value = withTiming(-(containerWidth * 2));
                 savedTranslateX.value = -(containerWidth * 2);
@@ -133,56 +139,48 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion })  => {
         ],
       };
     });
+
+    const gardens = [
+        {
+          x: 0,
+          platform: PLATFORMS.GITLAB,
+          imageSource: require('../assets/garden_themes/garden1bg.png'),
+        },
+        {
+          x: containerWidth,
+          platform: PLATFORMS.GITHUB,
+          imageSource: require('../assets/garden_themes/garden2bg.png'),
+        },
+        {
+          x: containerWidth * 2,
+          platform: PLATFORMS.GITEA,
+          imageSource: require('../assets/garden_themes/garden3bg.png'),
+        },
+      ];
   
-    return (
-        <GestureHandlerRootView  style={{ flex: 1, backgroundColor: 'white' }}>
-            <GestureDetector gesture={combinedGesture}>
+      return (
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'white' }}>
+          <GestureDetector gesture={combinedGesture}>
             <Animated.View style={[{ flex: 1 }, animatedStyle]}>
-                
-                <Svg height={svgHeight} width={svgWidth}>
-
-                    {/* garden 1 */}
-                    <GardenSection
-                     x={0}
-                     y={0}
-                     width={containerWidth}
-                     height={svgHeight}
-                     imageSource={require('../assets/garden_themes/garden1bg.png')}
-                     numberOfTrees={4}
-                     minDistanceBetweenTrees={20}
-                     navigation={navigation as StackNavigationProp<any, any>}
-                    />
-
-                    {/* garden 2 */}
-                    <GardenSection
-                     x={containerWidth}
-                     y={0}
-                     width={containerWidth}
-                     height={svgHeight}
-                     imageSource={require('../assets/garden_themes/garden2bg.png')}
-                     numberOfTrees={2}
-                     minDistanceBetweenTrees={20}
-                     navigation={navigation as StackNavigationProp<any, any>}
-                    />
-
-                    {/* garden 3 */}
-                    <GardenSection
-                     x={containerWidth * 2}
-                     y={0}
-                     width={containerWidth}
-                     height={svgHeight}
-                     imageSource={require('../assets/garden_themes/garden3bg.png')}
-                     numberOfTrees={3}
-                     minDistanceBetweenTrees={20}
-                     navigation={navigation as StackNavigationProp<any, any>}
-                    />
-
-                </Svg>
-              
+              <Svg height={svgHeight} width={svgWidth}>
+                {gardens.map((garden, index) => (
+                  <GardenSection
+                    key={index}
+                    x={garden.x}
+                    y={0}
+                    width={containerWidth}
+                    height={svgHeight}
+                    imageSource={garden.imageSource}
+                    minDistanceBetweenTrees={20}
+                    navigation={navigation as StackNavigationProp<any, any>}
+                    repositories={repositories.filter(repo => repo.platform.toLocaleUpperCase() === garden.platform)}
+                  />
+                ))}
+              </Svg>
             </Animated.View>
-            </GestureDetector>
-      </GestureHandlerRootView >
-    );
+          </GestureDetector>
+        </GestureHandlerRootView>
+      );
   };
 
 export default GardenView;
