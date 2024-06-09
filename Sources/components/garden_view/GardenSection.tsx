@@ -33,7 +33,7 @@ const GardenSection: React.FC<GardenSectionProps> = ({
       const newTrees = generateTrees(repositories, minDistanceBetweenTrees, height - 100, x, x + width - 60);
       setTrees(newTrees);
     }
-  }, [repositories, minDistanceBetweenTrees, height, width, x]);
+  }, []);
 
   const handleTreePress = (repo: Repository) => {
     console.log('Tree clicked!');

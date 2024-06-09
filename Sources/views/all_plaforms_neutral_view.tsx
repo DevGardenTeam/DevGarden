@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, StatusBar, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, StatusBar, ActivityIndicator, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -48,19 +48,37 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
           <View style={styles.gardenViewContainer} {...events} >
             {loading && <Loader />}
             <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
-          </View>   
+          </View> 
 
-          <View style={styles.titleContainer}>
-            <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
-          </View>           
+          {Platform.OS === 'web' && (
+            <View style={styles.titleContainer}>
+              <View style={styles.titleSubContainer}>
+                <Text style={[styles.titleText, { color: colors.text }]}>Gitlab</Text>
+              </View>
+              <View style={styles.titleSubContainer}>
+                <Text style={[styles.titleText, { color: colors.text }]}>Github</Text>
+              </View>
+              <View style={styles.titleSubContainer}>
+                <Text style={[styles.titleText, { color: colors.text }]}>Gitea</Text>
+              </View>
+            </View>
+          )} 
+
+          {Platform.OS !== 'web' && (
+            <View style={styles.titleContainerMobile}>
+              <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
+            </View>
+          )}        
 
           <View style={styles.navigationBack} >
             <BackNavigationButton onPress={() => navigation.navigate("Login")}/> 
           </View>
 
-          <View style={styles.slidingButton}>
-            <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
-          </View>                  
+          {Platform.OS !== 'web' && (
+            <View style={styles.slidingButton}>
+              <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
+            </View>
+          )}               
       </View>
     </SafeAreaView>
   );
@@ -91,8 +109,18 @@ const styles = StyleSheet.create({
     left: horizontalScale(15),
     zIndex: 1,
   },
+  titleContainerMobile: {
+    alignItems: 'center',
+  },  
   titleContainer: {
-      alignItems: 'center', // Pour centrer horizontalement le texte
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  titleSubContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
   titleText: {
       fontSize: moderateScale(50),
