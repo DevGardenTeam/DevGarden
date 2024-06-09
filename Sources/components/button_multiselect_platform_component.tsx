@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { PLATFORMS } from '../constants/constants';
 
 type ButtonMultiSelectPlatformComponent = {
   onSelect?: (platform: string) => void;
@@ -20,17 +21,17 @@ const ButtonMultiSelectPlatformComponent: React.FC<ButtonMultiSelectPlatformComp
   return (
     <View style={styles.container}>
       <TouchableOpacity style={[styles.button, selectedImage === 'Gitlab' && styles.selectedButton]}
-                        onPress={() => handleImagePress('Gitlab')}>
+                        onPress={() => handleImagePress(PLATFORMS.GITLAB)}>
         <Image source={require('../assets/platforms/gitlab.png')} style={styles.image} />
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.button, selectedImage === 'Github' && styles.selectedButton]}
-                        onPress={() => handleImagePress('Github')}>
+                        onPress={() => handleImagePress(PLATFORMS.GITHUB)}>
         <Image source={require('../assets/platforms/github.png')} style={styles.image} />
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.button, selectedImage === 'Gitea' && styles.selectedButton]}
-                        onPress={() => handleImagePress('Gitea')}>
+                        onPress={() => handleImagePress(PLATFORMS.GITEA)}>
         <Image source={require('../assets/platforms/gitea.png')} style={styles.image} />
       </TouchableOpacity>
     </View>

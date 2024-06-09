@@ -26,7 +26,7 @@ export default function Navigation() {
             <Stack.Navigator initialRouteName="Login" >
                 <Stack.Screen name="Home" component={HomeScreen}
                                            options={{
-                                                title: 'Home',
+                                                title: 'Login',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Parameters"  component={ParametersScreen}

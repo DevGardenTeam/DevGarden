@@ -31,6 +31,8 @@ interface RouteParams {
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
   const { repository } = route.params as RouteParams;
+  console.log("Got the repository: ", repository)
+  console.log("**********************************")
   const { colors } = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [OrbitControls ,events] = useControls()

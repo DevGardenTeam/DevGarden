@@ -5,3 +5,9 @@ export const CURRENT_BASE_URL: string = "https://codefirst.iut.uca.fr/containers
 //CONSTANTE POUR LE STUB
 //true si l'on veut le Stub, false pour le Service lié à l'API
 export const IS_STUB: boolean = false;
+
+export const PLATFORMS = {
+    GITHUB: "github",
+    GITLAB: "gitlab",
+    GITEA: "gitea",
+}
