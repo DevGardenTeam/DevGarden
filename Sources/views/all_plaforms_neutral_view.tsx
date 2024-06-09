@@ -26,8 +26,11 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   useEffect(() => {
     if (!fetchCalled.current) {
+      console.warn("fetching repositories for the first time")
       fetchRepositories();
       fetchCalled.current = true;
+    } else {
+      console.warn("Use effect called with no action")
     }
   }, []);
 

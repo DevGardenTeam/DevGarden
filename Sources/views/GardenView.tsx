@@ -45,7 +45,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
     
     useEffect(() => {
         selectedPortionValue.value = selectedPortion;
-        console.warn("selectedPortion: ", selectedPortion.toLocaleUpperCase())
+        //console.warn("selectedPortion: ", selectedPortion.toLocaleUpperCase())
         //console.warn("Repositories: ", repositories)
 
         scale.value = withTiming(1);
@@ -56,7 +56,6 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
     
         switch (selectedPortion) {
             case PLATFORMS.GITLAB:
-                console.warn("PORTION UPPERCASE: ", selectedPortion.toUpperCase())
                 translateX.value = withTiming(0);
                 
                 savedTranslateX.value = 0;

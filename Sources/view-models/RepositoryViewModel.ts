@@ -46,9 +46,5 @@ export const useRepositoryViewModel = (platform: string) => {
     }
   };
 
-  useEffect(() => {
-    fetchRepositories();
-  }, [platform]);
-
   return { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById };
 };
