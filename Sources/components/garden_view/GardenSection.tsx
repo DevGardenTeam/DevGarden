@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Platform, TouchableOpacity, View } from 'react-native';
+import { Platform } from 'react-native';
 import Svg, { ForeignObject, G, Image, Rect, Text as SvgText } from 'react-native-svg';
 import TreeComponent, { Tree, generateTrees } from './tree';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +10,7 @@ interface GardenSectionProps {
   y: number;
   width: number;
   height: number;
-  imageSource: any; // Adjust according to your image source type (e.g., require or URI)
+  imageSource: any;
   repositories: Repository[];
   minDistanceBetweenTrees: number;
   navigation: StackNavigationProp<any>;
@@ -27,6 +27,9 @@ const GardenSection: React.FC<GardenSectionProps> = ({
   navigation,
 }) => {
   const [trees, setTrees] = useState<Tree[]>([]);
+  const [hoveredRepo, setHoveredRepo] = useState<Repository | null>(null);
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [textLength, setTextLength] = useState<number>(0);
 
   useEffect(() => {
     if (repositories.length > 0) {
@@ -35,10 +38,25 @@ const GardenSection: React.FC<GardenSectionProps> = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (hoveredRepo) {
+      const textWidth = hoveredRepo.name.length * 8;
+      setTextLength(textWidth);
+    }
+  }, [hoveredRepo]);
+
   const handleTreePress = (repo: Repository) => {
     console.log('Tree clicked!');
     console.log("repository: ", repo)
-    navigation.navigate("Project", {repository: repo});
+    navigation.navigate("Project", { repository: repo });
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<SVGElement>) => {
+    setMousePosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRepo(null);
   };
 
   return (
@@ -63,28 +81,46 @@ const GardenSection: React.FC<GardenSectionProps> = ({
       ) : (
         trees.map(tree => tree.visible && (
           <G key={tree.label}>
-            <TreeComponent tree={tree} size={0.2} color="red"/>
+            <TreeComponent tree={tree} size={0.2} color="red" />
+            {Platform.OS === 'web' && hoveredRepo === tree.repository && (
+              <>
+                <Rect
+                  x={mousePosition.x - textLength / 2} // Positionnez le rectangle en fonction de la longueur du texte
+                  y={mousePosition.y - 25}
+                  width={textLength} // La largeur du rectangle est la même que la longueur du texte
+                  height={20}
+                  fill="white"
+                />
+                <SvgText
+                  x={mousePosition.x}
+                  y={mousePosition.y - 10}
+                  textAnchor="middle"
+                  fill="black"
+                  textLength={textLength} // Spécifiez la longueur du texte
+                >
+                  {hoveredRepo.name}
+                </SvgText>
+              </>
+            )}
             {Platform.OS === 'web' ? (
-             <ForeignObject x={tree.x} y={tree.y} width={50} height={50}>
-             <TouchableOpacity onPress={() => handleTreePress(tree.repository)} style={{ width: '100%', height: '100%' }}>
-               <div style={{
-                 width: '100%', 
-                 height: '100%', 
-                 backgroundColor: 'transparent', // Make it transparent or red for testing
-                 cursor: 'pointer'
-               }} />
-             </TouchableOpacity>
-           </ForeignObject>
+              <ForeignObject x={tree.x} y={tree.y} width={50} height={50}>
+                <div
+                  onClick={() => handleTreePress(tree.repository)}
+                  onMouseEnter={() => setHoveredRepo(tree.repository)}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  style={{ width: '100%', height: '100%', backgroundColor: 'transparent', cursor: 'pointer', position: 'relative' }}
+                />
+              </ForeignObject>
             ) : (
               <Rect
-              x={tree.x}
-              y={tree.y}
-              width={50} 
-              height={50}
-              fill="transparent"
-              onPress={() => {handleTreePress(tree.repository)}
-              }
-            />
+                x={tree.x}
+                y={tree.y}
+                width={50}
+                height={50}
+                fill="transparent"
+                onPress={() => handleTreePress(tree.repository)}
+              />
             )}
           </G>
         ))
