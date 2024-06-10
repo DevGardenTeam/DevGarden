@@ -18,6 +18,8 @@ import { TerrainModel2 } from '../components/3d_components/terrain2_component'
 import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 import MetricsUtils from '../helper/MetricsUtils';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 
 interface ProjectScreenProps {
@@ -63,28 +65,39 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     fetchStatus();
   }, [repository.name]);
 
+  const truncateText = (text : string, maxLength : number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
+
   if (!view) {
     const type = t('projectView.list');
     return (
-      <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-          <View style={styles.topList}>
-            <View style={styles.navigationBack}>
-              <BackNavigationButton />                
-            </View>
-            <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
-            </View>
-            <View style={styles.switch}>
-              <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
-                thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-                style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
-              </Switch>
-              <Text style={[styles.text,styles.textDay]}>{type}</Text>
-            </View>
+      <SafeAreaView style={{ backgroundColor: colors.background, height: '100%' }}>
+        <View style={styles.topList}>
+          <View style={styles.navigationBack}>
+            <BackNavigationButton />
           </View>
+          <View style={styles.titleContainer}>
+            <Text style={[styles.titleText, { color: colors.text }]}>
+              {truncateText(repository.name, 10)}
+            </Text>
+          </View>
+          <View style={styles.switchContainer}>
+            <Switch
+              trackColor={{ false: '#D3D3D3', true: '#B9FFB6' }}
+              thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}
+            />
+            <Text style={[styles.text, styles.textDay]}>{type}</Text>
+          </View>
+        </View>
 
           <View style={styles.mainContent}>
             <NavigationButton title={t('projectView.dashboard')} onPress={() => navigation.navigate("Dashboard")} />
@@ -99,38 +112,43 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   const type = t('projectView.garden');
 
-  const getGradientColors = (status: String) => {
+  const getGradientColors = (status: string) => {
     switch (status) {
       case 'ok':
-        return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'];
+        return ['#f1a55d', '#e8e8e8']; // Middle status
       case 'bad':
-        return ['#8B0000', '#B22222','#DC143C','#FF6347','#FF7F50']; // Example colors for 'bad' status
+        return ['#7c6969','#e8e8e8']; // Example colors for 'bad' status
       default:
         return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']; // Default colors
     }
   };
 
+ 
+
   return (
-    <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-        <LinearGradient colors={getGradientColors(status)} style={[styles.days]}>
-          <View style={styles.topList}>
-        <View style={styles.navigationBack}>
-          <BackNavigationButton />
-        </View>
-        <View style={styles.titleContainer}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
-            </View>
-        <View style={styles.switch}>
-            <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
+    <SafeAreaView style={{ backgroundColor: colors.background, height: '100%' }}>
+      <LinearGradient colors={getGradientColors(status)} style={styles.days}>
+        <View style={styles.topList}>
+          <View style={styles.navigationBack}>
+            <BackNavigationButton />
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={[styles.titleText, { color: colors.text }]}>
+              {truncateText(repository.name, 10)}
+            </Text>
+          </View>
+          <View style={styles.switchContainer}>
+            <Switch
+              trackColor={{ false: '#D3D3D3', true: '#B9FFB6' }}
               thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isEnabled}
-              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}>
-            </Switch>
-            <Text style={[styles.text,styles.textDay]}>{type}</Text>
+              style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.035 : HEIGHT * 0.025}}
+            />
+            <Text style={[styles.text, styles.textDay]}>{type}</Text>
+          </View>
         </View>
-      </View>
       <View style={{ flex: 1,  }} {...events} >
                     {loading && <Loader />}
                    
@@ -205,13 +223,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection:'row',
   },
-  switch: {
-    position: "absolute",
-    top: verticalScale(15),
-    right: horizontalScale(15),
-    justifyContent:'space-around',
-    alignItems: "center",
-    height: verticalScale(75)
+
+  switchContainer: {
+    flexShrink: 1, // Permet au conteneur de se réduire si nécessaire
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginRight: horizontalScale(10),
   },
   text: {
     fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
@@ -263,12 +280,14 @@ const styles = StyleSheet.create({
     zIndex:1
   },
   titleContainer: {
-      flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
-      alignItems: 'center', // Pour centrer horizontalement le texte
-      paddingHorizontal: horizontalScale(50),
+    flex: 1,
+    justifyContent: 'center', // Pour centrer verticalement le texte
+    alignItems: 'center',
+    height: verticalScale(75),
+    paddingHorizontal: horizontalScale(4),
   },
   titleText: {
-      fontSize: moderateScale(50),
+      fontSize: RFValue(25 , 680), // Taille de police responsive
       fontWeight: 'bold',
       textAlign: 'center'
   },
@@ -279,6 +298,8 @@ const styles = StyleSheet.create({
     height:'65%',
     marginTop: verticalScale(35),
   }
+
+  
 });
 
 export default ProjectScreen;
