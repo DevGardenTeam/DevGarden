@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import fontSizes from '../constants/fontSize';
 
 type ModalCommitComponentProps = {
     image: string;
@@ -18,7 +19,7 @@ const ModalCommitComponent: React.FC<ModalCommitComponentProps> = ({ image, user
     return (
         <View style={styles.modalView}>
             <TouchableOpacity onPress={onSelect}>
-                <Image source={require('../assets/icons/close.png')} style={[styles.closeImage, { tintColor: colors.text }]} />
+                <Image source={require('../assets/icons/chevron_down.png')} style={[styles.closeImage, { tintColor: colors.text }]} />
             </TouchableOpacity>
             <View style={styles.topModalBar}>
                 <View style={styles.userInfo}>
@@ -62,9 +63,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     squareContainer: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+        width: fontSizes.iconMedium,
+        height: fontSizes.iconMedium,
+        borderRadius: fontSizes.iconSmall,
         overflow: 'hidden',
         marginRight: 10,
     },
@@ -76,20 +77,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     userName: {
-        fontSize: 18,
+        fontSize: fontSizes.large,
         fontWeight: 'bold',
     },
     date: {
-        fontSize: 14,
+        fontSize: fontSizes.small,
         color: 'gray',
     },
     closeImage: {
-        width: 30,
-        height: 30,
+        width: fontSizes.iconSmall,
+        height: fontSizes.iconSmall,
     },
     message: {
         flex: 1,
-        fontSize: 16,
+        fontSize: fontSizes.medium,
         marginBottom: 20,
     },
     branchInfo: {
@@ -98,10 +99,10 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     branch: {
-        fontSize: 16,
+        fontSize: fontSizes.medium,
     },
     commitId: {
-        fontSize: 16,
+        fontSize: fontSizes.medium  ,
         color: 'gray',
     },
 });

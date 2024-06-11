@@ -11,6 +11,7 @@ import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { Repository } from '../model/Repository';
 import Modal from 'react-native-modal';
+import fontSizes from '../constants/fontSize';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -80,7 +81,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                     </View>
                     <Image
                       source={require('../assets/icons/right_arrow.png')}
-                      style={styles.icon}
+                      style={[styles.icon, { tintColor: colors.text }]}
                     />
                   </View>
                 </TouchableOpacity>
@@ -140,18 +141,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleText: {
-    fontSize: moderateScale(35),
+    fontSize: fontSizes.xlarge,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   titleTextBis: {
     alignItems: 'flex-end',
-    fontSize: moderateScale(25),
+    fontSize: fontSizes.large,
     color: 'gray',
   },
   icon: {
-    width: 24, 
-    height: 24,
+    width: fontSizes.iconSmall, 
+    height: fontSizes.iconSmall,
   },
   mainView: {
     flex: 1,
@@ -191,11 +192,11 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   commitMessage: {
-    fontSize: 18,
+    fontSize: fontSizes.large,
     fontWeight: 'bold',
   },
   commitAuthor: {
-    fontSize: 14,
+    fontSize: fontSizes.medium,
   },
 });
 

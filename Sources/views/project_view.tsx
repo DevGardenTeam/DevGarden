@@ -19,6 +19,7 @@ import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 import MetricsUtils from '../helper/MetricsUtils';
 import { RFValue } from 'react-native-responsive-fontsize';
+import fontSizes from '../constants/fontSize';
 
 
 
@@ -143,7 +144,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText, { color: colors.text }]}>
-              {truncateText(repository.name, 10)}
+              {truncateText(repository.name)}
             </Text>
           </View>
           <View style={styles.switchContainer}>
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
     marginRight: horizontalScale(10),
   },
   text: {
-    fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
+    fontSize: fontSizes.small,
   },
   textDay: {
     color:'black'
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(4),
   },
   titleText: {
-      fontSize: RFValue(25 , 680), // Taille de police responsive
+      fontSize: fontSizes.xxlarge, // Taille de police responsive
       fontWeight: 'bold',
       textAlign: 'center'
   },
