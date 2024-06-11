@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, Image, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, Image, ScrollView, StatusBar, TouchableOpacity, Platform } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, Suspense, useEffect } from 'react';
@@ -65,11 +65,20 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     fetchStatus();
   }, [repository.name]);
 
-  const truncateText = (text : string, maxLength : number) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...';
+  const truncateText = (text : string) => {
+    if(Platform.OS !== 'web'){
+      if (text.length > 10) {
+        return text.substring(0, 10) + '...';
+      }
+      return text;
     }
-    return text;
+    else{
+      if (text.length > 25) {
+        return text.substring(0, 22) + '...';
+      }
+      return text;
+    }
+    
   };
 
 
@@ -83,7 +92,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText, { color: colors.text }]}>
-              {truncateText(repository.name, 10)}
+              {truncateText(repository.name)}
             </Text>
           </View>
           <View style={styles.switchContainer}>
