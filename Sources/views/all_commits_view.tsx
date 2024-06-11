@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Modal, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
-import ButtonLabelCommitComponent from '../components/button_label_commit_component';
-import ModalCommitComponent from '../components/modal_commit_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
+import ModalCommitComponent from '../components/modal_commit_component';
 import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { Repository } from '../model/Repository';
+import Modal from 'react-native-modal';
+import fontSizes from '../constants/fontSize';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -80,7 +81,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                     </View>
                     <Image
                       source={require('../assets/icons/right_arrow.png')}
-                      style={styles.icon}
+                      style={[styles.icon, { tintColor: colors.text }]}
                     />
                   </View>
                 </TouchableOpacity>
@@ -91,22 +92,27 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
         </View>
         <Modal
           style={styles.modalContainer}
-          animationType="fade"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={() => { setModalVisible(false); }}>
-          <ModalCommitComponent
-            image={selectedItem?.author.photoUrl ?? ''}
-            username={selectedItem?.author.name ?? ''}
-            date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''}
-            message={selectedItem?.message ?? ''}
-            branch={selectedItem?.id ?? ''}
-            id={selectedItem?.id ?? ''}
-            onSelect={() => {
-              setModalVisible(false);
-              setSelectedItem(null);
-            }}
-          ></ModalCommitComponent>
+          isVisible={isModalVisible}
+          onSwipeComplete={() => { setModalVisible(false); setSelectedItem(null); }}
+          swipeDirection="down"
+          onBackdropPress={() => { setModalVisible(false); setSelectedItem(null); }}
+          onBackButtonPress={() => { setModalVisible(false); setSelectedItem(null); }}
+          backdropOpacity={0.5}
+        >
+          <View style={styles.modalView}>
+            <ModalCommitComponent
+              image={selectedItem?.author.photoUrl ?? ''}
+              username={selectedItem?.author.name ?? ''}
+              date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''}
+              message={selectedItem?.message ?? ''}
+              branch={selectedItem?.id ?? ''}
+              id={selectedItem?.id ?? ''}
+              onSelect={() => {
+                setModalVisible(false);
+                setSelectedItem(null);
+              }}
+            />
+          </View>
         </Modal>
       </View>
     </SafeAreaView>
@@ -131,22 +137,22 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   titleContainer: {
-    flex: 1, // Pour que le conteneur du titre occupe tout l'espace restant
-    alignItems: 'center', // Pour centrer horizontalement le texte
+    flex: 1, 
+    alignItems: 'center',
   },
   titleText: {
-    fontSize: moderateScale(35),
+    fontSize: fontSizes.xlarge,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   titleTextBis: {
     alignItems: 'flex-end',
-    fontSize: moderateScale(25),
+    fontSize: fontSizes.large,
     color: 'gray',
   },
   icon: {
-    width: 24, 
-    height: 24,
+    width: fontSizes.iconSmall, 
+    height: fontSizes.iconSmall,
   },
   mainView: {
     flex: 1,
@@ -162,10 +168,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalView: {
+    height: '70%', // Ajustez la hauteur de la modal ici
+    padding: 20,
     backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   itemContainer: {
     flexDirection: 'row',
@@ -181,11 +192,11 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   commitMessage: {
-    fontSize: 18,
+    fontSize: fontSizes.large,
     fontWeight: 'bold',
   },
   commitAuthor: {
-    fontSize: 14,
+    fontSize: fontSizes.medium,
   },
 });
 
