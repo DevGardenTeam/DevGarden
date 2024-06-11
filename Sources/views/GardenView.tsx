@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {StatusBar} from 'react-native';
 import Svg from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -61,6 +62,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
                 savedTranslateX.value = 0;
 
                 console.log("Current X: ", translateX.value);
+                StatusBar.setBackgroundColor('#f5f5f5');
 
                 break;
             case PLATFORMS.GITHUB:

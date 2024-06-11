@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, StatusBar, ActivityIndicator, Platform } from 'react-native';
+import { StyleSheet, View, Text, StatusBar, ActivityIndicator, Platform, SafeAreaView} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
-import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import GardenView from './GardenView';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
@@ -43,50 +42,48 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   }
 
   return (
-    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
-      <View style={styles.mainView}>
+      <SafeAreaView style={styles.mainView}>
           <View style={styles.gardenViewContainer} {...events} >
-            {loading && <Loader />}
             <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
-          </View> 
-
-          {Platform.OS === 'web' && (
-            <View style={styles.titleContainer}>
-              <View style={styles.titleSubContainer}>
-                <Text style={[styles.titleText, { color: colors.text }]}>Gitlab</Text>
-              </View>
-              <View style={styles.titleSubContainer}>
-                <Text style={[styles.titleText, { color: colors.text }]}>Github</Text>
-              </View>
-              <View style={styles.titleSubContainer}>
-                <Text style={[styles.titleText, { color: colors.text }]}>Gitea</Text>
-              </View>
-            </View>
-          )} 
-
-          {Platform.OS !== 'web' && (
-            <View style={styles.titleContainerMobile}>
-              <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
-            </View>
-          )}        
-
-          <View style={styles.navigationBack} >
-            <BackNavigationButton/> 
           </View>
+          <View style={styles.topMargin}>
+            {Platform.OS === 'web' && (
+              <View style={styles.titleContainer}>
+                <View style={styles.titleSubContainer}>
+                  <Text style={[styles.titleText, { color: colors.text }]}>Gitlab</Text>
+                </View>
+                <View style={styles.titleSubContainer}>
+                  <Text style={[styles.titleText, { color: colors.text }]}>Github</Text>
+                </View>
+                <View style={styles.titleSubContainer}>
+                  <Text style={[styles.titleText, { color: colors.text }]}>Gitea</Text>
+                </View>
+              </View>
+            )}
+            {Platform.OS !== 'web' && (
+              <View style={styles.titleContainerMobile}>
+                <Text style={[styles.titleText, { color: colors.text }]}>{selectedPlatform}</Text>
+              </View>
+            )}        
+
+            <View style={styles.navigationBack} >
+              <BackNavigationButton/> 
+            </View>
+          </View>          
 
           {Platform.OS !== 'web' && (
             <View style={styles.slidingButton}>
               <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
             </View>
-          )}               
-      </View>
-    </SafeAreaView>
+          )}     
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
+
+  topMargin: {
+    marginTop: StatusBar.currentHeight || 0
   },
   gardenViewContainer: {
     position: 'absolute',
@@ -100,7 +97,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems : 'center',
     justifyContent: 'space-between',
-    marginTop: StatusBar.currentHeight || 0,
     marginBottom: verticalScale(15)
   },
   navigationBack: {
