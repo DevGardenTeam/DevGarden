@@ -74,7 +74,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     }
     else{
       if (text.length > 25) {
-        return text.substring(0, 22) + '...';
+        return text.substring(0, 25) + '...';
       }
       return text;
     }
@@ -143,7 +143,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText, { color: colors.text }]}>
-              {truncateText(repository.name, 10)}
+              {truncateText(repository.name)}
             </Text>
           </View>
           <View style={styles.switchContainer}>
@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
     fontSize: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.04,
   },
   textDay: {
-    color:'black'
+    color:'black',
+    marginTop: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.03,
   },
   textNight: {
     color:'white'
