@@ -84,7 +84,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
+                <BackNavigationButton />
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>

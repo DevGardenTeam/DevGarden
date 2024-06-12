@@ -1,7 +1,7 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, ImageStyle, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, Image, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,10 +13,12 @@ import Trigger from '../components/3d_components/trigger';
 import Loader from '../components/3d_components/loader';
 import useControls from "r3f-native-orbitcontrols"
 import { Canvas } from '@react-three/fiber/native'
-import { TerrainModel } from '../components/3d_components/terrain_component'
-import { Repository } from '../model/Repository';
+import { TerrainModel1 } from '../components/3d_components/terrain_component'
 import { TerrainModel2 } from '../components/3d_components/terrain2_component'
 import { TerrainModel3 } from '../components/3d_components/terrain3_component'
+import { Repository } from '../model/Repository';
+import MetricsUtils from '../helper/MetricsUtils';
+
 
 interface ProjectScreenProps {
   navigation: StackNavigationProp<any>;
@@ -29,12 +31,13 @@ interface RouteParams {
 const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {  
   const route = useRoute();
   const { repository } = route.params as RouteParams;
+  console.log("Got the repository: ", repository)
+  console.log("**********************************")
   const { colors } = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [OrbitControls ,events] = useControls()
 
   // Switch
-
   const [view, setView] = useState(true);
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
@@ -44,13 +47,29 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   const {t} = useTranslation();  // A ajouter pour le multi langue
 
+  // Status d'un repository à utiliser avec les Metrics 
+  const [status, setStatus] = useState('loading');
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+        try {
+            const calculatedStatus = await MetricsUtils.calculateAverageMetric(repository.name);
+            setStatus(calculatedStatus);
+        } catch (error) {
+            console.error('Failed to calculate average metric', error);
+            setStatus('error');
+        }
+    };
+    fetchStatus();
+  }, [repository.name]);
+
   if (!view) {
     const type = t('projectView.list');
     return (
       <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
           <View style={styles.topList}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
+              <BackNavigationButton />                
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
@@ -80,12 +99,23 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
 
   const type = t('projectView.garden');
 
+  const getGradientColors = (status: String) => {
+    switch (status) {
+      case 'ok':
+        return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC'];
+      case 'bad':
+        return ['#8B0000', '#B22222','#DC143C','#FF6347','#FF7F50']; // Example colors for 'bad' status
+      default:
+        return ['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']; // Default colors
+    }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: colors.background,height: "100%" }}>
-    <LinearGradient colors={['#2B75B4', '#5292C5','#93C3E1','#C4E5F4','#DFF6FC']} style={[styles.days]}>
-      <View style={styles.topList}>
+        <LinearGradient colors={getGradientColors(status)} style={[styles.days]}>
+          <View style={styles.topList}>
         <View style={styles.navigationBack}>
-          <BackNavigationButton onPress={() => navigation.navigate("AllProjects", {platform: repository.platform})}/>                
+          <BackNavigationButton />
         </View>
         <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{repository.name}</Text>
@@ -112,13 +142,34 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           <directionalLight position={[0, 1, 0]} args={['white', 2]}  />
           <directionalLight position={[0, 0, 1]} args={['white', 2]}  />
           <Suspense fallback={<Trigger setLoading={setLoading} />}>
-            <TerrainModel3 
-              onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
-              onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
-              onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
-              onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
-              onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
-            />
+          {(() => {
+              switch (status) {
+                case 'ok':
+                  return <TerrainModel2 
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
+                  />;
+                case 'bad':
+                  return <TerrainModel3 
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
+                  />;
+                default:
+                  return <TerrainModel1
+                    onClickTree={() => navigation.navigate("AllCommits", {repository: repository})}
+                    onClickChest={() => navigation.navigate("AllFiles", {repository: repository})}
+                    onClickSign={() => navigation.navigate("Dashboard", {repository: repository})}
+                    onClickBush={() => navigation.navigate("AllIssues", {repository: repository})}
+                    onClickRock={() => navigation.navigate("ProjectManagement", {repository: repository})}
+                  />;
+              }
+            })()}
           </Suspense>
         </Canvas>
       </View>    

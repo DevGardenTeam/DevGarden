@@ -44,7 +44,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
     return (
         <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project", {repository: repository})}/> 
+                <BackNavigationButton/> 
             </View>
             <View style={styles.mainView}>
                 <View style={styles.titleView}>

@@ -21,6 +21,7 @@ export class Repository{
     size: number;
 
     platform: string;
+    status: string;
 
     constructor(
         id: string,
@@ -39,6 +40,7 @@ export class Repository{
         size: number,
 
         platform: string,
+        status: string,
       ) {
         this.id = id;
         this.name = name;
@@ -56,6 +58,7 @@ export class Repository{
         this.size = size;
 
         this.platform = platform;
+        this.status = status;
       }
 }
 
@@ -93,6 +96,7 @@ export function mapApiObjectToRepository(apiObject: any): Repository {
     files,
     apiObject.language,
     apiObject.size,
+    "",
     "",
   );
 }

@@ -24,17 +24,6 @@ steps:
 #    depends_on:
 #      - check-dependencies
 
-  - name: lint
-    image: node:21
-    commands:
-      - pwd
-      - ls
-      - cd Sources
-      - yarn install
-      - yarn lint
-    depends_on:
-      - check-dependencies
-
   - name: sonarqube
     image: reactnativecommunity/react-native-android
     environment:

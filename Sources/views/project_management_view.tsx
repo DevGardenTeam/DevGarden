@@ -32,7 +32,7 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
     <SafeAreaView style={{backgroundColor: colors.background}}>
         <View style={styles.top}>
             <View style={styles.navigationBack}>
-                <BackNavigationButton onPress={() => navigation.navigate("Project", {repository: repository})}/>
+                <BackNavigationButton />
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>{t('project_management_title')}</Text>

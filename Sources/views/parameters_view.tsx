@@ -9,8 +9,14 @@ import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics'
 import { useTheme } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import MetricsUtils from '../helper/MetricsUtils';
+import BackNavigationButton from '../components/button_back_navigation_component';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const ParametersScreen: React.FC = () =>  {
+interface ParametersProps {
+  navigation: StackNavigationProp<any>;
+}
+
+const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
 
   // Multi langue
 
@@ -41,12 +47,17 @@ const ParametersScreen: React.FC = () =>  {
     setPriority(priority);
   };
 
-  const handleMonthChange = (month: number) => {
-    MetricsUtils.setSelectedCommitMonth(month);
-    setCurrentMonth(month);
+  const handleMonthChange = (month: string) => {
+    const numericValue = month.replace(/[^0-9]/g, '');
+    const numericMonth = parseInt(numericValue, 10);
+
+    if (!isNaN(numericMonth)) {
+      MetricsUtils.setSelectedCommitMonth(numericMonth);
+      setCurrentMonth(numericValue);
+    }
   };
 
-  const [currentMonth, setCurrentMonth] = useState<number>(1);
+  const [currentMonth, setCurrentMonth] = useState('');
 
   const { colors } = useTheme();
 
@@ -70,7 +81,7 @@ const ParametersScreen: React.FC = () =>  {
             <View style={styles.headerEllipse} />
           </View> */}
           <View style={styles.titlecontainer}>
-            <Image source={require('../assets/icons/settings.png')} style={styles.settingsIcon}/>
+            <BackNavigationButton/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
           </View>
             <View style={styles.container_bis}>
@@ -137,17 +148,13 @@ const ParametersScreen: React.FC = () =>  {
             <View style={styles.calculatorContainer}>
                 <Text style={[styles.calculatorTitle, { color: colors.text }]}>Coefficients de qualité</Text>
                 <View style={styles.inputRow}>
-                    <Text style={[styles.rowName, { color: colors.text }]}>Date limite du dernier commit :</Text>
-                    <View>
-                      <Text style={[styles.sliderValue, , { color: colors.text}]}>{currentMonth} mois</Text>
-                      <Slider
-                          style={styles.slider}
-                          minimumValue={1}
-                          maximumValue={12}
-                          step={1}
-                          value={currentMonth}
-                          onValueChange={handleMonthChange}
-                      />
+                    <Text style={[styles.rowName, { color: colors.text }]}>Nombre de mois limite depuis le dernier commit :</Text>
+                    <View style={styles.inputView}>
+                      <TextInput value={currentMonth}
+                                onChangeText={handleMonthChange}
+                                keyboardType="numeric"
+                                style={styles.input}/>     
+                      <Text style={[styles.rowName, { color: colors.text }]}>Mois</Text>            
                     </View>
                     <Text style={[styles.rowName, { color: colors.text }]}>Priorité :</Text>
                     <View style={styles.dropDownContainer}>
@@ -355,12 +362,13 @@ const styles = StyleSheet.create({
       height: 40, // Ajustez la hauteur du Slider selon vos besoins
   },
   input: {
-      width: '48%',
+      width: '10%',
       borderColor: '#ccc',
       borderWidth: 1,
       borderRadius: 5,
       padding: 10,
       fontSize: moderateScale(15),
+      marginRight: 10
   },
   resultContainer: {
       marginTop: 20,
@@ -376,6 +384,17 @@ const styles = StyleSheet.create({
       color: '#414141',
       marginBottom: 5,
   },
+  navigationBack: {
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex:1,
+  },
+  inputView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
 export default  ParametersScreen;

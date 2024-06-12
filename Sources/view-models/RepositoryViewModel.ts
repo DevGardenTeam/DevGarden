@@ -15,22 +15,20 @@ export const useRepositoryViewModel = (platform: string) => {
   const repositoryService = IS_STUB ? new RepositoryStub() : new RepositoryService();
 
   const fetchRepositories = async () => {
+    var repositories = [];
+
     var repositoryManager = RepositoryManager.getInstance();
-    setRepositories(await repositoryManager.getRepositories());
-    if (repositories.length === 0){
+    // Fetch all repositories from every platform
       try {
-        const result = await repositoryService.getMany({ platform });
-        if (result.succeeded) {
-          setRepositories(result.data);
-        } else {
-          setError(result.errors);
-        }
+        //console.warn("Fetching repositories ...")
+        repositories = await repositoryManager.getRepositories();
+        //console.warn("Repositories fetched: ", repositories)
+        setRepositories(repositories);
       } catch (error: any) {
         setError(error.message);
       } finally {
         setLoading(false);
-      }      
-    }
+      }    
   };
 
   const fetchRepositoryById = async (id: string) => {
@@ -47,10 +45,6 @@ export const useRepositoryViewModel = (platform: string) => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchRepositories();
-  }, [platform]);
 
   return { repositories, repository, loading, error, fetchRepositories, fetchRepositoryById };
 };
