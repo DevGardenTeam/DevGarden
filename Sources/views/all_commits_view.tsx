@@ -84,7 +84,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 
      <View style={styles.searchContainer}>
        <TextInput
-         style={[styles.searchInput, { color: colors.text, borderColor: colors.border }]}
+         style={[styles.searchInput, { color: colors.text, borderColor: '#ccc' }]}
          placeholder="Search commits..."
          placeholderTextColor={colors.text}
          value={searchText}

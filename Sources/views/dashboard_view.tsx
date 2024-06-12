@@ -1,201 +1,127 @@
-// import 'intl-pluralrules';
-// import { StyleSheet, Text, Dimensions, View, TouchableOpacity, Image, Platform, ScrollView  } from 'react-native';
-// import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-// import "../service/i18n"
-// import React from 'react';
-// import { BarChart, PieChart } from "react-native-gifted-charts";
-// import BuildItem from "../components/dashboard_components/build_item_component"
-// import DonutLegend from "../components/dashboard_components/donut_legend_component"
+import React from 'react';
+import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import MarkdownDisplay from 'react-native-markdown-display';
+import fontSizes from '../constants/fontSize';
+import { useTheme } from '@react-navigation/native';
 
-// const DashBoardScreen: React.FC = () => {
-//   const {t} = useTranslation();     // A ajouter pour le multi langue
+// Données mockées pour simuler les informations du projet Git
+const mockData = {
+  readmeContent: "## Titre du Projet\n\nCeci est un **exemple** de contenu README.md.",
+  primaryLanguage: "JavaScript",
+  commiters: [
+    { id: 1, name: "John Doe", commits: 15, avatarUrl: "https://example.com/avatar1.png" },
+    { id: 2, name: "Jane Smith", commits: 10, avatarUrl: "https://example.com/avatar2.png" },
+    // Ajouter d'autres commiters si nécessaire
+  ]
+};
 
-//   // Activity Data
+const DashboardScreen = () => {
+  const { colors } = useTheme();
 
-//   const barChartData = [
-//     {value: 1, label: 'Lou', frontColor: 'red',
-//       topLabelComponent: () => (<Text style={{color: 'red', fontSize: 25}}>1</Text>)},
-//     {value: 5, label: 'Nicolas', frontColor: 'blue',
-//       topLabelComponent: () => (<Text>5</Text>)},
-//     {value: 3, label: 'Bruno', frontColor: 'yellow',
-//       topLabelComponent: () => (<Text style={{color: 'black', fontSize: 18, marginBottom: 1}}>3</Text>)},
-//     {value: 2, label: 'Tim', frontColor: 'green',
-//       topLabelComponent: () => (<Text style={{color: 'black', fontSize: 18, marginBottom: 1}}>2</Text>)},
-//   ]
+  return (
+    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={[styles.headerText, { color: colors.text }]}>Project's Dashboard</Text>
+      </View>
 
-//   // Languages used
+      {/* README Section */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>About the Project</Text>
+        <View style={{margin: 30,}}>
+            <MarkdownDisplay>{mockData.readmeContent}</MarkdownDisplay>
+        </View>
+      </View>
 
-//   const pieData = [
-//     {
-//       value: 47,
-//       color: '#009FFF',
-//     },
-//     {value: 34, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-//     {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-//     {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
-//   ];
-  
-  
-//   // Build Stats
+      {/* Langage Principal */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Principal Language</Text>
+        <View style={styles.languageContainer}>
+          <Text style={[styles.languageText, { color: colors.text }]}>{mockData.primaryLanguage}</Text>
+        </View>
+      </View>
 
-//   const isBuild = false
+      {/* Liste des Commiters */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>Commiters</Text>
+        {mockData.commiters.map(committer => (
+          <View key={committer.id} style={styles.commiterContainer}>
+            <Image source={{ uri: committer.avatarUrl }} style={styles.avatar} />
+            <View style={styles.commiterInfo}>
+              <Text style={[styles.commiterName, { color: colors.text }]}>{committer.name}</Text>
+              <Text style={[styles.commitCount, { color: colors.text }]}>{`${committer.commits} commits`}</Text>
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
 
-//   return (
-//     <ScrollView  style={styles.container}>
-//       <View style={styles.listTop}>
-//           <Text style={styles.title}>{t('projectView.dashboard')}</Text>
-//           <TouchableOpacity style={styles.cercle}>
-//             <Image source={require('../assets/dashboard_page_icon/tree.png')} style={styles.treeIcone}></Image>
-//           </TouchableOpacity>
-//       </View>
-//       <View style={styles.contentContainer}>
-//         <View style={styles.box}>
-//           <Text style={styles.boxTitle}>{t('dashboard.activityTitle')}</Text>
-//           <BarChart 
-//             data={barChartData}
-//             yAxisThickness={0}
-//             xAxisThickness={0}
-//             hideRules
-//             // hideYAxisText
-//             roundedTop
-//             />
-//         </View>
-//         <View style={styles.box}>
-//           <Text style={styles.boxTitle}>{t('dashboard.languagesTitle')}</Text>
-//           <PieChart
-//             data={pieData}
-//             donut
-//             showGradient
-//             sectionAutoFocus
-//             radius={90}
-//             innerRadius={60}   
-//           />
-//           <DonutLegend color={["#006DFF","#8F80F3","#3BE9DE","#FF7F97","blue"]} 
-//             value={{'React Native':String(pieData[0].value),
-//                     'TypeScripts':String(pieData[1].value),
-//                     'C#':String(pieData[2].value),
-//                     'Java':String(pieData[3].value),
-//                     'JavaScript':String(pieData[3].value)}} />
-//         </View>
-//         <View style={styles.box}>
-//           <View style={styles.buildHeader}>
-//             <Image source={isBuild ? require("../assets/dashboard_page_icon/check_circle.png") : require("../assets/dashboard_page_icon/cross_circle.png")} style={styles.buildIcon}></Image>
-//             <Text style={[styles.buildTitle,isBuild ? { color: '#00D415' } : { color: '#FF0202' }]}>{isBuild ? "Build Passing" : "Build Error"}</Text>
-//           </View>
-//           <View>
-//             <View style={styles.itemsBox}>
-//               <BuildItem title='Bugs' iconSource={require("../assets/dashboard_page_icon/bug.png")} value={"0"} mark="A"></BuildItem>
-//               <BuildItem title={t('dashboard.security')} iconSource={require("../assets/dashboard_page_icon/lock_open.png")} value={"20"} mark="C"></BuildItem>
-//             </View>
-//             <View style={styles.itemsBox}>
-//               <BuildItem title='Smells' iconSource={require("../assets/dashboard_page_icon/bug.png")} value={"50"} mark="D"></BuildItem>
-//               <BuildItem title={t('dashboard.duplication')} iconSource={require("../assets/dashboard_page_icon/lock_open.png")} value={'5%'} mark="B"></BuildItem>
-//             </View>
-//           </View>
-//         </View>
-//       </View>
-      
-//     </ScrollView >
-//   );
-// }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f8f8',
+    paddingHorizontal: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    borderBottomColor: '#ccc',
+  },
+  headerText: {
+    fontSize: fontSizes.xlarge,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  section: {
+    marginBottom: 20,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  sectionTitle: {
+    fontSize: fontSizes.large,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  languageContainer: {
+    backgroundColor: '#f0f0f0',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  languageText: {
+    fontSize: fontSizes.medium,
+    color: '#333',
+  },
+  commiterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  avatar: {
+    width: fontSizes.iconMedium,
+    height: fontSizes.iconMedium,
+    borderRadius: fontSizes.iconSmall,
+    marginRight: 10,
+  },
+  commiterInfo: {
+    flex: 1,
+  },
+  commiterName: {
+    fontSize: fontSizes.medium,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  commitCount: {
+    fontSize: fontSizes.small,
+    color: '#666',
+  },
+});
 
-// // t('[key]') => valeur directe dans le json
-// // t('[key].[2nd_key]') => valeur indirecte dans le json
-
-// const WIDTH = Dimensions.get('window').width ;
-// const HEIGHT = Dimensions.get('window').height ;
-
-// const ISLANDSCAPE = WIDTH > HEIGHT;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#F1F0F0',
-//   },
-//   listTop:{
-//     flexDirection:'row',
-//     justifyContent:'space-between',
-//     alignItems:'center'
-//   },
-//   title: {
-//     fontSize: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.12,
-//     margin: ISLANDSCAPE ? HEIGHT*0.045 : WIDTH*0.080,
-//   },
-//   cercle:{
-//     display: 'flex',
-//     width: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.15,
-//     height: ISLANDSCAPE ? HEIGHT*0.1 : WIDTH*0.15,
-//     borderRadius: WIDTH, 
-//     backgroundColor: 'transparent',
-//     borderWidth: 3,
-//     borderColor: 'black',
-//     alignContent:'center',
-//     alignItems:'center',
-//     margin: ISLANDSCAPE ? HEIGHT*0.045 : WIDTH*0.080,
-//   },
-//   treeIcone:{
-//     resizeMode: 'contain',
-//     height:'100%',
-//     width:'100%',
-//   },
-//   contentContainer: {
-//     flex: 1,
-//     backgroundColor: '#F1F0F0',
-//     alignItems: 'center',
-//   },
-//   box : {
-//     backgroundColor: '#FFFFFF',
-//     borderRadius: 10,
-//     padding: 10,
-//     alignItems: 'center',
-//     ...Platform.select({
-//       ios: {
-//         shadowColor: '#000',
-//         shadowOffset: { width: 0, height: 4 },
-//         shadowOpacity: 0.3,
-//         shadowRadius: 4,
-//       },
-//       android: {
-//         elevation: 4,
-//       },
-//     }),
-//     width: '80%',
-//     marginBottom:'10%'
-//   },
-//   boxTitle :{
-//     alignSelf:'flex-start',
-//     fontSize: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.07,
-//   },
-//   barchart: {
-//     alignSelf:'flex-end',
-//   },
-//   buildHeader: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     alignSelf:'flex-start',
-//     width:'60%',
-//     backgroundColor:'#F9F9F9',
-//     borderColor:'#EBEBEB',
-//     borderWidth: 2,
-//     borderRadius: 5,
-//     padding: ISLANDSCAPE ? 4 : 2,
-//   },
-//   buildIcon: {
-//     resizeMode: 'contain',
-//     height: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.1,
-//     width: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.1
-//   },
-//   buildTitle: {
-//     fontSize: ISLANDSCAPE ? HEIGHT*0.05 : WIDTH*0.06,
-//     fontWeight:'bold',
-//     alignSelf:'center'
-//   },
-//   itemsBox: {
-//     flexDirection:'row',
-//     width:'100%',
-//     marginTop:'5%',
-//     marginBottom:'5%'
-//   }
-// });
-
-// export default DashBoardScreen;
+export default DashboardScreen;

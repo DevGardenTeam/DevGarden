@@ -9,8 +9,6 @@ import { useTheme, useFocusEffect } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { WebView } from 'react-native-webview';
 import Breadcrumbs from '../components/breadcrumbs';
-
-
 import { Buffer } from 'buffer';
 import { Repository } from '../model/Repository';
 import fontSizes from '../constants/fontSize';

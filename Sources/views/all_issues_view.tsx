@@ -85,7 +85,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
 
      <View style={styles.searchContainer}>
        <TextInput
-         style={[styles.searchInput, { color: colors.text, borderColor: colors.border }]}
+         style={[styles.searchInput, { color: colors.text, borderColor: '#ccc' }]}
          placeholder="Search issues..."
          placeholderTextColor={colors.text}
          value={searchText}

@@ -17,6 +17,7 @@ import {DarkTheme, LightTheme} from "../theme/theme";
 import {useColorScheme} from "react-native";
 import AllFilesView from '../views/all_files_view';
 import { createStackNavigator } from '@react-navigation/stack';
+import DashboardScreen from '../views/dashboard_view';
 
 export default function Navigation() {
      const scheme = useColorScheme();
@@ -89,12 +90,11 @@ export default function Navigation() {
                                                 title: 'Pert',
                                                 headerShown: false
                                            }}/>
-                                           {/* <BottomTabNavigator.Screen name="Dashboard"  component={DashBoardScreen}
+                                           <Stack.Screen name="Dashboard"  component={DashboardScreen}
                                            options={{
                                                 title: 'Dashboard',
-                                                tabBarStyle : {display : "none"},
                                                 headerShown: false
-                                           }}/> */}
+                                           }}/>
                                            <Stack.Screen name="AllFiles"  component={AllFilesView}
                                            options={{
                                                 title: 'Files',
