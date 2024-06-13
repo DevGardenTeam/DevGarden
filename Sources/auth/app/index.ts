@@ -1,13 +1,22 @@
 import { HttpClient } from "../../model/generic_repository/HttpClient";
 import { CURRENT_BASE_URL } from "../../constants/constants";
-import axios, { AxiosInstance } from 'axios';
+import StringUtils from "../../helper/StringUtils";
+
+interface RegisterResult {
+  success: boolean;
+  message: string;
+}
 
 class Authen extends HttpClient {
   constructor() {
     super();
   }
 
-  static async register(username: string, password: string): Promise<boolean> {
+  static async register(username: string, password: string): Promise<RegisterResult> {
+
+    if (!StringUtils.isNotNullOrEmpty(username) || !StringUtils.isNotNullOrEmpty(password)){
+      return { success:false , message:"Veuillez remplir tous les champs !!" };
+    }
 
     const url = `${CURRENT_BASE_URL}/Authentification/register`;
 
@@ -22,18 +31,22 @@ class Authen extends HttpClient {
       });
 
       if (!response.ok) {
-        return false;
+        return { success:false , message:await response.text() };
       }
     } catch (error) {
       console.error('Error:', error);
-      return false;
+      return { success:false , message:"Une erreur inattendue est apparue" };
     }
-    return true;
+    return { success:true , message:"ok" } ;
   }
 
-  static async login(username: string, password: string): Promise<boolean> {
-    const url = `${CURRENT_BASE_URL}/Authentification/login`;
+  static async login(username: string, password: string): Promise<RegisterResult> {
 
+    if (!StringUtils.isNotNullOrEmpty(username) || !StringUtils.isNotNullOrEmpty(password)){
+      return { success:false , message:"Veuillez remplir tous les champs !!" };
+    }
+
+    const url = `${CURRENT_BASE_URL}/Authentification/login`;
     const requestUrl = `${url}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
 
     try {
@@ -45,13 +58,13 @@ class Authen extends HttpClient {
       });
 
       if (!response.ok) {
-        return false;
+        return { success:false , message:await response.text() };
       }
     } catch (error) {
       console.error('Error:', error);
-      return false;
+      return { success:false , message:"Une erreur inattendue est apparue" };
     }
-    return true;
+    return { success:true , message:"ok" };
   }
 }
 
