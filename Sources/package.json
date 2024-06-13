@@ -61,7 +61,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
-    "react-native-webview": "^13.10.2",
+    "react-native-webview": "^13.10.3",
     "three": "^0.165.0",
     "typescript": "~5.3.3",
     "uuidv4": "^6.2.13"

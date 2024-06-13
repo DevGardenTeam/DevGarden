@@ -1,8 +1,14 @@
-import React from 'react';
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import MarkdownDisplay from 'react-native-markdown-display';
 import fontSizes from '../constants/fontSize';
-import { useTheme } from '@react-navigation/native';
+import { useRoute, useTheme } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Repository } from '../model/Repository';
+import { FileViewController } from '../view-controllers/FileViewController';
+import { CommitViewController } from '../view-controllers/CommitViewController';
+import { Member } from '../model/Member';
+import { Buffer } from 'buffer';
 
 // Données mockées pour simuler les informations du projet Git
 const mockData = {
@@ -11,12 +17,81 @@ const mockData = {
   commiters: [
     { id: 1, name: "John Doe", commits: 15, avatarUrl: "https://example.com/avatar1.png" },
     { id: 2, name: "Jane Smith", commits: 10, avatarUrl: "https://example.com/avatar2.png" },
-    // Ajouter d'autres commiters si nécessaire
   ]
 };
 
-const DashboardScreen = () => {
+interface DashboardScreenProps {
+  navigation: StackNavigationProp<any>;
+}
+
+interface RouteParams {
+  repository: Repository;
+}
+
+class Committer extends Member {
+  commits: number;
+  constructor(id: string, name: string, photoUrl: string, commits: number) {
+    super(id, name, photoUrl, []);
+    this.commits = commits;
+  }
+}
+
+const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
+  const route = useRoute();
+  const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
+
+  const { files, loading: filesLoading, error: filesError, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
+  const { commits, loading: commitsLoading, error: commitsError, handleCommitPress, getAllCommits } = CommitViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
+
+  const [commitersData, setCommitersData] = useState<Committer[]>([]);
+  const [readmeContent, setReadmeContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    getAllCommits();
+    fetchReadmeContent();
+  }, []);
+
+  useEffect(() => {
+    if (commits) {
+      const commitersMap = new Map<string, Committer>();
+
+      commits.forEach(commit => {
+        const author = commit.author;
+        if (commitersMap.has(author.name)) {
+          const existingAuthor = commitersMap.get(author.name);
+          if (existingAuthor) {
+            existingAuthor.commits += 1;
+          }
+        } else {
+          commitersMap.set(author.name, new Committer(author.id, author.name, author.photoUrl, 1));
+        }
+      });
+
+      setCommitersData(Array.from(commitersMap.values()));
+    }
+  }, [commits]);
+
+  const fetchReadmeContent = async () => {
+    try {
+      const readmeFile = await fetchFirstFile('README.md');
+      if (readmeFile && readmeFile.encoding === 'base64') {
+        const cleanedBase64 = readmeFile.content.replace(/[^A-Za-z0-9+/=]/g, '');
+        const decodedContent = Buffer.from(cleanedBase64, 'base64').toString('utf-8');
+        setReadmeContent(decodedContent);
+      }
+    } catch (error) {
+      console.error('Error fetching README.md content:', error);
+    }
+  };
+
+  if (filesLoading || commitsLoading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (filesError || commitsError) {
+    return <Text>Error: {filesError || commitsError}</Text>;
+  }
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -28,8 +103,12 @@ const DashboardScreen = () => {
       {/* README Section */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>About the Project</Text>
-        <View style={{margin: 30,}}>
-            <MarkdownDisplay>{mockData.readmeContent}</MarkdownDisplay>
+        <View style={{ margin: 30 }}>
+          {readmeContent ? (
+            <MarkdownDisplay>{readmeContent}</MarkdownDisplay>
+          ) : (
+            <Text style={{ color: colors.text }}>Loading README.md...</Text>
+          )}
         </View>
       </View>
 
@@ -44,9 +123,9 @@ const DashboardScreen = () => {
       {/* Liste des Commiters */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Commiters</Text>
-        {mockData.commiters.map(committer => (
-          <View key={committer.id} style={styles.commiterContainer}>
-            <Image source={{ uri: committer.avatarUrl }} style={styles.avatar} />
+        {commitersData.map(committer => (
+          <View key={committer.name} style={styles.commiterContainer}>
+            <Image source={{ uri: committer.photoUrl }} style={styles.avatar} />
             <View style={styles.commiterInfo}>
               <Text style={[styles.commiterName, { color: colors.text }]}>{committer.name}</Text>
               <Text style={[styles.commitCount, { color: colors.text }]}>{`${committer.commits} commits`}</Text>
