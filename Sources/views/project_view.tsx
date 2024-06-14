@@ -135,7 +135,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
  
 
   return (
-    <View>
+    <View style={{ backgroundColor: colors.background, height: '100%' }}>
       <LinearGradient colors={getGradientColors(status)} style={styles.days}>
         <View style={styles.topList}>
           <View style={styles.navigationBack}>
