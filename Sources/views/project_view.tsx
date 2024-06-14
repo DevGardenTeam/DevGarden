@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Switch, Dimensions, Image, ScrollView, StatusBar, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, Switch, Dimensions, StatusBar, Platform } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, Suspense, useEffect } from 'react';
@@ -18,7 +18,6 @@ import { TerrainModel2 } from '../components/3d_components/terrain2_component'
 import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 import MetricsUtils from '../helper/MetricsUtils';
-import { RFValue } from 'react-native-responsive-fontsize';
 import fontSizes from '../constants/fontSize';
 
 
@@ -75,7 +74,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     }
     else{
       if (text.length > 25) {
-        return text.substring(0, 22) + '...';
+        return text.substring(0, 25) + '...';
       }
       return text;
     }
@@ -86,7 +85,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   if (!view) {
     const type = t('projectView.list');
     return (
-      <SafeAreaView style={{ backgroundColor: colors.background, height: '100%' }}>
+      <View>
         <View style={styles.topList}>
           <View style={styles.navigationBack}>
             <BackNavigationButton />
@@ -116,7 +115,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
             <NavigationButton title='Files' onPress={() => navigation.navigate("AllFiles", {repository: repository})}/>
             <NavigationButton title={t('project_management_title')} onPress={() => navigation.navigate("ProjectManagement", {repository: repository})}/>
           </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
@@ -136,7 +135,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
  
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.background, height: '100%' }}>
+    <View>
       <LinearGradient colors={getGradientColors(status)} style={styles.days}>
         <View style={styles.topList}>
           <View style={styles.navigationBack}>
@@ -202,7 +201,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
         </Canvas>
       </View>    
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -244,7 +243,8 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.small,
   },
   textDay: {
-    color:'black'
+    color:'black',
+    marginTop: ISLANDSCAPE ? HEIGHT*0.035 : WIDTH*0.03,
   },
   textNight: {
     color:'white'
