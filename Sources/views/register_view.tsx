@@ -13,9 +13,10 @@ interface RegisterViewProps {
 const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [verifPassword, setverifPassword] = useState('');
 
   const OnRegisterPress = () => {
-    HandleRegister(email, password,navigation);
+    HandleRegister(email, password, verifPassword,navigation);
   };
 
   return (
@@ -43,8 +44,8 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
             />
             <TextInputComponent
                 placeholder="Confirm Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
+                value={verifPassword}
+                onChangeText={(text) => setverifPassword(text)}
                 password = {true}
                 iconSource={require('../assets/icons/IconLock.png')}
             />

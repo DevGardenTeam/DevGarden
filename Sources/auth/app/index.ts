@@ -12,10 +12,14 @@ class Authen extends HttpClient {
     super();
   }
 
-  static async register(username: string, password: string): Promise<RegisterResult> {
+  static async register(username: string, password: string, verifPassword: string): Promise<RegisterResult> {
 
     if (!StringUtils.isNotNullOrEmpty(username) || !StringUtils.isNotNullOrEmpty(password)){
       return { success:false , message:"Veuillez remplir tous les champs !!" };
+    }
+
+    if (verifPassword != password){
+      return { success:false , message:"Les mots de passe ne sont pas identiques !!" };
     }
 
     const url = `${CURRENT_BASE_URL}/Authentification/register`;
