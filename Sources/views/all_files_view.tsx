@@ -35,7 +35,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 
-  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
+  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
 
 
   useFocusEffect(
@@ -56,10 +56,11 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
   const handlePress = async (item: File) => {
-    if (item.type === 'dir') {
+    console.log(item);
+    if (item.type === 'dir' || item.type === 'tree') {
       const newPath = item.path;
       setPathHistory(prevHistory => [...prevHistory, newPath]);
-      await handleFilePress(newPath);
+      await handleFilePress(newPath, true);
     } else {
       const firstFile = await fetchFirstFile(item.path);
       setSelectedFile(firstFile);
