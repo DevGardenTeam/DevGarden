@@ -11,6 +11,7 @@ import Slider from '@react-native-community/slider';
 import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
+import LinkAccountView from '../components/parameters/link_accounts';
 
 interface ParametersProps {
   navigation: StackNavigationProp<any>;
@@ -86,19 +87,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
           </View>
             <View style={styles.container_bis}>
               <View>
-                {/* ListView */}
-                <FlatList
-                  data={[
-                    {title: 'Mon projet perso',icon: require('../assets/platforms/github.png')},
-                    {title: "Dev'Garden",icon: require('../assets/platforms/gitlab.png')},
-                    {title: "Alibaba",icon: require('../assets/platforms/gitea.png')},
-                  ]}
-                  // Pour le binding remplacer l'item.title et le chemin de l'icon
-                  renderItem={({item}) => <TouchableOpacity style={styles.listview}>
-                    <Image source={item.icon} style={styles.platformIcon}/>
-                    <Text style={styles.titleAccount}>{item.title}</Text>
-                  </TouchableOpacity>}
-                />
+                <LinkAccountView />
               </View>
               <TouchableOpacity>
                 <View style={styles.part}>
