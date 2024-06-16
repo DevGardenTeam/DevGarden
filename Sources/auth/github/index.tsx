@@ -7,6 +7,9 @@ import { View, Button, StatusBar,  } from 'react-native';
 
 import { styles } from './styles';
 
+import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
+import { useUser } from "../../user/UserContext";
+
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
 
@@ -17,10 +20,11 @@ const discovery = {
   revocationEndpoint: `https://github.com/settings/connections/applications/${GITHUB_CLIENT_ID}`,
 }
 
-export default function GithubAuth() {
+export default function GithubAuth({ onLinkChange, username }: { onLinkChange: (isLinked: boolean) => void; username: string }) {
   
-  // [POC]
-  //const navigation = useNavigation();
+  const handleLinkChange = (isLinked: boolean) => {
+    onLinkChange(isLinked);
+  };
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -37,7 +41,7 @@ export default function GithubAuth() {
       console.log(response);
       console.log(`response code => ${code}`); // Debug
   
-      fetch('https://localhost:7260/api/v1/OAuth/token?platform=github', {
+      fetch(`${CURRENT_BASE_URL}/OAuth/token?platform=github&username=${username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,24 +50,27 @@ export default function GithubAuth() {
           code: code,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          // get the token from the response data
-          const accessToken = data.access_token;
-          console.log(`Access token => ${accessToken}`); // Debug
-  
-          if (accessToken) {
-            // navigate to the success screen
-            // [POC] commented for now since this was used for the POC
-            //navigation.navigate('Success', { accessToken: accessToken });
-          }
-        })
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text(); 
+      })
+      .then((text) => {
+        console.log('Raw text:', text); 
+        return JSON.parse(text); 
+      })
+      .then((data) => {
+        console.log(data); 
+        const isLinked = data.isLinked;
+        handleLinkChange(isLinked);
+      })
         .catch((error) => {
           console.error('Error:', error);
         });
     }
-  }, [response]);
+  }, [response, username]);
   
   // button 
   return (

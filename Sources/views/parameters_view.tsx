@@ -12,6 +12,8 @@ import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinkAccountView from '../components/parameters/link_accounts';
+import GithubAuth from '../auth/github';
+import { useUser } from '../user/UserContext';
 
 interface ParametersProps {
   navigation: StackNavigationProp<any>;
@@ -21,7 +23,8 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
 
   // Multi langue
 
-  const {t} = useTranslation();     
+  const {t} = useTranslation();  
+  const { user } = useUser(); 
 
   // DropDownPicker
 
@@ -87,7 +90,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
           </View>
             <View style={styles.container_bis}>
               <View>
-                <LinkAccountView />
+                <LinkAccountView user={user}/>
               </View>
               <TouchableOpacity>
                 <View style={styles.part}>

@@ -5,6 +5,7 @@ import StringUtils from "../../helper/StringUtils";
 interface RegisterResult {
   success: boolean;
   message: string;
+  response?: Response;
 }
 
 class Authen extends HttpClient {
@@ -41,7 +42,7 @@ class Authen extends HttpClient {
       console.error('Error:', error);
       return { success:false , message:"Une erreur inattendue est apparue" };
     }
-    return { success:true , message:"ok" } ;
+    return { success: true , message:"ok" } ;
   }
 
   static async login(username: string, password: string): Promise<RegisterResult> {
@@ -63,12 +64,13 @@ class Authen extends HttpClient {
       
       if (!response.ok) {
         return { success:false , message:await response.text() };
+      } else {
+        return { success:true , message:"ok", response: response };
       }
     } catch (error) {
       console.error('Error:', error);
       return { success:false , message:"Une erreur inattendue est apparue" };
     }
-    return { success:true , message:"ok" };
   }
 }
 
