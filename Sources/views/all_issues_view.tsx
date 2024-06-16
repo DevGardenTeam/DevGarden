@@ -316,14 +316,17 @@ const styles = StyleSheet.create({
    flexDirection: 'row',
    alignItems: 'center',
    gap: 20,
+   flex: 1,
  },
  fileName: {
    fontSize: fontSizes.medium,
    fontWeight: 'bold',
+   flex: 1,
  },
  fileDetails: {
    fontSize: fontSizes.small,
    color: 'grey',
+   flex: 1,
  },
  squareContainer: {
    width: fontSizes.iconSmall,
