@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
   titleText: {
       fontSize: moderateScale(50),
       fontWeight: 'bold',
-      textAlign: 'center'
+      textAlign: 'center',
+      textTransform: "capitalize"
   },
   
   mainView: {
