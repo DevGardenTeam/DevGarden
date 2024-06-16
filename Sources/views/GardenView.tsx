@@ -62,7 +62,6 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
                 savedTranslateX.value = 0;
 
                 console.log("Current X: ", translateX.value);
-                StatusBar.setBackgroundColor('#f5f5f5');
 
                 break;
             case PLATFORMS.GITHUB:

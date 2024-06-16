@@ -1,5 +1,5 @@
 import 'intl-pluralrules';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform, TextInput  } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform, TextInput  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
 import { useTheme } from '@react-navigation/native';
-import Slider from '@react-native-community/slider';
 import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -75,11 +74,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-          {/* <View style={styles.header}/> 
-          <View style={styles.headerEllipseContainer }>
-            <View style={styles.headerEllipse} />
-          </View> */}
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
           <View style={styles.titlecontainer}>
             <BackNavigationButton/>
             <Text style={styles.title}>{t('settings.settings')}</Text>
@@ -174,7 +169,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
                 </View>
             </View>
             <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"}></SettingsButton>
-        </SafeAreaView>
+        </View>
   );
 }
 
@@ -190,26 +185,6 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     backgroundColor: '#F1F0F0',
   },
-  // // Header
-  // header:{
-  //   backgroundColor: 'red',
-  //   height: verticalScale(15),
-  //   width: '100%',
-  // },
-  // headerEllipseContainer: {
-  //   overflow: 'hidden',
-  //   width: '100%', // Garde la fenêtre à 100%
-  //   height: HEIGHT * 0.25,
-  // },
-  // headerEllipse: {
-  //   backgroundColor: '#F1F0F0',
-  //   height: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
-  //   width: ISLANDSCAPE ? WIDTH*4 : WIDTH*2 ,
-  //   borderRadius: ISLANDSCAPE ? WIDTH*4 / 2 : WIDTH*2 / 2 , 
-  //   position: 'absolute',
-  //   top: 50,
-  //   left: ISLANDSCAPE ? -WIDTH * 1.5 : -WIDTH*0.5 ,
-  // },
   // Title
   titlecontainer:{
     display : "flex",

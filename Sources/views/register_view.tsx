@@ -15,7 +15,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <View style={styles.backButton}>
         <BackNavigationButton /> 
       </View>
@@ -61,7 +61,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
         </View>  
       </View>
 
-    </SafeAreaView>
+    </View>
   );
 };
 

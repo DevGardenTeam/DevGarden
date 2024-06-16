@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, FlatList, ActivityIndicator, Dimensions, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ActivityIndicator, Dimensions, ScrollView, StatusBar } from 'react-native';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
@@ -35,7 +35,7 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
   }
 
   return (
-    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+    <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
         <View style={styles.top}>   
           <View style={styles.navigationBack}>
             <BackNavigationButton />                 
@@ -57,7 +57,7 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
             />
           </View>  
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

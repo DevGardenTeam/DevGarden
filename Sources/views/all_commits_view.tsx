@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -8,7 +8,7 @@ import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
-import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { horizontalScale, verticalScale } from '../service/Metrics';
 import { Repository } from '../model/Repository';
 import Modal from 'react-native-modal';
 import fontSizes from '../constants/fontSize';
@@ -69,7 +69,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 
 
  return (
-   <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+   <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
      <View style={styles.top}>
        <View style={styles.navigationBack}>
          <BackNavigationButton />
@@ -167,7 +167,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
          </View>
        </Modal>
      </View>
-   </SafeAreaView>
+   </View>
  );
 };
 

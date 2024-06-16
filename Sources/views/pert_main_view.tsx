@@ -40,7 +40,7 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
     // }
 
     return (
-        <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+        <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.top}>
                 <View style={styles.navigationBack}>
                     <BackNavigationButton />
@@ -85,7 +85,7 @@ const PertView: React.FC<PertViewProps> = ({ navigation }) => {
                     onRequestClose={() => {setModalVisible(false)}}>    
                 </Modal>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
