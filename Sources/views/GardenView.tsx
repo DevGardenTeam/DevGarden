@@ -169,7 +169,6 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
                     return repoPlatform === gardenPlatform;
                   });
 
-                  // console.log(`Filtered repositories for ${garden.platform}:`, filteredRepos);
 
                   return (
                     <GardenSection

@@ -70,14 +70,16 @@ const GardenSection: React.FC<GardenSectionProps> = ({
         preserveAspectRatio="xMidYMid slice"
       />
       {repositories.length === 0 ? (
-        <SvgText
-          x={(x + width / 2).toString()}
-          y={(y + height / 2).toString()}
-          textAnchor="middle"
-          fill="black"
-        >
-          No repositories found for this platform.
-        </SvgText>
+          <SvgText
+            x={(x + width / 2).toString()}
+            y={(y + height / 2).toString()}
+            textAnchor="middle"
+            fill="black"
+            fontSize="16"
+            fontWeight="bold"
+          >
+            No repositories found for this platform.
+          </SvgText>
       ) : (
         trees.map(tree => tree.visible && (
           <G key={tree.label}>
