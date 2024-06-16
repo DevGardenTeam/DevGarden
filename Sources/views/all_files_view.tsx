@@ -149,7 +149,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
         </View>
-        {item.type === 'dir' && (
+        {item.type === 'dir' || item.type === 'tree' && (
           <Image
             source={require('../assets/icons/right_arrow.png')}
             style={styles.icon}
@@ -166,7 +166,14 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
         <>
           <View style={styles.top}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton />
+              <View style={styles.component}>
+                <TouchableOpacity style={styles.button} onPress={handleBackPress}>
+                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
+                </TouchableOpacity>              
+              </View>
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>Files</Text>
@@ -179,7 +186,14 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
         <>
           <View style={styles.top}>
             <View style={styles.navigationBack}>
-              <BackNavigationButton />
+              <View style={styles.component}>
+                <TouchableOpacity style={styles.button} onPress={handleBackPress}>
+                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
+                </TouchableOpacity>              
+              </View>
             </View>
             <View style={styles.titleContainer}>
               <Text style={[styles.titleText, { color: colors.text }]}>Files</Text>
@@ -213,6 +227,11 @@ const styles = StyleSheet.create({
   navigationBack: {
     marginLeft: horizontalScale(15),
   },
+  component: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 10,
+  },
   titleContainer: {
     flex: 1,
     alignItems: 'center',
@@ -242,15 +261,15 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   fileName: {
-    fontSize: 18,
+    fontSize: fontSizes.medium,
     fontWeight: 'bold',
   },
   fileDetails: {
-    fontSize: 14,
+    fontSize: fontSizes.small,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: horizontalScale(35),
+    height: horizontalScale(35),
   },
   fileContentContainer: {
     flex: 1,

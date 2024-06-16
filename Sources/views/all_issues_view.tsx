@@ -318,11 +318,11 @@ const styles = StyleSheet.create({
    gap: 20,
  },
  fileName: {
-   fontSize: fontSizes.large,
+   fontSize: fontSizes.medium,
    fontWeight: 'bold',
  },
  fileDetails: {
-   fontSize: fontSizes.medium,
+   fontSize: fontSizes.small,
    color: 'grey',
  },
  squareContainer: {

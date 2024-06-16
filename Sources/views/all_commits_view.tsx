@@ -121,14 +121,14 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                }}>
                  <View style={styles.itemContainer}>
                    <View style={styles.textInfoContainer}>
-                     <Text style={[styles.commitMessage, { color: colors.text }]} numberOfLines={1} ellipsizeMode="tail">
-                       {item.message ?? ''}
+                     <Text style={[styles.commitDate, { color: colors.text }]}>
+                       {item.date ? DateUtils.formatDate(item.date.toString()) : ''}
                      </Text>
                      <Text style={[styles.commitAuthor, { color: colors.text }]}>
                        {item.author.name ?? ''}
                      </Text>
-                     <Text style={[styles.commitDate, { color: colors.text }]}>
-                       {item.date ? DateUtils.formatDate(item.date.toString()) : ''}
+                     <Text style={[styles.commitMessage, { color: colors.text }]} numberOfLines={1} ellipsizeMode="tail">
+                       {item.message ?? ''}
                      </Text>
                    </View>
                    <Image
@@ -244,14 +244,14 @@ const styles = StyleSheet.create({
    gap: 20,
  },
  commitMessage: {
-   fontSize: fontSizes.large,
-   fontWeight: 'bold',
+   fontSize: fontSizes.small,
  },
  commitAuthor: {
    fontSize: fontSizes.medium,
  },
  commitDate: {
    fontSize: fontSizes.medium,
+   fontWeight: 'bold',
  },
  searchContainer: {
    marginHorizontal: horizontalScale(15),
