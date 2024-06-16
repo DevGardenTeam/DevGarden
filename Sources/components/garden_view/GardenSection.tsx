@@ -4,6 +4,7 @@ import Svg, { ForeignObject, G, Image, Rect, Text as SvgText } from 'react-nativ
 import TreeComponent, { Tree, generateTrees } from './tree';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Repository } from '../../model/Repository';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface GardenSectionProps {
   x: number;
@@ -31,12 +32,39 @@ const GardenSection: React.FC<GardenSectionProps> = ({
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [textLength, setTextLength] = useState<number>(0);
 
+  // Charger les positions sauvegardées des arbres depuis AsyncStorage
   useEffect(() => {
-    if (repositories.length > 0) {
-      const newTrees = generateTrees(repositories, minDistanceBetweenTrees, height - 100, x, x + width - 60);
-      setTrees(newTrees);
+    const loadSavedPositions = async () => {
+      try {
+        const savedTrees = await AsyncStorage.getItem(`trees-${imageSource}`);
+        if (savedTrees) {
+          setTrees(JSON.parse(savedTrees));
+        } else {
+          const newTrees = generateTrees(repositories, minDistanceBetweenTrees, height - 100, x, x + width - 60);
+          setTrees(newTrees);
+        }
+      } catch (e) {
+        console.error("Failed to load saved tree positions", e);
+      }
+    };
+
+    loadSavedPositions();
+  }, [repositories, imageSource]);
+
+  // Sauvegarder les positions des arbres dans AsyncStorage
+  useEffect(() => {
+    const saveTreePositions = async () => {
+      try {
+        await AsyncStorage.setItem(`trees-${imageSource}`, JSON.stringify(trees));
+      } catch (e) {
+        console.error("Failed to save tree positions", e);
+      }
+    };
+
+    if (trees.length > 0) {
+      saveTreePositions();
     }
-  }, []);
+  }, [trees, imageSource]);
 
   useEffect(() => {
     if (hoveredRepo) {
@@ -46,8 +74,6 @@ const GardenSection: React.FC<GardenSectionProps> = ({
   }, [hoveredRepo]);
 
   const handleTreePress = (repo: Repository) => {
-    console.log('Tree clicked!');
-    console.log("repository: ", repo)
     navigation.navigate("Project", { repository: repo });
   };
 
@@ -70,16 +96,16 @@ const GardenSection: React.FC<GardenSectionProps> = ({
         preserveAspectRatio="xMidYMid slice"
       />
       {repositories.length === 0 ? (
-          <SvgText
-            x={(x + width / 2).toString()}
-            y={(y + height / 2).toString()}
-            textAnchor="middle"
-            fill="black"
-            fontSize="16"
-            fontWeight="bold"
-          >
-            No repositories found for this platform.
-          </SvgText>
+        <SvgText
+          x={(x + width / 2).toString()}
+          y={(y + height / 2).toString()}
+          textAnchor="middle"
+          fill="black"
+          fontSize="16"
+          fontWeight="bold"
+        >
+          No repositories found for this platform.
+        </SvgText>
       ) : (
         trees.map(tree => tree.visible && (
           <G key={tree.label}>
@@ -87,9 +113,9 @@ const GardenSection: React.FC<GardenSectionProps> = ({
             {Platform.OS === 'web' && hoveredRepo === tree.repository && (
               <>
                 <Rect
-                  x={mousePosition.x - textLength / 2} // Positionnez le rectangle en fonction de la longueur du texte
+                  x={mousePosition.x - textLength / 2}
                   y={mousePosition.y - 25}
-                  width={textLength} // La largeur du rectangle est la même que la longueur du texte
+                  width={textLength}
                   height={20}
                   fill="white"
                 />
@@ -98,7 +124,7 @@ const GardenSection: React.FC<GardenSectionProps> = ({
                   y={mousePosition.y - 10}
                   textAnchor="middle"
                   fill="black"
-                  textLength={textLength} // Spécifiez la longueur du texte
+                  textLength={textLength}
                 >
                   {hoveredRepo.name}
                 </SvgText>
