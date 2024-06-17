@@ -1,6 +1,7 @@
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
+import { LogOutHandler } from '../view-models/LogoutViewModel';
 
 type ParmetersButton = {
     title: string,
@@ -10,10 +11,13 @@ type ParmetersButton = {
 }
   
 const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, navigation }) => {
+
+  const OnLogOutPress = () => {
+    LogOutHandler(navigation);
+  };
+
     return (
-        <TouchableOpacity style={styles.button} onPress={() => {
-          navigation.reset(navigation.getState())
-        }}>
+        <TouchableOpacity style={styles.button} onPress={OnLogOutPress}>
             <View style={styles.buttonContent}>
                 <Image source={iconSource} style={[styles.icon,{tintColor:tint}]} />
                 <Text style={styles.text}>{title}</Text>

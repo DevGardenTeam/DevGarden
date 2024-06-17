@@ -1,12 +1,12 @@
 import 'intl-pluralrules';
-import { StyleSheet, Text, View, Image, TextInput, StatusBar  } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
 import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
-import { useTheme } from '@react-navigation/native';
+import { useFocusEffect, useTheme } from '@react-navigation/native';
 import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -71,6 +71,18 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
       { label: t('supportedLanguages.pt'), value: 'pt' }
     ]);
   }, [i18n.language]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+        const onBackPress = () => {
+            return false; // Disable back button
+        };
+
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
     return (
         <View style={styles.container}>
