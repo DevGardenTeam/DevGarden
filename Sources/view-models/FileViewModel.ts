@@ -3,7 +3,7 @@ import { FileService } from '../service/FileService';
 import { File } from '../model/File';
 import { IS_STUB } from '../constants/constants';
 
-export const useFileViewModel = (platform: string, owner: string, repository: string, id: string) => {
+export const useFileViewModel = (dgUsername: string, platform: string, owner: string, repository: string, id: string) => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +23,7 @@ export const useFileViewModel = (platform: string, owner: string, repository: st
       else{
         repoIdentifier = repository;
       }
-      const result = await fileService.getMany({ platform, owner, repository: repoIdentifier, path, isFolder });
+      const result = await fileService.getMany({ dgUsername: dgUsername, platform, owner, repository: repoIdentifier, path, isFolder });
       if (result.succeeded) {
         setFiles(result.data);
         return result.data;

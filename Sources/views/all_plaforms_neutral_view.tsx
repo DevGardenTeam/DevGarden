@@ -8,6 +8,7 @@ import useControls from "r3f-native-orbitcontrols"
 import GardenView from './GardenView';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
+import { useUser } from '../user/UserContext';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -18,8 +19,9 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   const [selectedPlatform, setSelectedPlatform] = useState<string>(""); // Provide a default value for selectedPlatform
   const { colors } = useTheme();
   const [events] = useControls()
+  const user = useUser();
 
-  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform });
+  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform, username: user.user.username });
 
   const fetchCalled = useRef(false);
 

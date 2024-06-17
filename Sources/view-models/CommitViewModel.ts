@@ -20,7 +20,7 @@ export const useCommitViewModel = (platform: string, owner: string, repository: 
       const repo = await repositoryManager.getRepositoryByName(repository);
       
       if (repo?.commits.length === 0){
-        const result = await commitService.getMany({ platform, owner, repository });
+        const result = await commitService.getMany({ dgUsername: repositoryManager.dgUsername, platform, owner, repository });
         if (result.succeeded) {
           setCommits(result.data);
         } else {

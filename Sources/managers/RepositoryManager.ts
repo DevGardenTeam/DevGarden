@@ -1,3 +1,4 @@
+import { connect } from "http2";
 import { Repository } from "../model/Repository";
 import { CommitService } from "../service/CommitService";
 import { IssueService } from "../service/IssueService";
@@ -6,6 +7,9 @@ import { RepositoryService } from "../service/RepositoryService";
 class RepositoryManager {
     private static instance: RepositoryManager | null = null;
     
+    // le username
+    public dgUsername: string;
+
     // La liste des repositories
     repositories: Repository[];
 
@@ -18,10 +22,13 @@ class RepositoryManager {
     private issueService : IssueService;
 
     // Constructor privé pour empêcher la création d'instances directes
-    private constructor() {
+    private constructor(connectedUser: string = "none") {
         if (RepositoryManager.instance) {
             throw new Error("You can only create one instance of RepositoryManager !");
         }        this.repositories = [];
+
+        // Initialisation du username
+        this.dgUsername = connectedUser;
 
         RepositoryManager.instance = this;
 
@@ -35,9 +42,10 @@ class RepositoryManager {
     }
 
     // Méthode statique pour obtenir l'instance unique
-    static getInstance(): RepositoryManager {
+    static getInstance(username: string = "none"): RepositoryManager {
         if (!RepositoryManager.instance) {
-            RepositoryManager.instance = new RepositoryManager();
+            console.warn("Creating new RepositoryManager instance, username: ", username)
+            RepositoryManager.instance = new RepositoryManager(username);
         }
         return RepositoryManager.instance;
     }
@@ -48,7 +56,7 @@ class RepositoryManager {
     
         for (const platform of this.platforms) {
             try {
-                const result = await this.repositoryService.getMany({ platform });
+                const result = await this.repositoryService.getMany({ dgUsername: this.dgUsername, platform: platform });
                 if (result.succeeded) {
                     const platformRepositories = result.data;
     
@@ -66,8 +74,8 @@ class RepositoryManager {
     
                         // Fetch commits and issues in parallel
                         const [commitResult, issueResult] = await Promise.all([
-                            this.commitService.getMany({ platform: repositoryPlatform, owner: repositoryOwner, repository: repositoryName }),
-                            this.issueService.getMany({ platform: repositoryPlatform, owner: repositoryOwner, repository: repositoryName })
+                            this.commitService.getMany({ dgUsername: this.dgUsername, platform: repositoryPlatform, owner: repositoryOwner, repository: repositoryName }),
+                            this.issueService.getMany({ dgUsername: this.dgUsername, platform: repositoryPlatform, owner: repositoryOwner, repository: repositoryName })
                         ]);
     
                         if (commitResult.succeeded) {

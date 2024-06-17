@@ -9,6 +9,7 @@ import { FileViewController } from '../view-controllers/FileViewController';
 import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Member } from '../model/Member';
 import { Buffer } from 'buffer';
+import { useUser } from '../user/UserContext';
 
 // Données mockées pour simuler les informations du projet Git
 const mockData = {
@@ -40,8 +41,9 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
   const route = useRoute();
   const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
+  const user = useUser();
 
-  const { files, loading: filesLoading, error: filesError, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
+  const { files, loading: filesLoading, error: filesError, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ dgUsername: user.user.username, platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
   const { commits, loading: commitsLoading, error: commitsError, handleCommitPress, getAllCommits } = CommitViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name });
 
   const [commitersData, setCommitersData] = useState<Committer[]>([]);
