@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
           elevation: 4,
         },
       }),
-      width: '80%',
+      width: '40%',
       margin: 10
     },
     buttonContent: {

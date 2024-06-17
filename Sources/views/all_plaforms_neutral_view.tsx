@@ -58,7 +58,6 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
           <View style={styles.gardenViewContainer} {...events} >
             <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
           </View>
-          <View style={styles.contentView}>
           <View style={styles.topMargin}>
             {Platform.OS === 'web' && (
               <View style={styles.titleContainer}>
@@ -85,7 +84,6 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
             </TouchableOpacity> 
             </View>
           </View>  
-          </View>        
 
           {Platform.OS !== 'web' && (
             <View style={styles.slidingButton}>
