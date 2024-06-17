@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { horizontalScale, moderateScale, verticalScale } from '../../service/Metrics';
 
 // Get screen width
 const screenWidth = Dimensions.get('window').width;
@@ -40,7 +41,7 @@ const LinkAccountView = () => {
         onPress={() => handleLinkAccount(platform)}
       >
         <Image source={platformLogo} style={styles.logo} />
-        <Text style={[styles.text, { fontSize: textSize }]}>{platform.toUpperCase()}</Text>
+        <Text style={[styles.text]}>{platform.toUpperCase()}</Text>
         <Text style={[styles.text, { color: statusColor, marginLeft: 10 }]}>{statusText}</Text>
       </TouchableOpacity>
     );
@@ -57,7 +58,10 @@ const styles = StyleSheet.create({
   platformSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: horizontalScale(10),
+    paddingVertical: verticalScale(5),
+    marginVertical: verticalScale(5),
+
   },
   logo: {
     width: 30, // Adjust size as needed
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    // Add other text styling as needed
+    fontSize: moderateScale(20),
   },
 });
 

@@ -16,12 +16,12 @@ const HandleRegister = async (email: string, password: string, verifPassword: st
 
 const Handlelogin = async (email: string, password: string, navigation:  StackNavigationProp<any>) => {
   const result = await Authen.login(email, password);
-  if(result.success){
+  //if(result.success){
     navigation.navigate("AllPlatforms");
-  }
-  else{
-    CreateErrorAlert("Erreur",result.message);
-  }
+  // }
+  // else{
+  //   CreateErrorAlert("Erreur",result.message);
+  // }
 };
 
 export { HandleRegister , Handlelogin }
