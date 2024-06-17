@@ -25,14 +25,20 @@ class Authen extends HttpClient {
 
     const url = `${CURRENT_BASE_URL}/Authentification/register`;
 
-    const requestUrl = `${url}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    // const requestUrl = `${url}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+    const payload = {
+      username: username,
+      password: password
+    };
 
     try {
-      const response = await fetch(requestUrl, {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
@@ -52,14 +58,19 @@ class Authen extends HttpClient {
     }
 
     const url = `${CURRENT_BASE_URL}/Authentification/login`;
-    const requestUrl = `${url}?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+    const payload = {
+      username: username,
+      password: password
+    };
 
     try {
-      const response = await fetch(requestUrl, {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(payload)
       });
       
       if (!response.ok) {
