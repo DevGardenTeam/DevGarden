@@ -1,16 +1,23 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
+import { LogOutHandler } from '../view-models/LogoutViewModel';
 
 type ParmetersButton = {
     title: string,
     iconSource: ImageSourcePropType,
     tint : ColorValue,
-    onPress?: ((event: GestureResponderEvent) => void)
+    navigation: StackNavigationProp<any>
 }
   
-const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, onPress }) => {
+const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, navigation }) => {
+
+  const OnLogOutPress = () => {
+    LogOutHandler(navigation);
+  };
+
     return (
-        <TouchableOpacity style={styles.button} onPress={onPress}>
+        <TouchableOpacity style={styles.button} onPress={OnLogOutPress}>
             <View style={styles.buttonContent}>
                 <Image source={iconSource} style={[styles.icon,{tintColor:tint}]} />
                 <Text style={styles.text}>{title}</Text>
