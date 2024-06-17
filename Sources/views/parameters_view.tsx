@@ -148,7 +148,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
                     </View>
                 </View>
             </View>
-            <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"}></SettingsButton>
+            <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"} navigation={navigation}></SettingsButton>
         </View>
         </View>
   );

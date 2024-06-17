@@ -1,16 +1,19 @@
 import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Image, View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent, ImageSourcePropType, Platform, ColorValue  } from 'react-native';
 
 type ParmetersButton = {
     title: string,
     iconSource: ImageSourcePropType,
     tint : ColorValue,
-    onPress?: ((event: GestureResponderEvent) => void)
+    navigation: StackNavigationProp<any>
 }
   
-const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, onPress }) => {
+const ParmetersButton: React.FC<ParmetersButton> = ({ title, iconSource, tint, navigation }) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={onPress}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+          navigation.reset(navigation.getState())
+        }}>
             <View style={styles.buttonContent}>
                 <Image source={iconSource} style={[styles.icon,{tintColor:tint}]} />
                 <Text style={styles.text}>{title}</Text>
