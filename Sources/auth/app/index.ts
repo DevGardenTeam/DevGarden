@@ -60,12 +60,11 @@ class Authen extends HttpClient {
           'Content-Type': 'application/json',
         },
       });
-      
+      const result = await response.text();
       if (!response.ok) {
-        return { success:false , message:await response.text() };
+        return { success:false , message:await JSON.parse(result).message };
       }
     } catch (error) {
-      console.error('Error:', error);
       return { success:false , message:"Une erreur inattendue est apparue" };
     }
     return { success:true , message:"ok" };
