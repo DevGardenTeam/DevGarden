@@ -82,7 +82,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+        <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
             <View style={styles.backButton}>
                 <BackNavigationButton />
             </View>
@@ -114,7 +114,7 @@ const WbsView: React.FC<WbsViewProps> = ({ navigation }) => {
                 <ButtonVerticalAddComponent title={'Ajouter une catégorie'} onPress={handleAddCategory}/>
                 <ButtonVerticalAddComponent title={'Ajouter une tâche'} onPress={handleAddTask}/>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
   

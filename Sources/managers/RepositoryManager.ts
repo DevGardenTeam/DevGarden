@@ -26,7 +26,7 @@ class RepositoryManager {
         RepositoryManager.instance = this;
 
         // Initialisation des propriétés
-        this.platforms = ["github", "gitea"]; //"gitlab", 
+        this.platforms = ["github", "gitea", "gitlab"], 
 
         // Initialisation des services
         this.repositoryService = new RepositoryService();
@@ -56,7 +56,13 @@ class RepositoryManager {
                         repository.platform = platform;
                         const repositoryPlatform = repository.platform;
                         const repositoryOwner = repository.owner.name;
-                        const repositoryName = repository.name;
+                        var repositoryName = "";
+                        if (repository.platform == "gitlab"){
+                          repositoryName = repository.id;
+                        }
+                        else{
+                           repositoryName = repository.name; 
+                        }
     
                         // Fetch commits and issues in parallel
                         const [commitResult, issueResult] = await Promise.all([

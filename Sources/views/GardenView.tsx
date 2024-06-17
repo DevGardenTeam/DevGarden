@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {StatusBar} from 'react-native';
 import Svg from 'react-native-svg';
 import { Gesture, GestureDetector, GestureHandlerRootView, } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -24,7 +25,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
 
     const windowDimensions = Dimensions.get('window');
     const containerWidth = windowDimensions.width;
-    const containerHeight = windowDimensions.height;
+    const containerHeight = windowDimensions.height + (StatusBar.currentHeight ?? 0);
 
     console.log("width: ", containerWidth, "height: ", containerHeight)
 

@@ -3,10 +3,11 @@ import { GITLAB_CLIENT_ID } from "../config"
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { useAuthRequest } from 'expo-auth-session';
-import { View, Button, StatusBar,  } from 'react-native';
+import { View, Button, StatusBar, TouchableOpacity, Text,  } from 'react-native';
 
-import { styles } from './styles';
+import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
+import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
 
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
@@ -81,9 +82,35 @@ export default function GitlabAuth({ onLinkChange, username }: { onLinkChange: (
   // button 
   return (
     <View style={styles.container}>
-      <Button title='Enter with Gitlab' onPress={() => promptAsync()} />
-      <StatusBar />
+      <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
+        <Text style={styles.buttonText}>Enter with Gitlab</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
+
+export const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: horizontalScale(5),
+
+  },
+  button: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: verticalScale(10),
+    paddingHorizontal: horizontalScale(15),
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 15,
+    elevation: 1,
+  },
+  buttonText: {
+    color: '#E07919',
+    fontSize: moderateScale(15),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});

@@ -3,7 +3,7 @@ import { FileService } from '../service/FileService';
 import { File } from '../model/File';
 import { IS_STUB } from '../constants/constants';
 
-export const useFileViewModel = (platform: string, owner: string, repository: string) => {
+export const useFileViewModel = (platform: string, owner: string, repository: string, id: string) => {
   const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,12 +11,19 @@ export const useFileViewModel = (platform: string, owner: string, repository: st
   //En fonction de la constante IS_STUB, on implémente le Stub ou le Service
   const fileService = new FileService();
 
-  const fetchFiles = async (path: string = ''): Promise<File[] | null> => {
+  const fetchFiles = async (path: string = '', isFolder: boolean = false): Promise<File[] | null> => {
     setLoading(true);
     setError(null);
 
     try {
-      const result = await fileService.getMany({ platform, owner, repository, path });
+      var repoIdentifier;
+      if (platform == "gitlab"){
+        repoIdentifier = id;
+      }
+      else{
+        repoIdentifier = repository;
+      }
+      const result = await fileService.getMany({ platform, owner, repository: repoIdentifier, path, isFolder });
       if (result.succeeded) {
         setFiles(result.data);
         return result.data;

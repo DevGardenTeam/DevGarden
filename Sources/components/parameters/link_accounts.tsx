@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { horizontalScale, moderateScale, verticalScale } from '../../service/Metrics';
 import { UserInfo } from '../../user/UserContext';
 import GithubAuth from '../../auth/github';
 import GitlabAuth from '../../auth/gitlab';
@@ -63,14 +64,23 @@ const styles = StyleSheet.create({
   platformSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: horizontalScale(10),
+    paddingVertical: verticalScale(5),
+    marginVertical: verticalScale(5),
+    justifyContent: 'space-between',
+
   },
   logo: {
     width: 30,
     height: 30,
     marginRight: 10,
   },
-  text: {},
+  text: {
+    fontSize: moderateScale(20),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default LinkAccountView;

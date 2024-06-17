@@ -21,7 +21,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
           <View style={styles.square1}>
             <Text style={styles.title}>Bienvenue</Text>
             <View style={styles.emailContainer}>
@@ -55,7 +55,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

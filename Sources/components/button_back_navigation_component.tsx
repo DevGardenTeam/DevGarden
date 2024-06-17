@@ -14,10 +14,9 @@ const BackNavigationButton: React.FC = () => {
                 <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
-                <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
-            </TouchableOpacity>            
+                <Image source={require('../assets/icons/settings.png')} style={[ styles.icon]} resizeMode="contain"/>                
+            </TouchableOpacity>    
         </View>
-
     );
 };
 
@@ -25,15 +24,15 @@ const styles = StyleSheet.create({
     view: {
         flex: 1,
         flexDirection: "row",
-        gap: 10,
+        gap: 12,
     },
     button: {
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
     icon: {
-        width: horizontalScale(35),
-        height: verticalScale(35),
+        width: horizontalScale(40),
+        height: verticalScale(40),
     },
 });
   

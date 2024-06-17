@@ -6,13 +6,14 @@ interface FileViewControllerProps {
   platform: string;
   owner: string;
   repository: string;
+  id: string;
 }
 
-const FileViewController = ({ platform, owner, repository }: FileViewControllerProps) => {
-  const { files, loading, error, fetchFiles } = useFileViewModel(platform, owner, repository);
+const FileViewController = ({ platform, owner, repository, id }: FileViewControllerProps) => {
+  const { files, loading, error, fetchFiles } = useFileViewModel(platform, owner, repository, id);
 
-  const handleFilePress = (path?: string) => {
-    fetchFiles(path);
+  const handleFilePress = (path?: string, isFolder?: boolean) => {
+    fetchFiles(path, isFolder);
   };
 
   const getAllFiles = () => {

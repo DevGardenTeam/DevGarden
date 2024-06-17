@@ -3,8 +3,10 @@ import TreeSvg from "../../assets/trees/TreeSvg.svg";
 import TreeImageSvg from "./treeImageComp";
 import { G, Rect } from "react-native-svg";
 import { green } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
-import { Platform } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { Repository } from "../../model/Repository";
+import { Svg } from "@react-three/drei/core";
+import { moderateScale, verticalScale } from "../../service/Metrics";
 
 export type Tree = {
   label: string;
@@ -33,7 +35,7 @@ export function generateTrees(
       const newTree: Tree = {
         label: `tree-${i}`,
         x: Math.random() * xRange + minX,
-        y: Math.random() * areaHeight,
+        y: Math.random() * (areaHeight - 100 - 100) + 100,
         radius: 10, // Assuming a fixed radius for simplicity, adjust as needed
         visible: true, // Initially setting all trees as visible
         repository: repositories[i], // Assign the repository to the tree
@@ -73,17 +75,37 @@ interface TreeProps {
 const TreeComponent: React.FC<TreeProps> = ({
   tree,
   size = 1,
-  color = "currentColor",
 }) => {
+
+  const truncateName = (name: string) => {
+    return name.length > 10 ? `${name.substring(0, 10)}...` : name;
+  };
+
   if (Platform.OS === 'web') {
     return <TreeImageSvg x={tree.x} y={tree.y} size={size} />;
   } else {
     return (
-      <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
+      <View style={{ position: 'absolute', left: tree.x, top: tree.y }}>
+        <G transform={`translate(${tree.x}, ${tree.y}) scale(${size})`}>
         <TreeSvg />
+        <Text style={styles.treeText}>
+            {truncateName(tree.repository.name)}
+        </Text>
       </G>
+      </View>
     );
   }
 };
+
+const styles = StyleSheet.create({
+  treeText: {
+    position: 'absolute',
+    top: verticalScale(70), // Adjust the text position
+    textAlign: 'center',
+    color: 'black',
+    fontSize: moderateScale(12), // Increase font size
+    fontWeight: 'bold', // Make the text bold for better visibility
+  },
+});
 
 export default TreeComponent;
