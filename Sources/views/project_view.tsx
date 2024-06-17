@@ -19,6 +19,7 @@ import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 import MetricsUtils from '../helper/MetricsUtils';
 import fontSizes from '../constants/fontSize';
+import LoadingComponent from '../components/loading_component';
 
 
 
@@ -159,7 +160,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
         </View>
       <View style={{ flex: 1,  }} {...events} >
-                    {loading && <Loader />}
+                    {loading && <LoadingComponent/>}
                    
         <Canvas frameloop="demand" camera={{ position: [5, 3, 5] }}>
           <OrbitControls enablePan={false} maxZoom={7} minZoom={3.5}

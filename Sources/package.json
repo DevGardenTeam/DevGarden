@@ -33,6 +33,7 @@
     "@types/react": "~18.2.79",
     "@types/three": "^0.163.0",
     "axios": "^1.6.5",
+    "eas": "^0.1.0",
     "expo": "50",
     "expo-auth-session": "~5.4.0",
     "expo-crypto": "~12.8.1",

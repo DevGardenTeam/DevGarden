@@ -12,6 +12,7 @@ import { moderateScale, horizontalScale, verticalScale } from '../service/Metric
 import { Repository } from '../model/Repository';
 import Modal from 'react-native-modal';
 import fontSizes from '../constants/fontSize';
+import LoadingComponent from '../components/loading_component';
 
 
 interface AllIssuesViewProps {
@@ -61,7 +62,7 @@ const AllIssuesView: React.FC<AllIssuesViewProps> = ({ navigation }) => {
 
 
  if (loading) {
-   return <ActivityIndicator size="large" />;
+  return <LoadingComponent/>;
  }
 
 

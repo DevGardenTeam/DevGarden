@@ -11,6 +11,7 @@ import { Member } from '../model/Member';
 import { horizontalScale, verticalScale } from '../service/Metrics';
 import { Buffer } from 'buffer';
 import BackNavigationButton from '../components/button_back_navigation_component';
+import LoadingComponent from '../components/loading_component';
 
 // Données mockées pour simuler les informations du projet Git
 const mockData = {
@@ -88,7 +89,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
   };
 
   if (filesLoading || commitsLoading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
   if (filesError || commitsError) {

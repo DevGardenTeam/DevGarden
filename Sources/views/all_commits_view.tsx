@@ -13,6 +13,7 @@ import { Repository } from '../model/Repository';
 import Modal from 'react-native-modal';
 import fontSizes from '../constants/fontSize';
 import { BranchViewController } from '../view-controllers/BranchViewController';
+import LoadingComponent from '../components/loading_component';
 
 interface AllCommitsViewProps {
   navigation: StackNavigationProp<any>;
@@ -77,7 +78,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   const [filteredCommits, setFilteredCommits] = useState<Commit[]>([]);
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
   if (error) {

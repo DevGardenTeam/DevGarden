@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "devGarden",
-    "slug": "devGarden",
+    "name": "DevGarden",
+    "slug": "DevGarden",
     "scheme": "devgarden",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,13 +25,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.apk.DevGarden"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "11c7104d-7f9e-49c4-b17d-3e61ade14ab6"
+      }
+    }
   }
 }

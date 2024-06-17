@@ -7,6 +7,7 @@ import ButtonProjectComponent from '../components/button_project_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { useTheme } from '@react-navigation/native';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import LoadingComponent from '../components/loading_component';
 
 interface AllProjectsNeutralViewProps {
   navigation: StackNavigationProp<any>;
@@ -27,7 +28,7 @@ const AllProjectsNeutralView: React.FC<AllProjectsNeutralViewProps> = ({ navigat
   }, []);
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
   if (error) {

@@ -12,6 +12,7 @@ import { Buffer } from 'buffer';
 import { Repository } from '../model/Repository';
 import fontSizes from '../constants/fontSize';
 import { StatusBar } from 'react-native';
+import LoadingComponent from '../components/loading_component';
 
 
 interface AllFilesViewProps {
@@ -45,7 +46,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
 
