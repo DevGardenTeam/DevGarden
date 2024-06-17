@@ -46,6 +46,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
           <View style={styles.gardenViewContainer} {...events} >
             <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
           </View>
+          <View style={styles.contentView}>
           <View style={styles.topMargin}>
             {Platform.OS === 'web' && (
               <View style={styles.titleContainer}>
@@ -69,7 +70,8 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
             <View style={styles.navigationBack} >
               <BackNavigationButton/> 
             </View>
-          </View>          
+          </View>  
+          </View>        
 
           {Platform.OS !== 'web' && (
             <View style={styles.slidingButton}>
@@ -83,7 +85,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 const styles = StyleSheet.create({
 
   topMargin: {
-    marginTop: StatusBar.currentHeight || 0
+    marginTop: StatusBar.currentHeight || 0,
   },
   gardenViewContainer: {
     position: 'absolute',
@@ -132,8 +134,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '10%',
-    marginRight: '10%',
   },
   mainContent:{
     display: 'flex',
