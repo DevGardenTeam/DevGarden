@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import {moderateScale} from '../service/Metrics';
 import { Handlelogin } from "../view-models/AuthentificationViewModel";
+import { useUser } from '../user/UserContext';
 
 
 interface LoginScreenProps {
@@ -13,9 +14,10 @@ interface LoginScreenProps {
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { updateUser } = useUser();
 
   const OnLoginPress = () => {
-    Handlelogin(email, password,navigation);
+    Handlelogin(email, password,navigation, updateUser);
   };
 
   return (

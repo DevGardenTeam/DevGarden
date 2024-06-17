@@ -11,6 +11,8 @@ import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinkAccountView from '../components/parameters/link_accounts';
+import GithubAuth from '../auth/github';
+import { useUser } from '../user/UserContext';
 
 interface ParametersProps {
   navigation: StackNavigationProp<any>;
@@ -20,7 +22,8 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
 
   // Multi langue
 
-  const {t} = useTranslation();     
+  const {t} = useTranslation();  
+  const { user } = useUser(); 
 
   // DropDownPicker
 
@@ -81,7 +84,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
             <View style={styles.container_bis}>
               <View style={styles.part}>
                 <View style={styles.leftPart}>
-                  <LinkAccountView />
+                  <LinkAccountView user={user}/>
                 </View>
               </View>
               <View style={styles.part}>
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     justifyContent: 'space-between',
     gap: verticalScale(5),
-    marginTop: verticalScale(40),
+    marginTop: verticalScale(20),
   },
   container: {
     flex: 1,
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     flexDirection: 'column-reverse',
-    width: "80%",
+    width: "85%",
     elevation: 4,
     alignItems: 'center',
   },
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     marginTop: 20,
-    width: "80%",
+    width: "85%",
     elevation: 4,
   },
   calculatorTitle: {

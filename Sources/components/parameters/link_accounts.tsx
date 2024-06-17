@@ -1,55 +1,61 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { horizontalScale, moderateScale, verticalScale } from '../../service/Metrics';
+import { UserInfo } from '../../user/UserContext';
+import GithubAuth from '../../auth/github';
+import GitlabAuth from '../../auth/gitlab';
+import GiteaAuth from '../../auth/gitea';
 
-// Get screen width
 const screenWidth = Dimensions.get('window').width;
+const textSize = screenWidth * 0.05;
 
-// Calculate proportional text size
-const textSize = screenWidth * 0.05; // Example: 5% of screen width
-
-const LinkAccountView = () => {
-  const [isLinked, setIsLinked] = useState<{
-    [key: string]: boolean;
-  }>({
+const LinkAccountView = ({ user }: { user: UserInfo }) => {
+  const [isLinked, setIsLinked] = useState({
     gitlab: false,
     github: false,
     gitea: false,
   });
 
-  const handleLinkAccount = (platform: string) => {
-    console.log(`Linking ${platform} account...`);
-    // Handle logic to link account here
+  const updateLinkStatus = (platform: string, status: boolean) => {
+    setIsLinked(prevState => ({ ...prevState, [platform]: status }));
   };
 
-  const platformLogos: { [key: string]: any } = {
-    gitlab: require('../../assets/platforms/gitlab.png'),
-    github: require('../../assets/platforms/github.png'),
-    gitea: require('../../assets/platforms/gitea.png'),
+  const platforms = {
+    gitlab: {
+      component: <GitlabAuth onLinkChange={(status) => updateLinkStatus('gitlab', status)} username={user!.username} />,
+      logo: require('../../assets/platforms/gitlab.png'),
+      isLinked: isLinked.gitlab,
+    },
+    github: {
+      component: <GithubAuth onLinkChange={(status) => updateLinkStatus('github', status)} username={user!.username} />,
+      logo: require('../../assets/platforms/github.png'),
+      isLinked: isLinked.github,
+    },
+    gitea: {
+      component: <GiteaAuth onLinkChange={(status) => updateLinkStatus('gitea', status)} username={user!.username} />,
+      logo: require('../../assets/platforms/gitea.png'),
+      isLinked: isLinked.gitea,
+    },
   };
-  const renderPlatformSection = (platform: string) => {
-    console.log(`Rendering ${platform} section...`);
-    const linkedStatus = isLinked[platform];
-    const statusText = linkedStatus ? 'Linked' : 'Not Linked';
-    const statusColor = linkedStatus ? 'green' : 'red';
-    const platformLogo = platformLogos[platform];
+
+  const renderPlatformSection = (platformKey: string, platform: any) => {
+    const statusText = platform.isLinked ? 'Linked' : 'Not Linked';
+    const statusColor = platform.isLinked ? 'green' : 'red';
 
     return (
-      <TouchableOpacity
-        key={platform}
-        style={styles.platformSection}
-        onPress={() => handleLinkAccount(platform)}
-      >
-        <Image source={platformLogo} style={styles.logo} />
-        <Text style={[styles.text]}>{platform.toUpperCase()}</Text>
-        <Text style={[styles.text, { color: statusColor, marginLeft: 10 }]}>{statusText}</Text>
-      </TouchableOpacity>
+      <View style={styles.platformSection} key={platformKey}>
+        <Image source={platform.logo} style={styles.logo} />
+        <Text style={[styles.text, { color: statusColor }]}>{statusText}</Text>
+        {platform.component}
+      </View>
     );
   };
 
   return (
     <View>
-      {['gitlab', 'github', 'gitea'].map(platform => renderPlatformSection(platform))}
+      {Object.entries(platforms).map(([key, platform]) =>
+        renderPlatformSection(key, platform)
+      )}
     </View>
   );
 };
@@ -61,15 +67,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(10),
     paddingVertical: verticalScale(5),
     marginVertical: verticalScale(5),
+    justifyContent: 'space-between',
 
   },
   logo: {
-    width: 30, // Adjust size as needed
-    height: 30, // Adjust size as needed
+    width: 30,
+    height: 30,
     marginRight: 10,
   },
   text: {
     fontSize: moderateScale(20),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
