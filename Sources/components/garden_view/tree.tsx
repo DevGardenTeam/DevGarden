@@ -33,7 +33,7 @@ export function generateTrees(
       const newTree: Tree = {
         label: `tree-${i}`,
         x: Math.random() * xRange + minX,
-        y: Math.random() * areaHeight,
+        y: Math.random() * (areaHeight - 100 - 100) + 100,
         radius: 10, // Assuming a fixed radius for simplicity, adjust as needed
         visible: true, // Initially setting all trees as visible
         repository: repositories[i], // Assign the repository to the tree

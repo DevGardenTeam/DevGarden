@@ -42,7 +42,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   }
 
   return (
-      <SafeAreaView style={styles.mainView}>
+      <View style={[styles.mainView]}>
           <View style={styles.gardenViewContainer} {...events} >
             <GardenView selectedPortion={selectedPlatform} repositories={repositories}/>
           </View>
@@ -76,7 +76,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
               <ButtonMultiSelectPlatformComponent onSelect={(platform) => setSelectedPlatform(platform)}></ButtonMultiSelectPlatformComponent>
             </View>
           )}     
-      </SafeAreaView>
+      </View>
   );
 }
 
@@ -121,7 +121,8 @@ const styles = StyleSheet.create({
   titleText: {
       fontSize: moderateScale(50),
       fontWeight: 'bold',
-      textAlign: 'center'
+      textAlign: 'center',
+      textTransform: "capitalize"
   },
   
   mainView: {

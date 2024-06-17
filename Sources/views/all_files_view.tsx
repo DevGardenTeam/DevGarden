@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
-import BackNavigationButton from '../components/button_back_navigation_component';
 import { FileViewController } from '../view-controllers/FileViewController';
 import { File } from '../model/File';
 import { useTheme, useFocusEffect } from '@react-navigation/native';
-import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { horizontalScale, verticalScale } from '../service/Metrics';
 import { WebView } from 'react-native-webview';
 import Breadcrumbs from '../components/breadcrumbs';
 import { Buffer } from 'buffer';
@@ -161,7 +160,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+    <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       {selectedFile ? (
         <>
           <View style={styles.top}>
@@ -208,7 +207,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
           />
         </>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

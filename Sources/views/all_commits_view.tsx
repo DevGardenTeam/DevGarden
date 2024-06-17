@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, FlatList, ActivityIndicator, StatusBar, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -8,7 +8,7 @@ import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Commit } from '../model/Commit';
 import DateUtils from '../helper/DateUtils';
 import { useTheme } from '@react-navigation/native';
-import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
+import { horizontalScale, verticalScale } from '../service/Metrics';
 import { Repository } from '../model/Repository';
 import Modal from 'react-native-modal';
 import fontSizes from '../constants/fontSize';
@@ -46,10 +46,13 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
 
   useEffect(() => {
     if (branches.length > 0) {
-      const mainBranch = branches[0];
-      setSelectedBranch(mainBranch.name);
+      const mainBranch = branches.find(branch => branch.name === 'main');
+      const masterBranch = branches.find(branch => branch.name === 'master');
+      const selectedBranch = mainBranch || masterBranch || branches[0];
+  
+      setSelectedBranch(selectedBranch.name);
     }
-  }, [branches]);
+  }, [branches, setSelectedBranch]);
 
   useEffect(() => {
     if (selectedBranch) {
@@ -82,7 +85,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
+    <View style={[styles.safeAreaView, { backgroundColor: colors.background }]}>
       <View style={styles.top}>
         <View style={styles.navigationBack}>
           <BackNavigationButton />
@@ -136,13 +139,15 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
                   setSelectedItem(item);
                 }}>
                   <View style={styles.itemContainer}>
-                    <View style={styles.textInfoContainer}>
-                      <Text style={[styles.commitDate, { color: colors.text }]}>
-                        {item.date ? DateUtils.formatDate(item.date.toString()) : ''}
-                      </Text>
-                      <Text style={[styles.commitAuthor, { color: colors.text }]}>
-                        {item.author.name ?? ''}
-                      </Text>
+                    <View style={styles.textInfoColumn}>
+                      <View style={styles.textInfoContainer}>
+                        <Text style={[styles.commitDate, { color: colors.text }]}>
+                          {item.date ? DateUtils.formatDate(item.date.toString()) : ''}
+                        </Text>
+                        <Text style={[styles.commitAuthor, { color: colors.text }]}>
+                          {item.author.name ?? ''}
+                        </Text>  
+                      </View>
                       <Text style={[styles.commitMessage, { color: colors.text, flex: 1 }]} numberOfLines={1} ellipsizeMode="tail">
                         {item.message ?? ''}
                       </Text>
@@ -173,7 +178,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
               username={selectedItem?.author.name ?? ''}
               date={selectedItem?.date ? DateUtils.formatDate(selectedItem.date.toString()) : ''}
               message={selectedItem?.message ?? ''}
-              branch={selectedItem?.id ?? ''}
+              branch={selectedBranch ? selectedBranch : ''}
               id={selectedItem?.id ?? ''}
               onSelect={() => {
                 setModalVisible(false);
@@ -205,7 +210,7 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
           </View>
         </Modal>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -293,6 +298,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
     flex: 1,
+  },
+  textInfoColumn: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   commitMessage: {
     fontSize: fontSizes.small,

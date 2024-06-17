@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator, StatusBar } from 'react-native';
 import MarkdownDisplay from 'react-native-markdown-display';
 import fontSizes from '../constants/fontSize';
 import { useRoute, useTheme } from '@react-navigation/native';
@@ -8,7 +8,9 @@ import { Repository } from '../model/Repository';
 import { FileViewController } from '../view-controllers/FileViewController';
 import { CommitViewController } from '../view-controllers/CommitViewController';
 import { Member } from '../model/Member';
+import { horizontalScale, verticalScale } from '../service/Metrics';
 import { Buffer } from 'buffer';
+import BackNavigationButton from '../components/button_back_navigation_component';
 
 // Données mockées pour simuler les informations du projet Git
 const mockData = {
@@ -97,7 +99,11 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
+        <View style={styles.navigationBack}>
+          <BackNavigationButton />
+        </View>
         <Text style={[styles.headerText, { color: colors.text }]}>Project's Dashboard</Text>
+        <View style={styles.navigationPlaceholder} />
       </View>
 
       {/* README Section */}
@@ -141,7 +147,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-    paddingHorizontal: 20,
+    marginTop: StatusBar.currentHeight || 0,
   },
   header: {
     flexDirection: 'row',
@@ -155,8 +161,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  navigationBack: {
+    marginLeft: horizontalScale(15),
+  },
+  navigationPlaceholder: {
+    width: horizontalScale(90),
+  },
   section: {
     marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 10,

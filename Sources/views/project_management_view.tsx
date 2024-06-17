@@ -29,7 +29,7 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
 
   const {t} = useTranslation();     // A ajouter pour le multi langue
   return (
-    <SafeAreaView style={{backgroundColor: colors.background}}>
+    <View style={{backgroundColor: colors.background}}>
         <View style={styles.top}>
             <View style={styles.navigationBack}>
                 <BackNavigationButton />
@@ -49,7 +49,7 @@ const ProjectManagementScreen: React.FC<ProjectManagementScreenProps> = ({ navig
             <NavigationButton title='PERT' onPress={() => navigation.navigate("Pert", {repository: repository})}/>
           </View>
         </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

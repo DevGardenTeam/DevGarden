@@ -25,7 +25,7 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
 
     const windowDimensions = Dimensions.get('window');
     const containerWidth = windowDimensions.width;
-    const containerHeight = windowDimensions.height;
+    const containerHeight = windowDimensions.height + (StatusBar.currentHeight ?? 0);
 
     console.log("width: ", containerWidth, "height: ", containerHeight)
 
@@ -62,7 +62,6 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
                 savedTranslateX.value = 0;
 
                 console.log("Current X: ", translateX.value);
-                StatusBar.setBackgroundColor('#f5f5f5');
 
                 break;
             case PLATFORMS.GITHUB:
