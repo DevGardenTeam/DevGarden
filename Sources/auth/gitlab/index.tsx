@@ -47,7 +47,7 @@ export default function GitlabAuth({ onLinkChange, username }: { onLinkChange: (
       console.log(`response code => ${code}`); // Debug
       
       // Send the authorization code to the .NET Web API
-      fetch(`${CURRENT_BASE_URL}/OAuth/token?platform=gitlab&username=${username}`, {
+      fetch(`${CURRENT_BASE_URL}/OAuth/token/exchange?platform=gitlab&username=${username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

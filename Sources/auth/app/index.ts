@@ -72,6 +72,27 @@ class Authen extends HttpClient {
       return { success:false , message:"Une erreur inattendue est apparue" };
     }
   }
+
+  static async getTokens(username: string) {
+    const url = `${CURRENT_BASE_URL}/OAuth/tokens?username=${username}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        return response.json();
+      }
+    } catch(error) {
+      console.error('Error:', error);
+    }
+  }
 }
 
 export default Authen;
