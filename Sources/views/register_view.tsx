@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, StatusBar, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
-import BackNavigationButton from '../components/button_back_navigation_component';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { HandleRegister } from "../view-models/AuthentificationViewModel";
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
-
+import { useTheme } from '@react-navigation/native';
 
 interface RegisterViewProps {
   navigation: StackNavigationProp<any>;
@@ -23,10 +22,14 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
 
   const { t } = useTranslation();
 
+  const { colors } = useTheme();
+
   return (
     <View style={styles.safeArea}>
       <View style={styles.backButton}>
-        <BackNavigationButton /> 
+        <TouchableOpacity onPress={() => navigation?.goBack()}>
+            <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.mainBody}>
@@ -167,6 +170,15 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   
+  view: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 12,
+},
+icon: {
+    width: horizontalScale(40),
+    height: verticalScale(40),
+},
 });
 
 export default RegisterView;
