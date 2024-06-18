@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, StatusBar, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
@@ -80,9 +80,7 @@ const styles = StyleSheet.create({
   },
 
   safeArea: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    height: '100%',
+    flex: 1,
     paddingTop: StatusBar.currentHeight || 0,
   },
 
@@ -100,6 +98,7 @@ const styles = StyleSheet.create({
 
   emailContainer: {
     width: '100%',
+    height: '60%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },

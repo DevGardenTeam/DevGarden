@@ -84,9 +84,9 @@ const TreeComponent: React.FC<TreeProps> = ({
   };
 
   if (Platform.OS === 'web') {
-    return <TreeImageSvg x={tree.x} y={tree.y} size={size} />;
+    return <TreeImageSvg x={tree.x} y={tree.y} size={size} status={tree.repository.status} />;
   } else {
-    
+
     let SvgComponent;
     switch (tree.repository.status) {
       case 'ok':
