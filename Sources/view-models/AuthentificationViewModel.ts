@@ -6,7 +6,7 @@ import { storeTokenSecurely } from '../auth/tokenStorage';
 const HandleRegister = async (email: string, password: string, verifPassword: string, navigation:  StackNavigationProp<any>) => {
   const result = await Authen.register(email, password,verifPassword);
   if(result.success){
-    CreateErrorAlert("Félicitation","Vous venez de créer un compte sur DevGarden");
+    CreateErrorAlert("Félicitations","Vous venez de créer un compte sur DevGarden");
     navigation.navigate("Login");
   }
   else{
