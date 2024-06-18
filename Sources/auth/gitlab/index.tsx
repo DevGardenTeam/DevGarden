@@ -8,6 +8,7 @@ import { View, Button, StatusBar, TouchableOpacity, Text,  } from 'react-native'
 import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
 import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
+import RepositoryManager from "../../managers/RepositoryManager";
 
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
@@ -43,6 +44,8 @@ export default function GitlabAuth({ onLinkChange, username }: { onLinkChange: (
     if (response?.type === 'success') {
       console.log('response =>'); // Debug
       const { code } = response.params;
+      var repoManager = RepositoryManager.getInstance();
+      repoManager.getRepositories();
       console.log(response);
       console.log(GITLAB_CLIENT_ID);
       console.log(`response code => ${code}`); // Debug

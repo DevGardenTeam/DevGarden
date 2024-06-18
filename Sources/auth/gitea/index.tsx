@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
 import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
+import RepositoryManager from "../../managers/RepositoryManager";
 
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
@@ -38,6 +39,8 @@ export default function GiteaAuth({ onLinkChange, username }: { onLinkChange: (i
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params;
+      var repoManager = RepositoryManager.getInstance();
+      repoManager.getRepositories();
       console.log(`response code => ${code}`); // Debug
   
       fetch(`${CURRENT_BASE_URL}/OAuth/token/exchange?platform=gitea&username=${username}`, {
