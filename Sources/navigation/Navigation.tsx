@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from "@react-navigation/native"; 
 import HomeScreen from '../views/HomeScreen';
@@ -20,6 +20,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DashboardScreen from '../views/dashboard_view';
 
 export default function Navigation() {
+
+     useEffect(() => {
+          if (typeof document !== 'undefined') {
+               document.title = "Garden";
+               console.log(document.title)
+          }
+     }, ["DevGarden"]);
+
      const scheme = useColorScheme();
      const Stack = createStackNavigator();
      return (
@@ -27,77 +35,77 @@ export default function Navigation() {
             <Stack.Navigator initialRouteName="Login" >
                 <Stack.Screen name="Home" component={HomeScreen}
                                            options={{
-                                                title: 'Login',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Parameters"  component={ParametersScreen}
                                            options={{
-                                                title: 'Parameters',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Login"  component={LoginScreen}
                                            options={{
-                                                title: 'Login',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="AllProjects"  component={AllProjectsNeutralView}
                                            options={{
-                                                title: 'AllProjects',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="AllPlatforms"  component={AllPlatformsNeutralView}
                                            options={{
-                                                title: 'AllPlatforms',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="AllCommits"  component={AllCommitsView}
                                            options={{
-                                                title: 'AllCommits',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="AllIssues"  component={AllIssuesView}
                                            options={{
-                                                title: 'AllIssues',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Register"  component={RegisterView}
                                            options={{
-                                                title: 'Register',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Project"  component={ProjectScreen}
                                            options={{
-                                                title: 'Project',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="ProjectManagement"  component={ProjectManagementScreen}
                                            options={{
-                                                title: 'ProjectManagement',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Wbs"  component={WbsView}
                                            options={{
-                                                title: 'Wbs',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Gantt"  component={ProjectManagementScreen}
                                            options={{
-                                                title: 'Gantt',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Pert"  component={PertView}
                                            options={{
-                                                title: 'Pert',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="Dashboard"  component={DashboardScreen}
                                            options={{
-                                                title: 'Dashboard',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
                                            <Stack.Screen name="AllFiles"  component={AllFilesView}
                                            options={{
-                                                title: 'Files',
+                                                title: 'DevGarden',
                                                 headerShown: false
                                            }}/>
             </Stack.Navigator>

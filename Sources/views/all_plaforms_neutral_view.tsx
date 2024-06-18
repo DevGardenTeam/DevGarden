@@ -8,6 +8,7 @@ import useControls from "r3f-native-orbitcontrols"
 import GardenView from './GardenView';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
+import LoadingComponent from '../components/loading_component';
 import { useUser } from '../user/UserContext';
 
 
@@ -50,7 +51,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 );
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
   if (error) {
