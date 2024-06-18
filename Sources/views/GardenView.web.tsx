@@ -62,8 +62,6 @@ const GardenView: React.FC<GardenViewProps> = ({ repositories }) => {
     const filteredRepos = repositories.filter(repo => {
       const repoPlatform = repo.platform.toUpperCase();
       const gardenPlatform = garden.platform.toUpperCase();
-      console.log(`Repo platform: ${repoPlatform}`);
-      console.log(`Garden platform: ${gardenPlatform}`);
       return repoPlatform === gardenPlatform;
     });
 

@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
 import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
+import RepositoryManager from "../../managers/RepositoryManager";
 
 import { useTranslation } from "react-i18next"; 
 
@@ -40,6 +41,8 @@ export default function GiteaAuth({ onLinkChange, username }: { onLinkChange: (i
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params;
+      var repoManager = RepositoryManager.getInstance();
+      repoManager.getRepositories();
       console.log(`response code => ${code}`); // Debug
   
       fetch(`${CURRENT_BASE_URL}/OAuth/token/exchange?platform=gitea&username=${username}`, {
@@ -72,14 +75,14 @@ export default function GiteaAuth({ onLinkChange, username }: { onLinkChange: (i
         });
     }
   }, [response, username]);
-
+  
   const { t } = useTranslation();
 
   // button 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
-        <Text style={styles.buttonText}>{t("settings.enterGitlab")}</Text>
+        <Text style={styles.buttonText}>{t("settings.enterGitea")}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -49,6 +49,9 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
         //console.warn("selectedPortion: ", selectedPortion.toLocaleUpperCase())
         //console.warn("Repositories: ", repositories)
 
+        console.log("Loading selected portion: ", selectedPortion)
+        console.log("Repositories: ", repositories)
+
         scale.value = withTiming(1);
         translateY.value = withTiming(0);
         savedTranslateY.value = 0;
@@ -164,8 +167,12 @@ const GardenView: React.FC<GardenViewProps> = ({ selectedPortion, repositories }
               {/* Filter the repositories per platformm */}
               {gardens.map((garden, index) => {
                   const filteredRepos = repositories.filter(repo => {
+
                     const repoPlatform = repo.platform.toLocaleUpperCase();
                     const gardenPlatform = garden.platform.toLocaleUpperCase();
+
+                    console.log("Repo platform: ", repoPlatform, "Garden platform: ", gardenPlatform)
+
                     return repoPlatform === gardenPlatform;
                   });
 

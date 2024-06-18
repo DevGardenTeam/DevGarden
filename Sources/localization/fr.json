@@ -39,7 +39,7 @@
         "password":"Mot-de-passe",
         "forgetPassword":"Mot-de-passe oublié",
         "login":"Connexion",
-        "register":"Créer un compte",
+        "register":"Créer un compte"
     },
     "register":{
         "confirmPassword":"Confirmer le mot-de-passe",

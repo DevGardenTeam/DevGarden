@@ -10,6 +10,7 @@ import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
 import { useUser } from "../../user/UserContext";
 import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
+import RepositoryManager from "../../managers/RepositoryManager";
 
 import { useTranslation } from "react-i18next"; 
 
@@ -41,6 +42,8 @@ export default function GithubAuth({ onLinkChange, username }: { onLinkChange: (
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params;
+      var repoManager = RepositoryManager.getInstance();
+      repoManager.getRepositories();
       console.log(response);
       console.log(`response code => ${code}`); // Debug
   
