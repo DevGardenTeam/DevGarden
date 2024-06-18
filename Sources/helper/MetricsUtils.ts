@@ -172,16 +172,12 @@ export default class MetricsUtils {
     
         const commitWeightedMark = this.commitsMark * commitPriority;
         const issueWeightedMark = this.issuesMark * issuePriority;
-    
-        console.log(commitWeightedMark);
-        console.log(issueWeightedMark);
 
         const totalPriority = commitPriority + issuePriority;
         const averageMetric = (commitWeightedMark + issueWeightedMark) / totalPriority;
     
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            
             if (!repo) {
                 throw new Error("Repository not found");
             }

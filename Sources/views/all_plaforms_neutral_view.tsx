@@ -10,6 +10,7 @@ import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import LoadingComponent from '../components/loading_component';
 import { useUser } from '../user/UserContext';
+import MetricsUtils from '../helper/MetricsUtils';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -35,6 +36,19 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
       console.warn("Use effect called with no action")
     }
   }, []);
+
+  useEffect(() => {
+    if (repositories.length > 0) {
+      repositories.forEach(repo => {
+        if(repo.platform == "gitlab"){
+          MetricsUtils.calculateAverageMetric(repo.id);
+        }
+        else {
+          MetricsUtils.calculateAverageMetric(repo.name);
+        }
+      });
+    }
+  }, [repositories]);
 
   useFocusEffect(
     React.useCallback(() => {
