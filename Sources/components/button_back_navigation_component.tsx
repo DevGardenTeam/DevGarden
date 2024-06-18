@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     icon: {
-        width: horizontalScale(40),
-        height: verticalScale(40),
+        width: horizontalScale(30),
+        height: verticalScale(30),
     },
 });
   
