@@ -98,10 +98,10 @@ export default class MetricsUtils {
 
             // Determine the category
             switch (true) {
-                case (lastCommitDate >= targetDate1):
+                case (lastCommitDate >= targetDate2):
                     this.commitsMark = 20;
                     break;
-                case (lastCommitDate >= targetDate2 && lastCommitDate < targetDate1):
+                case (lastCommitDate >= targetDate1 && lastCommitDate < targetDate2):
                     this.commitsMark = 10;
                     break;
                 default:
