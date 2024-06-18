@@ -96,9 +96,6 @@ export default class MetricsUtils {
             const targetDate2 = new Date(currentDate);
             targetDate2.setMonth(targetDate2.getMonth() - Math.floor(selectedMonth / 2));
 
-            console.log(lastCommitDate);
-            console.log(targetDate1);
-            console.log(targetDate2);
             // Determine the category
             switch (true) {
                 case (lastCommitDate >= targetDate1):
@@ -182,8 +179,6 @@ export default class MetricsUtils {
         const totalPriority = commitPriority + issuePriority;
         const averageMetric = (commitWeightedMark + issueWeightedMark) / totalPriority;
     
-        console.log(averageMetric);
-
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
             
