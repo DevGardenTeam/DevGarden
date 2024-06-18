@@ -12,8 +12,8 @@ export default class MetricsUtils {
     };
 
     static selectedCommitMetrics = {
-        selectedMonth: 1,
-        selectedPriority: "High"
+        selectedMonth: 12,
+        selectedPriority: "Low"
     };
 
     static getQualityCommitMetrics() {
@@ -98,10 +98,10 @@ export default class MetricsUtils {
 
             // Determine the category
             switch (true) {
-                case (lastCommitDate >= targetDate1):
+                case (lastCommitDate >= targetDate2):
                     this.commitsMark = 20;
                     break;
-                case (lastCommitDate >= targetDate2 && lastCommitDate < targetDate1):
+                case (lastCommitDate >= targetDate1 && lastCommitDate < targetDate2):
                     this.commitsMark = 10;
                     break;
                 default:
@@ -172,16 +172,12 @@ export default class MetricsUtils {
     
         const commitWeightedMark = this.commitsMark * commitPriority;
         const issueWeightedMark = this.issuesMark * issuePriority;
-    
-        console.log(commitWeightedMark);
-        console.log(issueWeightedMark);
 
         const totalPriority = commitPriority + issuePriority;
         const averageMetric = (commitWeightedMark + issueWeightedMark) / totalPriority;
     
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            
             if (!repo) {
                 throw new Error("Repository not found");
             }

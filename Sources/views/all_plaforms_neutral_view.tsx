@@ -10,6 +10,7 @@ import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import LoadingComponent from '../components/loading_component';
 import { useUser } from '../user/UserContext';
+import MetricsUtils from '../helper/MetricsUtils';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -26,15 +27,35 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   const fetchCalled = useRef(false);
 
+  const [status, setStatus] = useState('loading');
+
   useEffect(() => {
-    if (!fetchCalled.current) {
-      console.warn("fetching repositories for the first time")
-      fetchRepositories();
-      fetchCalled.current = true;
-    } else {
-      console.warn("Use effect called with no action")
-    }
+    console.warn("Fetching repositories for the first time");
+    fetchRepositories();
   }, []);
+  
+  useEffect(() => {
+    const calculateMetrics = async () => {  
+      try {
+        for (let i = 0; i < repositories.length; i++) {
+          let repo = repositories[i];
+          let repoIdOrName = repo.platform === "gitlab" ? repo.id : repo.name;
+          const repoStatus = await MetricsUtils.calculateAverageMetric(repoIdOrName);
+          console.log(repoStatus);
+          setStatus(repoStatus);
+          repo.status = repoStatus;
+        }
+      } catch (error) {
+        console.error("Error calculating status for repositories:", error);
+      }
+    };
+  
+    if (repositories.length > 0) {
+      calculateMetrics();
+    }
+  }, [repositories]);
+  
+  
 
   useFocusEffect(
     React.useCallback(() => {

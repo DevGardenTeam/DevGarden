@@ -202,13 +202,13 @@ const styles = StyleSheet.create({
   },
   // Title
   titlecontainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: verticalScale(7),
   },
   title: {
-    fontSize: moderateScale(40),
+    fontSize: moderateScale(30),
     color: "#414141",
     fontWeight: "bold"
   },

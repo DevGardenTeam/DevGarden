@@ -60,9 +60,12 @@ const AllCommitsView: React.FC<AllCommitsViewProps> = ({ navigation }) => {
       const branchCommits = branches.find(branch => branch.name === selectedBranch)?.commits || [];
       setFilteredCommits(
         branchCommits
-          .filter(commit =>
-            commit.message?.toLowerCase().includes(searchText.toLowerCase()) ||
-            commit.author.name?.toLowerCase().includes(searchText.toLowerCase())
+          .filter(commit => 
+            commit.author?.name && // Vérifie que l'auteur existe et a un nom
+            (
+              commit.message?.toLowerCase().includes(searchText.toLowerCase()) ||
+              commit.author.name.toLowerCase().includes(searchText.toLowerCase())
+            )
           )
           .sort((a, b) => {
             if (sortOrder === 'asc') {

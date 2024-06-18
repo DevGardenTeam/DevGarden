@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
 
   emailContainer: {
     width: '100%',
+    height: '40%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },

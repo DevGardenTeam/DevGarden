@@ -37,7 +37,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
           <Text style={styles.title}>Create account</Text>
           <View style={styles.emailContainer}>
             <TextInputComponent
-                placeholder={t('login.password')}
+                placeholder={t('login.login')}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 iconSource={require('../assets/icons/IconMail.png')}
@@ -87,9 +87,7 @@ const styles = StyleSheet.create({
   },
 
   safeArea: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    height: '100%',
+    flex: 1,
     paddingTop: StatusBar.currentHeight || 0,
   },
 
@@ -107,6 +105,7 @@ const styles = StyleSheet.create({
 
   emailContainer: {
     width: '100%',
+    height: '60%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
