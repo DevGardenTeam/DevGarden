@@ -1,34 +1,32 @@
 import { useEffect, useState } from 'react';
-import { CommitService } from '../service/CommitService';
-import { Commit } from '../model/Commit';
+import { BranchService } from '../service/BranchService';
+import { Branch } from '../model/Branch';
 import { IS_STUB } from '../constants/constants';
-import { CommitStub } from '../stub/CommitStub';
 import RepositoryManager from '../managers/RepositoryManager';
-import { Repository } from '../model/Repository';
 
-export const useCommitViewModel = (platform: string, owner: string, repository: string) => {
-  const [commits, setCommits] = useState<Commit[]>([]);
+export const useBranchViewModel = (platform: string, owner: string, repository: string) => {
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   //En fonction de la constante IS_STUB, on implémente le Stub ou le Service
-  const commitService = IS_STUB ? new CommitStub() : new CommitService();
+  const branchService = new BranchService();
 
-  const fetchCommits = async () => {
+  const fetchBranches = async () => {
     var repositoryManager = RepositoryManager.getInstance();    
     try {
       const repo = await repositoryManager.getRepositoryByName(repository);
       
-      if (repo?.commits.length === 0){
-        const result = await commitService.getMany({ dgUsername: repositoryManager.dgUsername, platform, owner, repository });
+      if (repo?.branches.length === 0){
+        const result = await branchService.getMany({ platform, owner, repository });
         if (result.succeeded) {
-          setCommits(result.data);
+          setBranches(result.data);
         } else {
           setError(result.errors);
         }  
       } 
       else{
-        setCommits(repo?.commits || []);
+        setBranches(repo?.branches || []);
       }
     } catch (error: any) {
       setError(error.message);
@@ -38,8 +36,8 @@ export const useCommitViewModel = (platform: string, owner: string, repository: 
   };
 
   useEffect(() => {
-    fetchCommits();
+    fetchBranches();
   }, [platform, owner, repository]);
 
-  return { commits, loading, error, fetchCommits };
+  return { branches, loading, error, fetchBranches };
 };

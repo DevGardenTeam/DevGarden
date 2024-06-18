@@ -2,7 +2,7 @@ import { Branch, mapApiObjectToBranch } from "../model/Branch";
 import { BaseResources } from "../model/generic_repository/BaseResources";
 import { ApiResponse } from "../model/generic_repository/ApiReponse";
 
-export class CommitService extends BaseResources<Branch>{
+export class BranchService extends BaseResources<Branch>{
     collection = 'Branch';
     getManyString = "GetAllBranches"
 

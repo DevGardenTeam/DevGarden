@@ -25,13 +25,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/devgardenIcon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.apk.DevGarden"
     },
     "web": {
       "favicon": "./assets/roundDevgardenIcon.png"
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "11c7104d-7f9e-49c4-b17d-3e61ade14ab6"
+      }
+    }
   }
 }
