@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Switch, Dimensions, StatusBar, Platform } from 'react-native';
+import { StyleSheet, Text, View, Switch, Dimensions, StatusBar, Platform, BackHandler } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import '../service/i18n';
 import React, { useState, Suspense, useEffect } from 'react';
 import NavigationButton from '../components/button_component'
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
@@ -81,6 +81,18 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
     }
     
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+        const onBackPress = () => {
+            return false; // Disable back button
+        };
+
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
 
   if (!view) {

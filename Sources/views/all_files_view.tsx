@@ -13,6 +13,7 @@ import { Repository } from '../model/Repository';
 import fontSizes from '../constants/fontSize';
 import { StatusBar } from 'react-native';
 import LoadingComponent from '../components/loading_component';
+import { useUser } from '../user/UserContext';
 
 
 interface AllFilesViewProps {
@@ -29,13 +30,14 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
   const route = useRoute();
   const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
+  const user = useUser();
 
 
   const [pathHistory, setPathHistory] = useState<string[]>(['']);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 
-  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
+  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ dgUsername: user.user.username, platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
 
 
   useFocusEffect(
@@ -171,7 +173,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
                   <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
-                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />                
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon ]} />                
                 </TouchableOpacity>              
               </View>
             </View>
@@ -191,7 +193,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
                   <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
-                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />                
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon ]} />                
                 </TouchableOpacity>              
               </View>
             </View>

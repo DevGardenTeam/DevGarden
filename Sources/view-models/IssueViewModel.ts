@@ -19,7 +19,7 @@ export const useIssueViewModel = (platform: string, owner: string, repository: s
       const repo = await repositoryManager.getRepositoryByName(repository);
 
       if(repo?.issues.length === 0){
-        const result = await issueService.getMany({ platform, owner, repository });
+        const result = await issueService.getMany({ dgUsername: repositoryManager.dgUsername, platform, owner, repository });
         if (result.succeeded) {
           setIssues(result.data);
         } else {

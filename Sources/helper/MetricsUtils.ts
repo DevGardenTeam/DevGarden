@@ -65,8 +65,13 @@ export default class MetricsUtils {
         var repositoryManager = RepositoryManager.getInstance();
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            if (!repo || repo.commits.length === 0) {
-                throw new Error("No commits found in the repository");
+            if (!repo) {
+                throw new Error("Repository not found");
+            }
+
+            if (repo.commits.length === 0) {
+                this.commitsMark = 0;
+                return;
             }
 
             // Sort the commits by date in descending order
@@ -100,14 +105,20 @@ export default class MetricsUtils {
         }
     }
 
+    
 
     // CALCULATE ISSUES METRICS
     static calculateIssuesMetric = async (repositoryName: string) => {
         var repositoryManager = RepositoryManager.getInstance();
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            if (!repo || repo.issues.length === 0) {
-                throw new Error("No issues found in the repository");
+            if (!repo) {
+                throw new Error("Repository not found");
+            }
+
+            if (repo.issues.length === 0) {
+                this.issuesMark = 20;
+                return;
             }
 
             const openIssues = repo.issues.filter((issue: any) => issue.state === "open").length;
@@ -116,7 +127,6 @@ export default class MetricsUtils {
 
             const lowerBound = this.selectedIssueMetrics.selectedPercentage - 10;
             const upperBound = this.selectedIssueMetrics.selectedPercentage + 10;
-
 
             switch (true) {
                 case (openIssuesPercentage < lowerBound):
@@ -133,6 +143,7 @@ export default class MetricsUtils {
             throw new Error(`Failed to calculate issues metrics: ${error.message}`);
         }
     }
+
 
     // CALCULATE AVERAGE METRICS
     static calculateAverageMetric = async (repositoryName: string) => {

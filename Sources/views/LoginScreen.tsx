@@ -3,6 +3,9 @@ import { View, StyleSheet, SafeAreaView, Text, TouchableOpacity, Dimensions } fr
 import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import {moderateScale} from '../service/Metrics';
+import { Handlelogin } from "../view-models/AuthentificationViewModel";
+import { useUser } from '../user/UserContext';
+
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<any>;
@@ -11,6 +14,11 @@ interface LoginScreenProps {
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { updateUser } = useUser();
+
+  const OnLoginPress = () => {
+    Handlelogin(email, password,navigation, updateUser);
+  };
 
   return (
     <View style={styles.safeArea}>
@@ -39,7 +47,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               <Text style={styles.forgotPasswordText}>Forget Password</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AllPlatforms")}>
+              <TouchableOpacity style={styles.button} onPress={OnLoginPress}>
                 <Text style={styles.buttonText}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Register")}>

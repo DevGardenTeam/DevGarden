@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { IBaseResources } from "./IBaseResources";
 import { ApiResponse } from "./ApiReponse";
 import { HttpClient } from "./HttpClient";

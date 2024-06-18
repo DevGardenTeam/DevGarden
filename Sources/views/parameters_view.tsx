@@ -1,15 +1,18 @@
 import 'intl-pluralrules';
-import { StyleSheet, Text, TouchableOpacity,Switch, View, FlatList, Dimensions, Image, Platform, TextInput  } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
 import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {moderateScale, verticalScale, horizontalScale} from '../service/Metrics';
-import { useTheme } from '@react-navigation/native';
+import { useFocusEffect, useTheme } from '@react-navigation/native';
 import MetricsUtils from '../helper/MetricsUtils';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { StackNavigationProp } from '@react-navigation/stack';
+import LinkAccountView from '../components/parameters/link_accounts';
+import GithubAuth from '../auth/github';
+import { useUser } from '../user/UserContext';
 
 interface ParametersProps {
   navigation: StackNavigationProp<any>;
@@ -19,7 +22,8 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
 
   // Multi langue
 
-  const {t} = useTranslation();     
+  const {t} = useTranslation();  
+  const { user } = useUser(); 
 
   // DropDownPicker
 
@@ -68,53 +72,37 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
     ]);
   }, [i18n.language]);
 
-    // Switch
+  useFocusEffect(
+    React.useCallback(() => {
+        const onBackPress = () => {
+            return false; // Disable back button
+        };
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-          <View style={styles.titlecontainer}>
+        <View style={styles.container}>
+          <View style={styles.navigationBack}>
             <BackNavigationButton/>
+          </View>
+          <View style={styles.titlecontainer}>
             <Text style={styles.title}>{t('settings.settings')}</Text>
           </View>
+          <View style={styles.mainContainer}>
             <View style={styles.container_bis}>
-              <View>
-                {/* ListView */}
-                <FlatList
-                  data={[
-                    {title: 'Mon projet perso',icon: require('../assets/platforms/github.png')},
-                    {title: "Dev'Garden",icon: require('../assets/platforms/gitlab.png')},
-                    {title: "Alibaba",icon: require('../assets/platforms/gitea.png')},
-                  ]}
-                  // Pour le binding remplacer l'item.title et le chemin de l'icon
-                  renderItem={({item}) => <TouchableOpacity style={styles.listview}>
-                    <Image source={item.icon} style={styles.platformIcon}/>
-                    <Text style={styles.titleAccount}>{item.title}</Text>
-                  </TouchableOpacity>}
-                />
-              </View>
-              <TouchableOpacity>
-                <View style={styles.part}>
-                  <View style={styles.leftPart}>
-                    <Image source={require('../assets/setting_page_icon/link.png')} style={styles.partIcon}/>
-                    <Text style={styles.text}>{t('settings.linkAccount')}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
               <View style={styles.part}>
                 <View style={styles.leftPart}>
-                  <Image source={require('../assets/setting_page_icon/half_moon.png')} style={styles.partIcon}/>
-                  <Text style={styles.text}>{t('settings.nightMode')}</Text>
+                  <LinkAccountView user={user}/>
                 </View>
-                <View>
-                  <Switch trackColor={{false: '#D3D3D3', true: '#B9FFB6'}}
-                  thumbColor={isEnabled ? '#00A210' : '#f4f3f4'}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                  style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }], height: ISLANDSCAPE ? HEIGHT * 0.025 : HEIGHT * 0.025 , marginRight: ISLANDSCAPE ? WIDTH * 0.025 : WIDTH * 0.02}}/>
+              </View>
+              <View style={styles.part}>
+                <View style={styles.leftPart}>
+                  <Image source={require('../assets/setting_page_icon/link.png')} style={styles.partIcon}/>
+                  <Text style={styles.text}>{t('settings.linkAccount')}</Text>
                 </View>
               </View>
               <View style={styles.part}>
@@ -122,7 +110,7 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
                   <Image source={require('../assets/setting_page_icon/internet.png')} style={styles.partIcon}/>
                   <Text style={styles.text}>{t('settings.language')}</Text>
                 </View>
-                <View style={styles.dropDownContainer}>
+                <View>
                   <DropDownPicker
                     open={open}
                     value={value}
@@ -132,8 +120,6 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
                     setItems={setItems}
                     onChangeValue={(value: string)=> { changeLanguage(value);}}
                     placeholder={t('supportedLanguages.'+i18n.language)}
-                    searchable={true}
-                    searchPlaceholder={t('settings.searchPlaceHolder')}
                     style={styles.DropDownPicker}
                     listItemLabelStyle={styles.itemsStyle}
                     placeholderStyle={styles.itemsStyle}/>
@@ -142,48 +128,60 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
             </View>
             <View style={styles.calculatorContainer}>
                 <Text style={[styles.calculatorTitle, { color: colors.text }]}>Coefficients de qualité</Text>
-                <View style={styles.inputRow}>
-                    <Text style={[styles.rowName, { color: colors.text }]}>Nombre de mois limite depuis le dernier commit :</Text>
-                    <View style={styles.inputView}>
-                      <TextInput value={currentMonth}
+                <View style={styles.secondContainer}>
+                    <View style={styles.inputRow}>
+                        <Text style={[styles.rowName, { color: colors.text }]}>Temps depuis dernier commit:</Text>
+                        <View style={styles.inputView}>
+                            <TextInput
+                                value={currentMonth}
                                 onChangeText={handleMonthChange}
                                 keyboardType="numeric"
-                                style={styles.input}/>     
-                      <Text style={[styles.rowName, { color: colors.text }]}>Mois</Text>            
+                                style={styles.input}
+                            />
+                            <Text style={[styles.rowName, { color: colors.text }]}>Mois</Text>
+                        </View>
                     </View>
-                    <Text style={[styles.rowName, { color: colors.text }]}>Priorité :</Text>
-                    <View style={styles.dropDownContainer}>
-                      <DropDownPicker
-                        open={openPriority}
-                        value={priority}
-                        items={MetricsUtils.qualityCommitMetrics.priorities}
-                        setOpen={setOpenPriority}
-                        setValue={setPriority}
-                        onChangeValue={(value: string) => handlePriorityChange(value)}
-                        placeholder={"Select a priority..."}
-                        style={styles.DropDownPicker}
-                        listItemLabelStyle={[styles.itemsStyle, { color: colors.text}]}
-                        placeholderStyle={[styles.itemsStyle, { color: colors.text}]}
-                      />
+                    <View style={styles.inputRow}>
+                        <Text style={[styles.rowName, { color: colors.text }]}>Priorité:</Text>
+                        <View>
+                            <DropDownPicker
+                                open={openPriority}
+                                value={priority}
+                                items={MetricsUtils.qualityCommitMetrics.priorities}
+                                setOpen={setOpenPriority}
+                                setValue={setPriority}
+                                onChangeValue={(value: string) => handlePriorityChange(value)}
+                                placeholder={MetricsUtils.qualityCommitMetrics.priorities[3].label}
+                                style={styles.DropDownPicker}
+                                listItemLabelStyle={[styles.itemsStyle, { color: colors.text }]}
+                                placeholderStyle={[styles.itemsStyle, { color: colors.text }]}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>
-            <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"}></SettingsButton>
+            <SettingsButton title={t('settings.logOut')} iconSource={require('../assets/setting_page_icon/logout.png')} tint={"red"} navigation={navigation}></SettingsButton>
+        </View>
         </View>
   );
 }
 
-const WIDTH = Dimensions.get('window').width ;
-const HEIGHT = Dimensions.get('window').height ;
-
-const ISLANDSCAPE = WIDTH > HEIGHT;
 
 const styles = StyleSheet.create({
+  mainContainer:{
+    alignItems : 'center',
+    justifyContent: 'space-between',
+    gap: verticalScale(5),
+    marginTop: verticalScale(20),
+  },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent:'space-between',
-    backgroundColor: '#F1F0F0',
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  navigationBack: {
+    top: verticalScale(15),
+    left: horizontalScale(15),
+    zIndex:1
   },
   // Title
   titlecontainer:{
@@ -191,15 +189,13 @@ const styles = StyleSheet.create({
     flexDirection : "row",
     justifyContent:"center",
     alignItems:"center",
-    marginTop: verticalScale(50)
   },
   title:{
     fontSize: moderateScale(40),
-    marginHorizontal: horizontalScale(25),
-    marginVertical: verticalScale(25),
     color:"#414141",
     fontWeight:"bold"
   },
+
   settingsIcon: {
     resizeMode: 'contain',
     width: horizontalScale(60),
@@ -211,18 +207,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     flexDirection: 'column-reverse',
-    width: "80%",
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    width: "85%",
+    elevation: 4,
+    alignItems: 'center',
+  },
+  dropDownContainer: {
+    flex: 1,
+    maxWidth: '40%',
   },
   part:{
     paddingHorizontal: horizontalScale(10),
@@ -247,128 +238,64 @@ const styles = StyleSheet.create({
   },
   partIcon: {
     resizeMode: 'contain',
-    width: horizontalScale(50),
-    height: verticalScale(50)
+    width: horizontalScale(40),
+    height: verticalScale(40),
+    marginRight: horizontalScale(5),
   },
-  //DropDownPicker
-  dropDownContainer: {
-    height:'100%',
+
+  secondContainer: {
+    flexDirection: 'column',
+    marginTop: 15,
   },
+
   DropDownPicker:{
-    borderRadius: 20,
+    borderColor: '#ccc',
+    borderRadius: 15,
     borderBlockColor:'none',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-    width: horizontalScale(135),
-    height : verticalScale(15),
+    elevation: 1,
+    width: horizontalScale(120),
+    marginLeft: horizontalScale(20),
   },
   itemsStyle:{
     fontSize: moderateScale(15),
     fontWeight:"500",
   },
-  //ListView
-  listview:{
-    display : "flex",
-    flexDirection : "row",
-    alignItems: "center",
-    marginBottom: verticalScale(5)
-  },
-  titleAccount:{
-    fontSize: moderateScale(15),
-    color:"#414141",
-  },
-  platformIcon: {
-    resizeMode: 'contain',
-    width: horizontalScale(45), 
-    height: verticalScale(45),
-    marginLeft: horizontalScale(30),
-  },
   //Calculator
   calculatorContainer: {
     backgroundColor: '#FFFFFF',
+    height: '30%',
     borderRadius: 10,
     padding: 20,
     marginTop: 20,
-    width: "80%",
-    ...Platform.select({
-        ios: {
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
-            shadowRadius: 4,
-        },
-        android: {
-            elevation: 4,
-        },
-    }),
+    width: "85%",
+    elevation: 4,
   },
   calculatorTitle: {
       fontSize: moderateScale(20),
       fontWeight: 'bold',
-      marginBottom: 10,
       color: '#414141',
   },
-  inputRow: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 10,
-      gap: 10,
-  },
+
   rowName: {
       fontSize: moderateScale(15),
   },
-  sliderValue: {
-    marginTop: -20,
-    fontSize: 18,
-  },
-  slider: {
-      width: 200, // Ajustez la largeur du Slider selon vos besoins
-      height: 40, // Ajustez la hauteur du Slider selon vos besoins
+  inputRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   input: {
-      width: '10%',
       borderColor: '#ccc',
       borderWidth: 1,
       borderRadius: 5,
-      padding: 10,
+      padding: 5,
       fontSize: moderateScale(15),
-      marginRight: 10
-  },
-  resultContainer: {
-      marginTop: 20,
-  },
-  resultText: {
-      fontSize: moderateScale(18),
-      fontWeight: 'bold',
-      color: '#414141',
-      marginBottom: 10,
-  },
-  gradeItem: {
-      fontSize: moderateScale(15),
-      color: '#414141',
-      marginBottom: 5,
-  },
-  navigationBack: {
-    top: verticalScale(15),
-    left: horizontalScale(15),
-    zIndex:1,
   },
   inputView: {
-    flex: 1,
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: horizontalScale(20),
   }
 });
 

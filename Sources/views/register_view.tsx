@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import TextInputComponent from '../components/text_input_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
-
+import { HandleRegister } from "../view-models/AuthentificationViewModel";
 
 interface RegisterViewProps {
   navigation: StackNavigationProp<any>;
@@ -13,6 +13,11 @@ interface RegisterViewProps {
 const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [verifPassword, setverifPassword] = useState('');
+
+  const OnRegisterPress = () => {
+    HandleRegister(email, password, verifPassword,navigation);
+  };
 
   return (
     <View style={styles.safeArea}>
@@ -39,8 +44,8 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
             />
             <TextInputComponent
                 placeholder="Confirm Password"
-                value={password}
-                onChangeText={(text) => setPassword(text)}
+                value={verifPassword}
+                onChangeText={(text) => setverifPassword(text)}
                 password = {true}
                 iconSource={require('../assets/icons/IconLock.png')}
             />
@@ -55,7 +60,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
         </View>
 
         <View style={styles.square2}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={OnRegisterPress}>
               <Text style={styles.buttonText}>Create Account</Text>
             </TouchableOpacity>
         </View>  

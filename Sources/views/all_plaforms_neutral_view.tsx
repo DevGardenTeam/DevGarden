@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, Text, StatusBar, ActivityIndicator, Platform, SafeAreaView} from 'react-native';
+import { StyleSheet, View, Text, StatusBar, ActivityIndicator, Platform, SafeAreaView, TouchableOpacity, Image, BackHandler} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ButtonMultiSelectPlatformComponent from '../components/button_multiselect_platform_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
-import { useTheme } from '@react-navigation/native';
+import { useFocusEffect, useTheme } from '@react-navigation/native';
 import useControls from "r3f-native-orbitcontrols"
 import GardenView from './GardenView';
 import {moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { RepositoryController } from '../view-controllers/RepositoryViewController';
 import LoadingComponent from '../components/loading_component';
+import { useUser } from '../user/UserContext';
 
 
 interface AllPlatformsNeutralViewProps {
@@ -19,8 +20,9 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
   const [selectedPlatform, setSelectedPlatform] = useState<string>(""); // Provide a default value for selectedPlatform
   const { colors } = useTheme();
   const [events] = useControls()
+  const user = useUser();
 
-  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform });
+  const { repositories, loading, error, handleRepositoryPress, fetchRepositories } = RepositoryController({ platform: selectedPlatform, username: user.user.username });
 
   const fetchCalled = useRef(false);
 
@@ -33,6 +35,18 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
       console.warn("Use effect called with no action")
     }
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+        const onBackPress = () => {
+            return true; // Disable back button on this screen
+        };
+
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+);
 
   if (loading) {
     return <LoadingComponent/>;
@@ -68,9 +82,11 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
             )}        
 
             <View style={styles.navigationBack} >
-              <BackNavigationButton/> 
+            <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
+                <Image source={require('../assets/icons/settings.png')} style={[ styles.icon]} resizeMode="contain"/>                
+            </TouchableOpacity> 
             </View>
-          </View>          
+          </View>  
 
           {Platform.OS !== 'web' && (
             <View style={styles.slidingButton}>
@@ -84,7 +100,7 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 const styles = StyleSheet.create({
 
   topMargin: {
-    marginTop: StatusBar.currentHeight || 0
+    marginTop: StatusBar.currentHeight || 0,
   },
   gardenViewContainer: {
     position: 'absolute',
@@ -133,8 +149,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    marginLeft: '10%',
-    marginRight: '10%',
   },
   mainContent:{
     display: 'flex',
@@ -164,7 +178,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
     height: '10%',
-  }
+  },
+
+  icon: {
+    width: horizontalScale(40),
+    height: verticalScale(40),
+},
 })
 
 export default AllPlatformsNeutralView;
