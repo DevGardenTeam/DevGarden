@@ -1,9 +1,5 @@
 import 'intl-pluralrules';
-<<<<<<< HEAD
-import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler, Platform  } from 'react-native';
-=======
-import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler } from 'react-native';
->>>>>>> 97e283fc2dc448949d87a5f382612af162cf3a42
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler, Platform } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
