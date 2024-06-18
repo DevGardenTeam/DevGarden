@@ -53,18 +53,20 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   // Status d'un repository à utiliser avec les Metrics 
   const [status, setStatus] = useState('loading');
 
-  useEffect(() => {
-    const fetchStatus = async () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchStatus = async () => {
         try {
-            const calculatedStatus = await MetricsUtils.calculateAverageMetric(repository.name);
-            setStatus(calculatedStatus);
+          const calculatedStatus = await MetricsUtils.calculateAverageMetric(repository.name);
+          setStatus(calculatedStatus);
         } catch (error) {
-            console.error('Failed to calculate average metric', error);
-            setStatus('error');
+          console.error('Failed to calculate average metric', error);
+          setStatus('error');
         }
-    };
-    fetchStatus();
-  }, [repository.name]);
+      };
+      fetchStatus();
+    }, [repository.name])
+  );
 
   const truncateText = (text : string) => {
     if(Platform.OS !== 'web'){

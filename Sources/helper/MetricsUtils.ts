@@ -69,15 +69,23 @@ export default class MetricsUtils {
                 throw new Error("Repository not found");
             }
 
-            if (repo.commits.length === 0) {
-                this.commitsMark = 0;
-                return;
+            var selectedBranch = repo.branches[0];
+
+            if (repo.branches.length > 0) {
+                const mainBranch = repo.branches.find(branch => branch.name === 'main');
+                const masterBranch = repo.branches.find(branch => branch.name === 'master');
+                selectedBranch = mainBranch || masterBranch || repo.branches[0];
+
+                if (selectedBranch.commits.length === 0){
+                    this.commitsMark = 0;
+                    return;
+                }
             }
 
             // Sort the commits by date in descending order
-            repo.commits.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            selectedBranch.commits.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-            const lastCommitDate = new Date(repo.commits[0].date);
+            const lastCommitDate = new Date(selectedBranch.commits[0].date);
             const currentDate = new Date();
             const selectedMonth = this.selectedCommitMetrics.selectedMonth;
 
@@ -88,6 +96,9 @@ export default class MetricsUtils {
             const targetDate2 = new Date(currentDate);
             targetDate2.setMonth(targetDate2.getMonth() - Math.floor(selectedMonth / 2));
 
+            console.log(lastCommitDate);
+            console.log(targetDate1);
+            console.log(targetDate2);
             // Determine the category
             switch (true) {
                 case (lastCommitDate >= targetDate1):
@@ -165,9 +176,14 @@ export default class MetricsUtils {
         const commitWeightedMark = this.commitsMark * commitPriority;
         const issueWeightedMark = this.issuesMark * issuePriority;
     
+        console.log(commitWeightedMark);
+        console.log(issueWeightedMark);
+
         const totalPriority = commitPriority + issuePriority;
         const averageMetric = (commitWeightedMark + issueWeightedMark) / totalPriority;
     
+        console.log(averageMetric);
+
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
             
