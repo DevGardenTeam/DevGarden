@@ -59,14 +59,22 @@ class RepositoryManager {
     
         for (const platform of this.platforms) {
             try {
+                console.log("Fetching repositories for platform:", platform);
                 const result = await this.repositoryService.getMany({ dgUsername: this.dgUsername, platform: platform });
+                
+                console.log("Result: ", result);
+
                 if (result.succeeded) {
+                    console.log("Result succeeded")
                     const platformRepositories = result.data;
+                    console.log("Platform repositories: ", platformRepositories);
     
                     const repositoryPromises = platformRepositories.map(async (repository) => {
+                        
                         repository.platform = platform;
                         const repositoryPlatform = repository.platform;
                         const repositoryOwner = repository.owner.name;
+                        
                         var repositoryName = "";
                         if (repository.platform == "gitlab"){
                           repositoryName = repository.id;
@@ -102,7 +110,7 @@ class RepositoryManager {
     
                         return repository;
                     });
-    
+                    
                     const repositories = await Promise.all(repositoryPromises);
                     allRepositories.push(...repositories);
                 }

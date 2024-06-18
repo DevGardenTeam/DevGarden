@@ -56,9 +56,11 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
             return true; // Disable back button on this screen
         };
 
-        BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        if(Platform.OS !== 'web') {
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+          return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }
+        
     }, [])
 );
 
