@@ -12,8 +12,8 @@ export default class MetricsUtils {
     };
 
     static selectedCommitMetrics = {
-        selectedMonth: 1,
-        selectedPriority: "High"
+        selectedMonth: 12,
+        selectedPriority: "Low"
     };
 
     static getQualityCommitMetrics() {

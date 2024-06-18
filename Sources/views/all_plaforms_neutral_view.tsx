@@ -27,28 +27,35 @@ const AllPlatformsNeutralView: React.FC<AllPlatformsNeutralViewProps> = ({ navig
 
   const fetchCalled = useRef(false);
 
-  useEffect(() => {
-    if (!fetchCalled.current) {
-      console.warn("fetching repositories for the first time")
-      fetchRepositories();
-      fetchCalled.current = true;
-    } else {
-      console.warn("Use effect called with no action")
-    }
-  }, []);
+  const [status, setStatus] = useState('loading');
 
   useEffect(() => {
+    console.warn("Fetching repositories for the first time");
+    fetchRepositories();
+  }, []);
+  
+  useEffect(() => {
+    const calculateMetrics = async () => {  
+      try {
+        for (let i = 0; i < repositories.length; i++) {
+          let repo = repositories[i];
+          let repoIdOrName = repo.platform === "gitlab" ? repo.id : repo.name;
+          const repoStatus = await MetricsUtils.calculateAverageMetric(repoIdOrName);
+          console.log(repoStatus);
+          setStatus(repoStatus);
+          repo.status = repoStatus;
+        }
+      } catch (error) {
+        console.error("Error calculating status for repositories:", error);
+      }
+    };
+  
     if (repositories.length > 0) {
-      repositories.forEach(repo => {
-        if(repo.platform == "gitlab"){
-          MetricsUtils.calculateAverageMetric(repo.id);
-        }
-        else {
-          MetricsUtils.calculateAverageMetric(repo.name);
-        }
-      });
+      calculateMetrics();
     }
   }, [repositories]);
+  
+  
 
   useFocusEffect(
     React.useCallback(() => {
