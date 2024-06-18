@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "devGarden",
+    "name": "DevGarden",
     "slug": "devGarden",
     "scheme": "devgarden",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/devgardenIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/SplashGIF.gif",
@@ -23,12 +23,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/devgardenIcon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/roundDevgardenIcon.png"
     },
     "plugins": [
       "expo-localization"
