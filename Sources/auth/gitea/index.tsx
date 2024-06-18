@@ -40,7 +40,7 @@ export default function GiteaAuth({ onLinkChange, username }: { onLinkChange: (i
       const { code } = response.params;
       console.log(`response code => ${code}`); // Debug
   
-      fetch(`${CURRENT_BASE_URL}/OAuth/token?platform=gitea&username=${username}`, {
+      fetch(`${CURRENT_BASE_URL}/OAuth/token/exchange?platform=gitea&username=${username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

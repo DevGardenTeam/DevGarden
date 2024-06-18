@@ -12,6 +12,8 @@ import { Buffer } from 'buffer';
 import { Repository } from '../model/Repository';
 import fontSizes from '../constants/fontSize';
 import { StatusBar } from 'react-native';
+import LoadingComponent from '../components/loading_component';
+import { useUser } from '../user/UserContext';
 
 
 interface AllFilesViewProps {
@@ -28,13 +30,14 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
   const route = useRoute();
   const { repository } = route.params as RouteParams;
   const { colors } = useTheme();
+  const user = useUser();
 
 
   const [pathHistory, setPathHistory] = useState<string[]>(['']);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 
-  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
+  const { files, loading, error, handleFilePress, getAllFiles, fetchFirstFile } = FileViewController({ dgUsername: user.user.username, platform: repository.platform, owner: repository.owner.name, repository: repository.name, id: repository.id });
 
 
   useFocusEffect(
@@ -45,7 +48,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <LoadingComponent/>;
   }
 
 
@@ -148,7 +151,7 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
 
 
         </View>
-        {item.type === 'dir' || item.type === 'tree' && (
+        {(item.type === 'dir' || item.type === 'tree') && (
           <Image
             source={require('../assets/icons/right_arrow.png')}
             style={styles.icon}
@@ -167,10 +170,10 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
             <View style={styles.navigationBack}>
               <View style={styles.component}>
                 <TouchableOpacity style={styles.button} onPress={handleBackPress}>
-                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
-                  <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon ]} />                
                 </TouchableOpacity>              
               </View>
             </View>
@@ -187,10 +190,10 @@ const AllFilesView: React.FC<AllFilesViewProps> = ({ navigation }) => {
             <View style={styles.navigationBack}>
               <View style={styles.component}>
                 <TouchableOpacity style={styles.button} onPress={handleBackPress}>
-                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.icon, { tintColor: colors.text }]} />
+                  <Image source={require('../assets/icons/arrow_back.png')} style={[ styles.backNavIcon, { tintColor: colors.text }]} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation?.navigate("Parameters")}>
-                  <Image source={require('../assets/icons/settings.png')} style={[ styles.icon, { tintColor: colors.text }]} />                
+                  <Image source={require('../assets/icons/settings.png')} style={[ styles.backNavIcon ]} />                
                 </TouchableOpacity>              
               </View>
             </View>
@@ -258,6 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 20,
+    flex: 1,
   },
   fileName: {
     fontSize: fontSizes.medium,
@@ -265,10 +269,15 @@ const styles = StyleSheet.create({
   },
   fileDetails: {
     fontSize: fontSizes.small,
+    flex: 1,
   },
-  icon: {
+  backNavIcon: {
     width: horizontalScale(35),
     height: horizontalScale(35),
+  },
+  icon: {
+    width: fontSizes.iconSmall,
+    height: fontSizes.iconSmall,
   },
   fileContentContainer: {
     flex: 1,

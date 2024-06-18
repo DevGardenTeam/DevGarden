@@ -7,10 +7,11 @@ interface FileViewControllerProps {
   owner: string;
   repository: string;
   id: string;
+  dgUsername: string;
 }
 
-const FileViewController = ({ platform, owner, repository, id }: FileViewControllerProps) => {
-  const { files, loading, error, fetchFiles } = useFileViewModel(platform, owner, repository, id);
+const FileViewController = ({ dgUsername, platform, owner, repository, id }: FileViewControllerProps) => {
+  const { files, loading, error, fetchFiles } = useFileViewModel(dgUsername, platform, owner, repository, id);
 
   const handleFilePress = (path?: string, isFolder?: boolean) => {
     fetchFiles(path, isFolder);

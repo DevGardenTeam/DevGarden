@@ -65,14 +65,27 @@ export default class MetricsUtils {
         var repositoryManager = RepositoryManager.getInstance();
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            if (!repo || repo.commits.length === 0) {
-                throw new Error("No commits found in the repository");
+            if (!repo) {
+                throw new Error("Repository not found");
+            }
+
+            var selectedBranch = repo.branches[0];
+
+            if (repo.branches.length > 0) {
+                const mainBranch = repo.branches.find(branch => branch.name === 'main');
+                const masterBranch = repo.branches.find(branch => branch.name === 'master');
+                selectedBranch = mainBranch || masterBranch || repo.branches[0];
+
+                if (selectedBranch.commits.length === 0){
+                    this.commitsMark = 0;
+                    return;
+                }
             }
 
             // Sort the commits by date in descending order
-            repo.commits.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            selectedBranch.commits.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-            const lastCommitDate = new Date(repo.commits[0].date);
+            const lastCommitDate = new Date(selectedBranch.commits[0].date);
             const currentDate = new Date();
             const selectedMonth = this.selectedCommitMetrics.selectedMonth;
 
@@ -100,14 +113,20 @@ export default class MetricsUtils {
         }
     }
 
+    
 
     // CALCULATE ISSUES METRICS
     static calculateIssuesMetric = async (repositoryName: string) => {
         var repositoryManager = RepositoryManager.getInstance();
         try {
             const repo = await repositoryManager.getRepositoryByName(repositoryName);
-            if (!repo || repo.issues.length === 0) {
-                throw new Error("No issues found in the repository");
+            if (!repo) {
+                throw new Error("Repository not found");
+            }
+
+            if (repo.issues.length === 0) {
+                this.issuesMark = 20;
+                return;
             }
 
             const openIssues = repo.issues.filter((issue: any) => issue.state === "open").length;
@@ -116,7 +135,6 @@ export default class MetricsUtils {
 
             const lowerBound = this.selectedIssueMetrics.selectedPercentage - 10;
             const upperBound = this.selectedIssueMetrics.selectedPercentage + 10;
-
 
             switch (true) {
                 case (openIssuesPercentage < lowerBound):
@@ -133,6 +151,7 @@ export default class MetricsUtils {
             throw new Error(`Failed to calculate issues metrics: ${error.message}`);
         }
     }
+
 
     // CALCULATE AVERAGE METRICS
     static calculateAverageMetric = async (repositoryName: string) => {
@@ -154,6 +173,9 @@ export default class MetricsUtils {
         const commitWeightedMark = this.commitsMark * commitPriority;
         const issueWeightedMark = this.issuesMark * issuePriority;
     
+        console.log(commitWeightedMark);
+        console.log(issueWeightedMark);
+
         const totalPriority = commitPriority + issuePriority;
         const averageMetric = (commitWeightedMark + issueWeightedMark) / totalPriority;
     

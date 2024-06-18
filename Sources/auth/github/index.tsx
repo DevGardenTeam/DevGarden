@@ -42,7 +42,7 @@ export default function GithubAuth({ onLinkChange, username }: { onLinkChange: (
       console.log(response);
       console.log(`response code => ${code}`); // Debug
   
-      fetch(`${CURRENT_BASE_URL}/OAuth/token?platform=github&username=${username}`, {
+      fetch(`${CURRENT_BASE_URL}/OAuth/token/exchange?platform=github&username=${username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

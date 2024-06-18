@@ -4,6 +4,13 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const customConfig = {
   transformer: {
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    assetPlugins: ['expo-asset/tools/hashAssetFiles'],
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: false
+      }
+    })
   },
   resolver: {
     sourceExts: ['js', 'jsx', 'json', 'ts', 'tsx', 'cjs', 'mjs', 'svg'], // Add 'svg' to the list of source extensions

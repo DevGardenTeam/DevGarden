@@ -5,7 +5,7 @@ import { RepositoryStub } from '../stub/RepositoryStub';
 import { IS_STUB } from '../constants/constants';
 import RepositoryManager from '../managers/RepositoryManager';
 
-export const useRepositoryViewModel = (platform: string) => {
+export const useRepositoryViewModel = (platform: string, username: string) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [repository, setRepository] = useState<Repository>();
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export const useRepositoryViewModel = (platform: string) => {
   const fetchRepositories = async () => {
     var repositories = [];
 
-    var repositoryManager = RepositoryManager.getInstance();
+    var repositoryManager = RepositoryManager.getInstance(username);
     // Fetch all repositories from every platform
       try {
         //console.warn("Fetching repositories ...")

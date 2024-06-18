@@ -19,6 +19,7 @@ import { TerrainModel3 } from '../components/3d_components/terrain3_component'
 import { Repository } from '../model/Repository';
 import MetricsUtils from '../helper/MetricsUtils';
 import fontSizes from '../constants/fontSize';
+import LoadingComponent from '../components/loading_component';
 
 
 
@@ -52,18 +53,20 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
   // Status d'un repository à utiliser avec les Metrics 
   const [status, setStatus] = useState('loading');
 
-  useEffect(() => {
-    const fetchStatus = async () => {
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchStatus = async () => {
         try {
-            const calculatedStatus = await MetricsUtils.calculateAverageMetric(repository.name);
-            setStatus(calculatedStatus);
+          const calculatedStatus = await MetricsUtils.calculateAverageMetric(repository.name);
+          setStatus(calculatedStatus);
         } catch (error) {
-            console.error('Failed to calculate average metric', error);
-            setStatus('error');
+          console.error('Failed to calculate average metric', error);
+          setStatus('error');
         }
-    };
-    fetchStatus();
-  }, [repository.name]);
+      };
+      fetchStatus();
+    }, [repository.name])
+  );
 
   const truncateText = (text : string) => {
     if(Platform.OS !== 'web'){
@@ -171,7 +174,7 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
           </View>
         </View>
       <View style={{ flex: 1,  }} {...events} >
-                    {loading && <Loader />}
+                    {loading && <LoadingComponent/>}
                    
         <Canvas frameloop="demand" camera={{ position: [5, 3, 5] }}>
           <OrbitControls enablePan={false} maxZoom={7} minZoom={3.5}
