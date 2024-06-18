@@ -53,6 +53,11 @@ class RepositoryManager {
         return RepositoryManager.instance;
     }
 
+    static resetInstance(): void {
+        console.warn("Resetting RepositoryManager instance");
+        RepositoryManager.instance = null;
+    }
+
     // Méthode pour obtenir tous les repositories
     async getRepositories() {
         const allRepositories: Repository[] = [];
