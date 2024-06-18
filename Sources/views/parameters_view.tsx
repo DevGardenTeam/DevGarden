@@ -1,5 +1,5 @@
 import 'intl-pluralrules';
-import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler  } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, BackHandler, Platform  } from 'react-native';
 import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 import i18n from '../service/i18n';
 import SettingsButton from '../components/settings_buttons_component';
@@ -78,9 +78,10 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) =>{
             return false; // Disable back button
         };
 
-        BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        if(Platform.OS !== 'web') {
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+          return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }
     }, [])
   );
 

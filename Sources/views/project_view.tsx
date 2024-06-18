@@ -87,9 +87,10 @@ const ProjectScreen: React.FC<ProjectScreenProps> = ({ navigation }) => {
             return false; // Disable back button
         };
 
-        BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        if(Platform.OS !== 'web') {
+          BackHandler.addEventListener('hardwareBackPress', onBackPress);
+          return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      }
     }, [])
   );
 
