@@ -144,10 +144,10 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.calculatorContainer}>
-          <Text style={[styles.calculatorTitle, { color: colors.text }]}>Coefficients de qualité</Text>
+          <Text style={[styles.calculatorTitle, { color: colors.text }]}>{t("settings.qualityCoef")}</Text>
           <View style={styles.secondContainer}>
             <View style={styles.inputRow}>
-              <Text style={[styles.rowName, { color: colors.text }]}>Temps depuis dernier commit:</Text>
+              <Text style={[styles.rowName, { color: colors.text }]}>{t("settings.lastCommit")}</Text>
               <View style={styles.inputView}>
                 <TextInput
                   value={currentMonth}
@@ -155,11 +155,11 @@ const ParametersScreen: React.FC<ParametersProps> = ({ navigation }) => {
                   keyboardType="numeric"
                   style={styles.input}
                 />
-                <Text style={[styles.rowName, { color: colors.text }]}>Mois</Text>
+                <Text style={[styles.rowName, { color: colors.text }]}>{t("settings.month")}</Text>
               </View>
             </View>
             <View style={styles.inputRow}>
-              <Text style={[styles.rowName, { color: colors.text }]}>Priorité:</Text>
+              <Text style={[styles.rowName, { color: colors.text }]}>{t("settings.priority")}</Text>
               <View>
                 <DropDownPicker
                   open={openPriority}

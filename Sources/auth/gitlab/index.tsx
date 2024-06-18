@@ -9,6 +9,9 @@ import { StyleSheet } from 'react-native';
 import { CURRENT_BASE_URL, GitAuthProps } from "../../constants/constants";
 import { horizontalScale, moderateScale, verticalScale } from "../../service/Metrics";
 
+import { useTranslation } from "react-i18next"; 
+
+
 // handle the redirection back to our app
 WebBrowser.maybeCompleteAuthSession();
 
@@ -78,12 +81,14 @@ export default function GitlabAuth({ onLinkChange, username }: { onLinkChange: (
         });
     }
   }, [response, username]);
-  
+
+  const { t } = useTranslation();
+
   // button 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
-        <Text style={styles.buttonText}>Enter with Gitlab</Text>
+        <Text style={styles.buttonText}>{t("settings.enterGitlab")}</Text>
       </TouchableOpacity>
     </View>
   );

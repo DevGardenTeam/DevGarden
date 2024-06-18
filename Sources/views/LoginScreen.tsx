@@ -5,7 +5,7 @@ import TextInputComponent from '../components/text_input_component';
 import {moderateScale} from '../service/Metrics';
 import { Handlelogin } from "../view-models/AuthentificationViewModel";
 import { useUser } from '../user/UserContext';
-
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<any>;
@@ -20,19 +20,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     Handlelogin(email, password,navigation, updateUser);
   };
 
+  const { t } = useTranslation();
+
   return (
     <View style={styles.safeArea}>
           <View style={styles.square1}>
-            <Text style={styles.title}>Bienvenue</Text>
+            <Text style={styles.title}>{t('login.welcome')}</Text>
             <View style={styles.emailContainer}>
                 <TextInputComponent
-                  placeholder="Email Address"
+                  placeholder={t('login.emailAddress')}
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                   iconSource={require('../assets/icons/IconMail.png')}
                 />
                 <TextInputComponent
-                  placeholder="Password"
+                  placeholder={t('login.password')}
                   value={password}
                   onChangeText={(text) => setPassword(text)}
                   password = {true}
@@ -44,14 +46,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
           <View style={styles.square2}>
             <TouchableOpacity>
-              <Text style={styles.forgotPasswordText}>Forget Password</Text>
+              <Text style={styles.forgotPasswordText}>{t('login.forgetPassword')}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.button} onPress={OnLoginPress}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>{t('login.login')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Register")}>
-                <Text style={styles.buttonText}>Register</Text>
+                <Text style={styles.buttonText}>{t('login.register')}</Text>
               </TouchableOpacity>
             </View>
         </View>

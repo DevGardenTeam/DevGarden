@@ -5,6 +5,8 @@ import TextInputComponent from '../components/text_input_component';
 import BackNavigationButton from '../components/button_back_navigation_component';
 import { moderateScale, horizontalScale, verticalScale } from '../service/Metrics';
 import { HandleRegister } from "../view-models/AuthentificationViewModel";
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
+
 
 interface RegisterViewProps {
   navigation: StackNavigationProp<any>;
@@ -19,6 +21,8 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
     HandleRegister(email, password, verifPassword,navigation);
   };
 
+  const { t } = useTranslation();
+
   return (
     <View style={styles.safeArea}>
       <View style={styles.backButton}>
@@ -30,20 +34,20 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
           <Text style={styles.title}>Create account</Text>
           <View style={styles.emailContainer}>
             <TextInputComponent
-                placeholder="Email Address"
+                placeholder={t('login.password')}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 iconSource={require('../assets/icons/IconMail.png')}
             />
             <TextInputComponent
-                placeholder="Password"
+                placeholder={t('login.password')}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 password = {true}
                 iconSource={require('../assets/icons/IconLock.png')}
             />
             <TextInputComponent
-                placeholder="Confirm Password"
+                placeholder={t('register.confirmPassword')}
                 value={verifPassword}
                 onChangeText={(text) => setverifPassword(text)}
                 password = {true}
@@ -51,9 +55,9 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
             />
           </View>
           <View style={styles.alreadyAccount}>
-              <Text>Already have an account?  </Text>
-              <TouchableOpacity>
-                  <Text style={styles.loginText}>Log in</Text>
+              <Text>{t('register.alreadyAccount')}</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                  <Text style={styles.loginText}>{t("login.login")}</Text>
               </TouchableOpacity>
           </View>
 
@@ -61,7 +65,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
 
         <View style={styles.square2}>
             <TouchableOpacity style={styles.button} onPress={OnRegisterPress}>
-              <Text style={styles.buttonText}>Create Account</Text>
+              <Text style={styles.buttonText}>{t('register.createAccount')}</Text>
             </TouchableOpacity>
         </View>  
       </View>

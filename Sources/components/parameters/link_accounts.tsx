@@ -5,11 +5,15 @@ import { UserInfo } from '../../user/UserContext';
 import GithubAuth from '../../auth/github';
 import GitlabAuth from '../../auth/gitlab';
 import GiteaAuth from '../../auth/gitea';
+import { useTranslation } from "react-i18next"; // A ajouter pour le multi langue
 
 const screenWidth = Dimensions.get('window').width;
 const textSize = screenWidth * 0.05;
 
 const LinkAccountView = ({ user }: { user: UserInfo }) => {
+
+  const { t } = useTranslation();
+
   const [isLinked, setIsLinked] = useState({
     gitlab: false,
     github: false,
@@ -39,7 +43,7 @@ const LinkAccountView = ({ user }: { user: UserInfo }) => {
   };
 
   const renderPlatformSection = (platformKey: string, platform: any) => {
-    const statusText = platform.isLinked ? 'Linked' : 'Not Linked';
+    const statusText = platform.isLinked ? t('settings.linked') : t('settings.notLinked');
     const statusColor = platform.isLinked ? 'green' : 'red';
 
     return (

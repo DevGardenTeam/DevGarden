@@ -10,7 +10,16 @@
         "language":"Línguas",
         "nightMode":"Modo escuro",
         "linkAccount":"Vincular contas",
-        "searchPlaceHolder":"Procurar uma língua"
+        "searchPlaceHolder":"Procurar uma língua",
+        "qualityCoef":"Coeficientes de qualidade",
+        "lastCommit":"Tempo desde o último commit:",
+        "month":"Mês",
+        "priority":"Prioridade:",
+        "linked":"Relacionado",
+        "notLinked":"Não relacionado",
+        "enterGitHub":"Faça login no GitHub",
+        "enterGitlab":"Faça login no Gitlab",
+        "enterGitea":"Faça login no Gitea"
     },
     "projectView": {
         "garden":"Jardim",
@@ -23,5 +32,18 @@
         "languagesTitle":"Línguas",
         "security":"Segurança",
         "duplication":"Duplicação"
+    },
+    "login":{
+        "welcome":"Bem-vindo",
+        "emailAddress":"Endereço de email",
+        "password":"Senha",
+        "forgetPassword":"Esqueceu a senha",
+        "login":"Conecte-se",
+        "register":"Registro"
+    },
+    "register":{
+        "confirmPassword":"Confirme sua senha",
+        "alreadyAccount":"Já tem uma conta? ",
+        "createAccount":"Criar uma conta"
     }
 }

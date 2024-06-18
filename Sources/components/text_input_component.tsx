@@ -1,5 +1,5 @@
-import React from 'react';
-import { DimensionValue, TextInput, ImageSourcePropType, View, Image, StyleSheet, Dimensions  } from 'react-native';
+import React, { useState } from 'react';
+import { DimensionValue, TextInput, ImageSourcePropType, View, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 
 type TextInputProps  = {
     placeholder?: string
@@ -10,18 +10,28 @@ type TextInputProps  = {
     password?: boolean
 }
   
-const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width='85%', onChangeText, value, iconSource, password = false  }) => {
-    return (
+const TextInputComponent: React.FC<TextInputProps > = ({ placeholder, width='85%', onChangeText, value, iconSource, password = false }) => {
+  
+  const [secureTextEntry, setSecureTextEntry] = useState(password);
+
+  const toggleSecureTextEntry = () => {
+    if (password){
+      setSecureTextEntry(!secureTextEntry);
+    }
+  };  
+  
+  return (
         <View style={[styles.container, { width: width }]}>
             <TextInput 
                 style={styles.input}
                 placeholder={placeholder}
                 value={value}
                 onChangeText={onChangeText}
-                secureTextEntry = {password}>
+                secureTextEntry = {secureTextEntry}>
             </TextInput >
-
-            <Image style={styles.icon} source={iconSource}></Image>
+            <TouchableOpacity style={styles.icon} onPress={toggleSecureTextEntry}>
+              <Image source={iconSource}></Image>
+            </TouchableOpacity>   
         </View>
                 
     );
