@@ -2,7 +2,7 @@
 FROM nginx:alpine
 
 # Copy the web-build folder to the nginx html folder
-COPY web-build /usr/share/nginx/html
+COPY ./web-build /usr/share/nginx/html
 
 # Expose the port nginx is running on
 EXPOSE 80
