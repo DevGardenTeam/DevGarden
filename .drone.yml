@@ -14,9 +14,11 @@ steps:
     commands:
       - cd Sources
       - ls
-      - npx expo export:web --output ../WebDeployment/web-build
-      - ls ../WebDeployment/web-build
-      - cd ../WebDeployment/web-build
+      - npx expo export:web
+      - cd WebDeployement
+      - mv ../web-build ./
+      - ls
+      - cd web-build
 
   - name: serve-web-build
     image: node:latest
