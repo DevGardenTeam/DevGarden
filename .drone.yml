@@ -13,7 +13,11 @@ steps:
       CI_PROJECT_DIR: /app
     commands:
       - ls
-      - cd Sources/WebDeployment/web-build
+      - cd Sources
+      - npm install -g expo-cli
+      - npm install
+      - npx expo export:web
+      - cd /WebDeployment/web-build
       - npm install -g serve
       - serve -s .
 
