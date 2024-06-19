@@ -24,7 +24,7 @@ steps:
     image: plugins/docker
     settings:
       dockerfile: ./Sources/WebDeployement/Dockerfile
-      context: .
+      context: ./Sources/WebDeployement
       registry: hub.codefirst.iut.uca.fr
       repo: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb
       username:
