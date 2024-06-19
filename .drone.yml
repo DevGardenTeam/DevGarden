@@ -21,15 +21,6 @@ steps:
       - ls
       - cd web-build
 
-  - name: serve-web-build
-    image: node:latest
-    environment:
-      CI_PROJECT_DIR: /app
-    commands:
-      - npm install -g serve
-      - serve -s .
-    depends_on: [build-web]
-
   - name: docker-build-and-push-web
     image: plugins/docker
     settings:
