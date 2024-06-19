@@ -8,12 +8,13 @@ trigger:
 
 steps:
   - name: build-web
-    image: node:14
+    image: node:latest
     environment:
       CI_PROJECT_DIR: /app
     commands:
       - ls
       - cd Sources
+      - npm install
       - npx expo export:web
       - mv web-build /WebDeployment
       - cd /WebDeployment/web-build
