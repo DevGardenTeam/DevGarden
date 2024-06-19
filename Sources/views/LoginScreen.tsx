@@ -28,7 +28,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             <Text style={styles.title}>{t('login.welcome')}</Text>
             <View style={styles.emailContainer}>
                 <TextInputComponent
-                  placeholder={t('login.emailAddress')}
+                  placeholder={"username"}
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                   iconSource={require('../assets/icons/IconMail.png')}
@@ -45,7 +45,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           </View>
 
           <View style={styles.square2}>
-            <TouchableOpacity>
+            <TouchableOpacity style={{ display: 'none' }}>
               <Text style={styles.forgotPasswordText}>{t('login.forgetPassword')}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>

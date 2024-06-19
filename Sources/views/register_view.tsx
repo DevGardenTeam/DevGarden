@@ -37,7 +37,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
           <Text style={styles.title}>Create account</Text>
           <View style={styles.emailContainer}>
             <TextInputComponent
-                placeholder={t('login.login')}
+                placeholder={"username"}
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 iconSource={require('../assets/icons/IconMail.png')}
@@ -50,7 +50,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ navigation }) => {
                 iconSource={require('../assets/icons/IconLock.png')}
             />
             <TextInputComponent
-                placeholder={t('register.confirmPassword')}
+                placeholder={"confirm password"}
                 value={verifPassword}
                 onChangeText={(text) => setverifPassword(text)}
                 password = {true}

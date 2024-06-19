@@ -63,13 +63,15 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
 
       commits.forEach(commit => {
         const author = commit.author;
-        if (commitersMap.has(author.name)) {
-          const existingAuthor = commitersMap.get(author.name);
-          if (existingAuthor) {
-            existingAuthor.commits += 1;
+        if(author != null) {
+          if (commitersMap.has(author.name)) {
+            const existingAuthor = commitersMap.get(author.name);
+            if (existingAuthor) {
+              existingAuthor.commits += 1;
+            }
+          } else {
+            commitersMap.set(author.name, new Committer(author.id, author.name, author.photoUrl, 1));
           }
-        } else {
-          commitersMap.set(author.name, new Committer(author.id, author.name, author.photoUrl, 1));
         }
       });
 
@@ -125,7 +127,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>Principal Language</Text>
         <View style={styles.languageContainer}>
-          <Text style={[styles.languageText, { color: colors.text }]}>{mockData.primaryLanguage}</Text>
+          <Text style={[styles.languageText, { color: colors.text }]}>{repository.language}</Text>
         </View>
       </View>
 
