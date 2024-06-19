@@ -1,40 +1,39 @@
 kind: pipeline
 type: docker
-name: devgardenci
+name: CI
 
 trigger:
   event:
     - push
 
 steps:
-  - name: check-dependencies
-    image: node:21
-    commands:
-      - node -v
-      - yarn -v
-
-#  - name: type-check
-#    image: node:21
-#    commands:
-#      - pwd
-#      - ls
-#      - cd Sources
-#      - yarn install
-#      - yarn tsc
-#    depends_on:
-#      - check-dependencies
-
-  - name: sonarqube
-    image: reactnativecommunity/react-native-android
+  - name: build-web
+    image: node:14
     environment:
-      SONAR_TOKEN:
-        from_secret: DEVGARDEN_TOKEN
-
+      CI_PROJECT_DIR: /app
     commands:
-      - export SONAR_SCANNER_VERSION=4.7.0.2747
-      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
-      - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
-      - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-      - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-      - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -Dsonar.projectKey=DevGarden -Dsonar.sources=. -Dsonar.host.url=https://codefirst.iut.uca.fr/sonar -Dsonar.login=$DEVGARDEN_TOKEN
+      - ls
+      - cd Sources/WebDeployment/web-build
+      - npm install -g serve
+      - serve -s .
+
+- name: docker-build-and-push-web
+  image: plugins/docker
+  settings:
+    dockerfile: ./Sources/WebDeployment/Dockerfile
+    context: .
+    registry: hub.codefirst.iut.uca.fr
+    repo: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb
+    username:
+      from_secret: SECRET_REGISTRY_USERNAME
+    password:
+      from_secret: SECRET_REGISTRY_PASSWORD
+  depends_on: [build-web]
+
+  - name: deploy-web-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+      IMAGENAME: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb:latest
+      COMMAND: create
+      OVERWRITE: true
+    depends_on: [build-web]
