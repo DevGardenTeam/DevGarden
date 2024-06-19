@@ -19,13 +19,11 @@ steps:
       - cd WebDeployement
       - mv ../web-build ./
       - ls
-      - cd ../..
-      - ls
 
   - name: docker-build-and-push-web
     image: plugins/docker
     settings:
-      dockerfile: ./Sources/WebDeployment/Dockerfile
+      dockerfile: ./Sources/WebDeployement/Dockerfile
       context: .
       registry: hub.codefirst.iut.uca.fr
       repo: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb
