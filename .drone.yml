@@ -19,7 +19,7 @@ steps:
       - cd WebDeployement
       - mv ../web-build ./
       - ls
-      - cd web-build
+      -cd ..
 
   - name: docker-build-and-push-web
     image: plugins/docker
