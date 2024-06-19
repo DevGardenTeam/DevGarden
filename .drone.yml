@@ -14,9 +14,8 @@ steps:
     commands:
       - ls
       - cd Sources
-      - npm install -g expo-cli
-      - npm install
       - npx expo export:web
+      - mv web-build /WebDeployment
       - cd /WebDeployment/web-build
       - npm install -g serve
       - serve -s .
