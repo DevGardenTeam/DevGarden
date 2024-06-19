@@ -16,8 +16,11 @@ steps:
       - cd Sources
       - npm install
       - npx expo export:web
+      - ls
       - mv web-build /WebDeployment
-      - cd /WebDeployment/web-build
+      - cd /WebDeployment
+      - ls
+      - cd web-build
       - npm install -g serve
       - serve -s .
 
