@@ -16,7 +16,7 @@ steps:
       - ls
       - npm install
       - npx expo export:web
-      - cd WebDeployment
+      - cd WebDeployement
       - mv ../web-build ./
       - ls
       - cd ../..
