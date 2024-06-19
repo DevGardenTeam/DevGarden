@@ -17,23 +17,24 @@ steps:
       - npm install -g serve
       - serve -s .
 
-- name: docker-build-and-push-web
-  image: plugins/docker
-  settings:
-    dockerfile: ./Sources/WebDeployment/Dockerfile
-    context: .
-    registry: hub.codefirst.iut.uca.fr
-    repo: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb
-    username:
-      from_secret: SECRET_REGISTRY_USERNAME
-    password:
-      from_secret: SECRET_REGISTRY_PASSWORD
-  depends_on: [build-web]
+  - name: docker-build-and-push-web
+    image: plugins/docker
+    settings:
+      dockerfile: ./Sources/WebDeployment/Dockerfile
+      context: .
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+    depends_on: [build-web]
 
   - name: deploy-web-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
       IMAGENAME: hub.codefirst.iut.uca.fr/lou.broda/devgardenweb:latest
+      CONTAINERNAME: devgardenweb
       COMMAND: create
       OVERWRITE: true
-    depends_on: [build-web]
+    depends_on: [docker-build-and-push-web]
