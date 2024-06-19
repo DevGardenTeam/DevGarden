@@ -14,6 +14,7 @@ steps:
     commands:
       - cd Sources
       - ls
+      - npm install
       - npx expo export:web
       - cd WebDeployement
       - mv ../web-build ./
@@ -27,6 +28,7 @@ steps:
     commands:
       - npm install -g serve
       - serve -s .
+    depends_on: [build-web]
 
   - name: docker-build-and-push-web
     image: plugins/docker
@@ -39,7 +41,7 @@ steps:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
-    depends_on: [build-web]
+    depends_on: [serve-web-build]
 
   - name: deploy-web-container
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
