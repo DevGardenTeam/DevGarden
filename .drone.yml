@@ -16,10 +16,11 @@ steps:
       - ls
       - npm install
       - npx expo export:web
-      - cd WebDeployement
+      - cd WebDeployment
       - mv ../web-build ./
       - ls
-      -cd ..
+      - cd ../..
+      - ls
 
   - name: docker-build-and-push-web
     image: plugins/docker
