@@ -12,8 +12,8 @@ steps:
     environment:
       CI_PROJECT_DIR: /app
     commands:
+      - cd Sources
       - ls
-      - cd Sources/WebDeployment
       - npx expo export:web --output ../WebDeployment/web-build
       - ls ../WebDeployment/web-build
       - cd ../WebDeployment/web-build
