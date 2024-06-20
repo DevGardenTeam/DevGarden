@@ -16,3 +16,4 @@ export const PLATFORMS = {
 export interface GitAuthProps {
     onLinkStatusChange: (isLinked: boolean) => void;
 }
+// comment
