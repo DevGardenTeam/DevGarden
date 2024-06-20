@@ -40,5 +40,6 @@ steps:
       CONTAINERNAME: devgardenweb
       COMMAND: create
       OVERWRITE: true
+      PORTS: 80:80
       ADMINS: nicolasfranco,loubroda,timlevadoux,brunoda_costa_cunha
     depends_on: [docker-build-and-push-web]
